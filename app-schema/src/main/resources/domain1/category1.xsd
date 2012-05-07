@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:ct="http://app.org/schemas/base/complextype/v10" xmlns:st="http://app.org/schemas/base/simpletype/v10"
+	xmlns:tns="http://app.org/schemas/domain1/category1/v10" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://app.org/schemas/domain1/category1/v10">
+
+	<xs:import namespace="http://app.org/schemas/base/simpletype/v10" schemaLocation="../base/simpletype.xsd" />
+	<xs:import namespace="http://app.org/schemas/base/complextype/v10" schemaLocation="../base/complextype.xsd" />
+
+	<xs:element name="queryOrderRequest" type="tns:QueryOrderRequest" />
+	<xs:element name="queryOrderResponse" type="tns:QueryOrderResponse" />
+
+	<xs:complexType name="QueryOrderResponse">
+		<xs:sequence>
+			<xs:element name="result" type="ct:Result" maxOccurs="1" minOccurs="1" />
+			<xs:element name="count" type="xs:int" maxOccurs="1" minOccurs="1" />
+			<xs:element name="items" type="tns:OrderStatus" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OrderStatus">
+		<xs:sequence>
+			<xs:element name="orderId" type="xs:long" maxOccurs="1" minOccurs="1" />
+			<xs:element name="orderPrice" type="xs:double" maxOccurs="1" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="QueryOrderRequest">
+		<xs:sequence>
+			<xs:element name="username" type="xs:string" maxOccurs="1" minOccurs="1" />
+			<xs:element name="inProgress" type="xs:boolean" maxOccurs="1" minOccurs="1" />
+			<xs:element name="startDate" type="xs:dateTime" maxOccurs="1" minOccurs="1" />
+			<xs:element name="endDate" type="xs:dateTime" maxOccurs="1" minOccurs="1" />
+			<xs:element name="orderIds" type="xs:long" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

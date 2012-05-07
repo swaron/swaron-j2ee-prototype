@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ 
+		directory -->
+
+	<mvc:resources mapping="/resources/**" location="/resources/" order="20" />
+	<mvc:view-controller path="/sample/mvc.do" view-name="sample/mvc"/>
+	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser"/>
+	<mvc:view-controller path="/sample/crud.do" view-name="sample/secUser"/>
+
+	<!-- Configures Handler Interceptors -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	</mvc:interceptors>
+
+	<bean id="localeResolver" class="org.app.integration.spring.i18n.LocaleResolver" />
+
+	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="ignoreAcceptHeader" value="false" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+				<entry key="do" value="text/html" />
+			</map>
+		</property>
+		<property name="defaultContentType" value="text/html" />
+		<property name="favorParameter" value="false" />
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+					<property name="prefix" value="/WEB-INF/jsp/" />
+					<property name="suffix" value=".jsp" />
+					<property name="order" value="2" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- for application/json -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="marshaller" ref="jaxbMarshaller" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

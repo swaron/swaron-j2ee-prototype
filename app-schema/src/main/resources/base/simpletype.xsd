@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://app.org/schemas/base/simpletype/v10"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1" elementFormDefault="qualified">
+
+
+	<xs:simpleType name="ResultCode">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass>
+					<jaxb:typesafeEnumMember value="0" name="SUCCESS" />
+					<jaxb:typesafeEnumMember value="1" name="ERROR" />
+				</jaxb:typesafeEnumClass>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="0" />
+			<xs:enumeration value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

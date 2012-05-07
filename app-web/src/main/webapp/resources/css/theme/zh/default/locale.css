@@ -1,0 +1,190 @@
+.x-body {
+	font-size: 14px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif
+}
+
+.x-box-mc {
+	font-family: "Myriad Pro", "Myriad Web", "Tahoma", "Helvetica", "Arial", sans-serif;
+	font-size: 15px
+}
+
+.x-box-mc h3 {
+	font-size: 18px;
+}
+
+.x-btn-default-small .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-btn-default-medium .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-btn-default-large .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-btn-default-toolbar-small .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-btn-default-toolbar-medium .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-btn-default-toolbar-large .x-btn-inner {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-menu-item-text {
+	font-size: 13px;
+}
+
+.x-form-item-label {
+	font-size: 14px;
+}
+
+.x-form-file-wrap .x-form-file-input {
+	font-size: 100px
+}
+
+.x-html-editor-tb .x-font-select {
+	font-size: 13px
+}
+
+.x-panel-body {
+	font-size: 15px
+}
+
+.x-panel-header-default {
+	font-size: 13px;
+}
+
+.x-panel-header-text-default {
+	font-size: 13px;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif
+}
+
+.x-panel-header-default-framed {
+	font-size: 13px;
+}
+
+.x-panel-header-text-default-framed {
+	color: #04408c;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif
+}
+
+.x-tip-header-text {
+	font-size: 13px;
+}
+
+.x-tip-header,.x-tip-body,.x-form-invalid-tip-body {
+	font-size: 13px;
+}
+
+.x-progress-text {
+	font-size: 13px;
+}
+
+.x-toolbar {
+	font-size: 13px;
+}
+
+.x-toolbar .x-form-item-label {
+	font-size: 13px;
+}
+
+.x-toolbar .x-toolbar-text {
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+	font-size: 13px;
+}
+
+.x-window-header-text-default {
+	font-family: Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+	font-size: 13px
+}
+
+.x-tab-bar {
+	font-size: 13px
+}
+
+.x-tab button {
+	font-size: 13px;
+}
+
+.x-mask-msg div {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif
+}
+
+.x-btn-group-header-text-default-framed {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+table.x-datepicker-inner th {
+	font: normal 12px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+	text-align: right;
+}
+
+table.x-datepicker-inner a {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-monthpicker-item {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-column-header {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-grid-row .x-grid-cell {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-grid-rowbody {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-grid-cell {
+	font: normal 15px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-grid-group-title {
+	font: bold 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-grid-row-editor .x-form-field {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif !important
+}
+
+.x-grid-row-editor .x-form-display-field {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif !important;
+}
+
+.x-form-invalid-under {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-form-field,.x-form-display-field {
+	font: normal 15px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-form-item {
+	font: normal 15px Microsoft YaHei, tahoma, arial, verdana, sans-serif
+}
+
+.x-fieldset-header {
+	font: 13px bold Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}
+
+.x-dd-drag-ghost {
+	font: normal 13px Microsoft YaHei, tahoma, arial, verdana, sans-serif;
+}

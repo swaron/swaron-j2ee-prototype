@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+">
+	<changeSet id="3" author="total" context="test">
+		<sql endDelimiter=";">
+		<![CDATA[
+			--version info for dbunit
+			drop table if exists db_version;
+			drop table if exists system_config;
+			drop table if exists code_dictionary;
+			
+			--spring acl schemas
+			drop table if exists acl_entry cascade;
+			drop table if exists acl_object_identity cascade;
+			drop table if exists acl_class cascade;
+			drop table if exists acl_sid cascade;
+			
+			--spring security schemas
+			drop table if exists sec_group_authority cascade;
+			drop table if exists sec_group_member cascade;
+			drop table if exists sec_group cascade;
+			drop table if exists sec_user cascade;
+			drop table if exists unreg_user cascade;
+			drop table if exists user_detail cascade;
+			
+			drop table if exists base_object cascade;
+			drop table if exists log_click_unreg cascade;
+			drop table if exists log_login_unreg cascade;
+			drop table if exists log_search_unreg cascade;
+			drop table if exists log_click cascade;
+			drop table if exists log_login cascade;
+			drop table if exists log_search cascade;
+			drop table if exists user_bundle cascade;
+			drop table if exists obj_bundle cascade;
+			drop table if exists category_type cascade;
+			drop table if exists obj_category cascade;
+			drop table if exists obj_detail cascade;
+			drop table if exists detail_type cascade;
+			drop table if exists detail_range cascade;
+			drop table if exists user_topic cascade;
+		]]>
+		</sql>
+		<createTable tableName="acl_sid">
+			<column name="acl_sid_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="principal" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="sid" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="acl_sid" columnNames="sid,principal" constraintName="acl_sid_uk_1" />
+		<createTable tableName="acl_class">
+			<column name="acl_class_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="class" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="acl_class" columnNames="class" constraintName="acl_class_uk_1" />
+		<createTable tableName="acl_object_identity">
+			<column name="acl_object_identity_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="object_id_class" type="int">
+				<constraints nullable="false" foreignKeyName="acl_object_identity_fk_2" references="acl_class(acl_class_id)" />
+			</column>
+			<column name="object_id_identity" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="parent_object" type="int">
+				<constraints nullable="true" foreignKeyName="acl_object_identity_fk_1" references="acl_object_identity(acl_object_identity_id)" />
+			</column>
+			<column name="owner_sid" type="int">
+				<constraints nullable="false" foreignKeyName="acl_object_identity_fk_3" references="acl_sid(acl_sid_id)" />
+			</column>
+			<column name="entries_inheriting" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="acl_object_identity" columnNames="object_id_class,object_id_identity"
+			constraintName="acl_object_identity_uk_1" />
+
+		<createTable tableName="acl_entry">
+			<column name="acl_entry_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="acl_object_identity" type="int">
+				<constraints nullable="false" foreignKeyName="acl_entry_fk_1" references="acl_object_identity(acl_object_identity_id)" />
+			</column>
+			<column name="ace_order" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="sid" type="int">
+				<constraints nullable="false" foreignKeyName="acl_entry_fk_2" references="acl_sid(acl_sid_id)" />
+			</column>
+			<column name="mask" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="granting" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="audit_success" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="audit_failure" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="acl_entry" columnNames="acl_object_identity,ace_order"
+			constraintName="acl_entry_uk_1" />
+
+		<createTable tableName="sec_user">
+			<column name="sec_user_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(64)">
+				<constraints nullable="false" uniqueConstraintName="sec_user_uk_1" unique="true" />
+			</column>
+			<column name="passwd" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="enabled" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="last_last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="locked_time" type="datetime" />
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_failed_count" type="smallint" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_state" type="int" />
+<!-- 			<column name="user_detail_id" type="int">
+				<constraints nullable="false"/>
+			</column> -->
+		</createTable>
+		<createTable tableName="user_detail">
+			<column name="user_detail_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sec_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="user_detail_fk_1" references="sec_user(sec_user_id)" uniqueConstraintName="user_detail_uk_1" unique="true"/>
+			</column>
+			<column name="first_name" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="last_name" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="birthday" type="date">
+				<constraints nullable="true" />
+			</column>
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<!-- <addForeignKeyConstraint constraintName="sec_user_fk_1" baseTableName="sec_user" baseColumnNames="user_detail_id" referencedTableName="user_detail" referencedColumnNames="user_detail_id"/> -->
+		<createTable tableName="unreg_user">
+			<column name="unreg_user_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(64)">
+				<constraints nullable="false" uniqueConstraintName="unreg_user_uk_1" unique="true" />
+			</column>
+			<column name="passwd" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="enabled" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="last_last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="locked_time" type="datetime" />
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_failed_count" type="smallint" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_state" type="int" />
+		</createTable>
+
+		<createTable tableName="sec_group">
+			<column name="sec_group_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="group_name" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="sec_group_authority">
+			<column name="sec_group_authority_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sec_group_id" type="int">
+				<constraints nullable="false" foreignKeyName="sec_group_authority_fk_1" references="sec_group(sec_group_id)" />
+			</column>
+			<column name="authority" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="sec_group_member">
+			<column name="sec_group_member_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sec_group_id" type="int">
+				<constraints nullable="false" foreignKeyName="sec_group_member_fk_1" references="sec_group(sec_group_id)" />
+			</column>
+			<column name="sec_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="sec_group_member_fk_2" references="sec_user(sec_user_id)" />
+			</column>
+		</createTable>
+
+		<createTable tableName="base_object">
+			<column name="base_object_id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="owner_sec_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="base_object_fk_1" references="sec_user(sec_user_id)" />
+			</column>
+		</createTable>
+		<createTable tableName="log_click">
+			<column name="log_click_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sec_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="log_click_fk_1" references="sec_user(sec_user_id)" />
+			</column>
+		</createTable>
+		<createTable tableName="log_click_unreg">
+			<column name="log_click_unreg_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="unreg_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="log_click_unreg_fk_1" references="unreg_user(unreg_user_id)" />
+			</column>
+		</createTable>
+		<createTable tableName="log_login_unreg">
+			<column name="log_login_unreg_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="unreg_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="log_login_unreg_fk_1" references="unreg_user(unreg_user_id)" />
+			</column>
+			<column name="jsession" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ip_address" type="inet">
+				<constraints nullable="false" />
+			</column>
+			<column name="details" type="varchar(500)">
+				<constraints nullable="true" />
+			</column>
+			<column name="browser_agent" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="system_config">
+			<column name="system_config_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="param_key" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="param_value" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_time" type="datetime" />
+		</createTable>
+		<createTable tableName="category_type">
+			<column name="category_type_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="text" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parent_category_type_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="should_inherit_detail_type" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+			<column name="bypass" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="detail_type">
+			<column name="detail_type_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="category_type_id" type="int">
+				<constraints nullable="false" foreignKeyName="detail_type_fk_1" references="category_type(category_type_id)" />
+			</column>
+			<column name="normalized_unit" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="text" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="detail_range">
+			<column name="detail_range_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="detail_type_id" type="int">
+				<constraints nullable="false" foreignKeyName="detail_range_fk_1" references="detail_type(detail_type_id)" />
+			</column>
+			<column name="min" type="double">
+				<constraints nullable="true" />
+			</column>
+			<column name="max" type="double">
+				<constraints nullable="true" />
+			</column>
+			<column name="text" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="val" type="varchar(1024)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="obj_category">
+			<column name="obj_category_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="category_type_id" type="int">
+				<constraints nullable="false" foreignKeyName="obj_category_fk_1" references="category_type(category_type_id)" />
+			</column>
+			<column name="base_object_id" type="int">
+				<constraints nullable="false" foreignKeyName="obj_category_fk_2" references="base_object(base_object_id)" />
+			</column>
+		</createTable>
+		<createTable tableName="obj_detail">
+			<column name="obj_detail_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="base_object_id" type="int">
+				<constraints nullable="false" foreignKeyName="obj_detail_fk_1" references="base_object(base_object_id)" />
+			</column>
+			<column name="detail_type_id" type="int">
+				<constraints nullable="false" foreignKeyName="obj_detail_fk_2" references="detail_type(detail_type_id)" />
+			</column>
+			<column name="text" type="varchar(1024)">
+				<constraints nullable="false" />
+			</column>
+			<column name="val" type="double">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="code_dictionary">
+			<column name="code_dictionary_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="table_name" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="column_name" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="code" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="name_en" type="varchar(256)">
+			</column>
+			<column name="name_zh" type="varchar(256)">
+			</column>
+			<column name="name_i18n_key" type="varchar(256)">
+			</column>
+			<column name="description" type="varchar(1024)">
+			</column>
+			<column name="sort_order" type="int">
+			</column>
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="db_version">
+			<column name="key" type="varchar(1024)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="value" type="int">
+			</column>
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<loadData tableName="code_dictionary" encoding="UTF-8" file="dbdata/code_dictionary.csv"></loadData>
+		<modifySql dbms="h2">
+			<replace replace="inet" with="varchar(16)" />
+		</modifySql>
+		<modifySql dbms="mysql">
+			<replace replace="inet" with="varchar(16)" />
+		</modifySql>
+		<modifySql dbms="oracle">
+			<replace replace="inet" with="varchar(16)" />
+		</modifySql>
+		<modifySql dbms="mssql">
+			<replace replace="inet" with="varchar(16)" />
+		</modifySql>
+	</changeSet>
+</databaseChangeLog>

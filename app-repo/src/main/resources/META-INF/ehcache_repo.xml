@@ -1,0 +1,19 @@
+<ehcache name="hibernate_cache" updateCheck="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+	<diskStore path="java.io.tmpdir/ehcache/hibernate" />
+	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="240"
+		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="org.hibernate.cache.internal.StandardQueryCache" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="org.hibernate.cache.spi.UpdateTimestampsCache" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="org.hibernate.cache.StandardQueryCache" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="org.hibernate.cache.UpdateTimestampsCache" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU" />
+</ehcache>

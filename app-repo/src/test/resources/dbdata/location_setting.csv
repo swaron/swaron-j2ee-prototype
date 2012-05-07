@@ -1,0 +1,14 @@
+location_setting_id,province,agent,legal_age
+1,ON,1,18
+2,QC,0,18
+3,BC,0,19
+4,AB,0,18
+5,SK,0,18
+6,NS,0,19
+7,NL,0,19
+8,MA,0,18
+9,PE,0,18
+10,NT,0,19
+11,YT,0,19
+12,NB,0,19
+13,NU,0,19

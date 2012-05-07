@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="app-repo" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>org.app.repo.jpa.model.AclClass</class>
+		<class>org.app.repo.jpa.model.AclEntry</class>
+		<class>org.app.repo.jpa.model.AclObjectIdentity</class>
+		<class>org.app.repo.jpa.model.AclSid</class>
+		<class>org.app.repo.jpa.model.SecGroup</class>
+		<class>org.app.repo.jpa.model.SecGroupAuthority</class>
+		<class>org.app.repo.jpa.model.SecGroupMember</class>
+		<class>org.app.repo.jpa.model.SecUser</class>
+		<class>org.app.repo.jpa.model.UserDetail</class>
+		<class>org.app.repo.jpa.model.CodeDictionary</class>
+		<class>org.app.repo.jpa.model.DetailRange</class>
+		<class>org.app.repo.jpa.model.DetailType</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.EhCacheRegionFactory"/>
+			<property name="net.sf.ehcache.configurationResourceName" value="/META-INF/ehcache_repo.xml"/>
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.generate_statistics" value="true"/>
+			<property name="hibernate.cache.use_structured_entries" value="true"/>
+		</properties>
+	</persistence-unit>
+</persistence>

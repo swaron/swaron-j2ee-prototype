@@ -1,0 +1,26 @@
+audit_type_id,audit_component_type,audit_actor_type,audit_function_type,update_time,update_by,description
+1,Login,System,Read,2011-06-24T17:25:00,admin,Login activity
+2,Enrollment,System,Read,2011-06-24T17:25:00,admin,Audit when user try to enrollment
+3,CreateAccount,System,Add,2011-06-24T17:25:00,admin,Audit when Accounts are created
+4,ActiveChoice,System,Add,2011-06-24T17:25:00,admin,Audit when user make active choice
+5,TransferPrescription,System,Add,2011-06-24T17:25:01,admin,Audit when user Transfer Prescript
+6,OrderStatus,System,Read,2011-06-24T17:25:02,admin,Audit when user Order Status
+7,MemberPlan,System,Add,2011-06-24T17:25:00,admin,Audit when user add memberPlan
+8,MemberPlan,System,Edit,2011-06-24T17:25:00,admin,Audit when user edit memberPlan
+9,MemberPlan,System,Delete,2011-06-24T17:25:00,admin,Audit when user delete memberPlan
+10,Credit Card,System,Add,2011-06-24T17:25:00,admin,Audit when user add credit card
+11,Credit Card,System,Edit,2011-06-24T17:25:00,admin,Audit when user update credit card
+12,Credit Card,System,Delete,2011-06-24T17:25:00,admin,Audit when user delete credit card
+13,Preference,System,Edit,2011-06-24T17:25:00,admin,Audit when user update preference
+14,Medical Profile,System,Edit,2011-06-24T17:25:00,admin,Audit when user update medical profile
+15,Download,System,Read,2011-06-24T17:25:01,admin,Audit when user downLoad PDF
+16,Member Address,System,Edit,2011-06-24T17:25:00,admin,Audit when user update  address 
+19,Email,System,Edit,2011-06-24T17:25:00,admin,Audit when user update Email Address
+20,Base Member Information,System,Edit,2011-06-24T17:25:00,admin,Audit when user update Base Member Information
+21,TrySavingCalculator,System,Read,2011-06-24T17:25:00,admin, User try to use saving calculator function
+22,SavingCalculatorResult,System,Read,2011-06-24T17:25:00,admin, Audit the result of saving calculator user have done
+23,CallMe,System,Add,2011-06-24T17:25:00,admin, Audit when user use call me
+24,PrivacySetting,User,Edit,2011-06-24T17:25:00,admin, Audit when user edit privacy setting
+25,Agent,System,Add,2011-06-24T17:25:00,admin,Audit when user add Agent
+26,Agent,System,Edit,2011-06-24T17:25:00,admin,Audit when user edit Agent
+27,Agent,System,Delete,2011-06-24T17:25:00,admin,Audit when user delete Agent

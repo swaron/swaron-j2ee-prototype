@@ -1,0 +1,16 @@
+/* round box */
+.round-box{
+	background-color: #D8E9F0;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: relative;
+	behavior: url(ie/PIE.htc);
+	padding: 30px;
+}
+.round-box .info-panel{
+	background-color: #F5F5F5;
+	padding-left: 16px;
+	line-height: 32px;
+}
+

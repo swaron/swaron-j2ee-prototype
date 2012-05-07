@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.app</groupId>
+		<artifactId>app-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../app-parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.app</groupId>
+	<artifactId>app-service</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Application Lightweight Service Layer</name>
+	<description>
+		The application layer is responsible for driving the workflow of the application,
+		matching the use cases at hand. These operations are interface-independent and 
+		can be both synchronous or message-driven. This layer is well suited for
+		spanning transactions, high-level logging and security. The application layer
+		is thin in terms of domain logic - it merely coordinates the domain layerobjects to perform the actual work.
+	</description>
+
+	<properties>
+	</properties>
+	<build>
+	</build>
+	<dependencies>
+	</dependencies>
+</project>
