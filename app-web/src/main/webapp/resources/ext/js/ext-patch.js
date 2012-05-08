@@ -1,4 +1,9 @@
 (function(Manager, Class, flexSetter, alias) {
+	//<if nonBrowser>
+        var isNonBrowser = typeof window === 'undefined',
+        isNodeJS = isNonBrowser && (typeof require === 'function'),
+        isPhantomJS = (typeof phantom !== 'undefined' && phantom.fs);
+    //</if>
 	/**
 	 * add wait/notify function in loader
 	 */
@@ -15,7 +20,7 @@
                 });
 				//</debug>
 			}else{
-				factory.newInstance(config);
+				factory = Ext.create(factory,config);
 			}
             //move following to notify method.
         },
@@ -25,7 +30,7 @@
 			var missingClasses = [];
 			for (i = 0, ln = classNames.length; i < ln; i++) {
 				var className = classNames[i];
-				//decrease pending count corresponding to the attribute in wait.
+				//simulate onfileload decrease pending count corresponding to the attribute in wait.
 				if (this.isFileLoaded.hasOwnProperty(className) && this.isFileLoaded[className] == false) {
 					var filePath = this.classNameToFilePathMap[className] || this.getPath(className);
 					this.onFileLoaded(className,filePath);
@@ -45,47 +50,30 @@
                             " '" + missingClasses.join("', '") + "'. They will be created implicited now."
                 });
 				//</debug>
-                // we need to define thise classes, becuase we use queue underline, the queue will not be cleared if these classes are not defined.
-                for (var i = 0, length = missingClasses.length; i < length; i++) {
-                	var className = missingClasses[i];
-                	Ext.define(className,{
-                		dummy:true
-                	});
-                }
 			}
 		},
-		wait : function(expressions,config,fn,scope) {
+		wait : function(expression,config,fn,scope) {
+			//<debug>
+		    if ((typeof expression !== 'string' || !expression.match(/Factory$/g))) {
+	            Ext.Error.raise({
+	                sourceClass: "Ext.Loader",
+	                sourceMethod: "wait",
+	                msg: "Invalid expression '" + name + "' specified, must be factory class string, end with Factory."
+	            });
+	        }
+			//</debug>
 			fn = fn || Ext.emptyFn;
 			scope = scope || Ext.global;
 			config = config || {};
+			var factoryClassName = expression;
+			var createInstance = function(){
+				Ext.create(factoryClassName,config);
+			};
+			this.require(factoryClassName,createInstance,scope);
+			var className =  factoryClassName.substr(0, factoryClassName.length - 'Factory'.length)
 			
-			//(try to) support wait on multiple classes, exclude already created classes.
-			//currrently, we don't support multiple classes, because they may expect different constructor values
-			var possibleClassNames = Ext.Array.from(expressions);
-			//<debug>
-			if(possibleClassNames.length > 1){
-                Ext.Error.raise({
-                    sourceClass: "ext-patch",
-                    sourceMethod: "requireSingleton",
-                    msg: "requireSingleton don't support multiple classes currently."
-                });
-			}
-			//</debug>
-			var classNames = [];
-			for (i = 0, length = possibleClassNames.length; i < length; i++) {
-				possibleClassName = possibleClassNames[i];
-				if (!Manager.isCreated(possibleClassName)) {
-					Ext.Array.include(classNames, possibleClassName);
-				}
-			}
-			//if all classes have been defined, return immediately
-			if (classNames.length === 0) {
-				fn.call(scope);
-				return this;
-			}
-
 			this.queue.push({
-				requires : classNames,
+				requires : className,
 				config : config,
 				callback : fn,
 				scope : scope
@@ -93,58 +81,9 @@
 	
 			//below are same as require method			
 			var i, ln, className;
-			for (i = 0, ln = classNames.length; i < ln; i++) {
-                className = classNames[i];
-
-                if (!this.isFileLoaded.hasOwnProperty(className)) {
-                    this.isFileLoaded[className] = false;
-
-                    filePath = this.getPath(className);
-
-                    this.classNameToFilePathMap[className] = filePath;
-
-                    this.numPendingFiles++;
-
-                    //<if nonBrowser>
-                    if (isNonBrowser) {
-                        if (isNodeJS) {
-                            require(filePath);
-                        }
-                        // Temporary support for hammerjs
-                        else {
-                            var f = fs.open(filePath),
-                                content = '',
-                                line;
-
-                            while (true) {
-                                line = f.readLine();
-                                if (line.length === 0) {
-                                    break;
-                                }
-                                content += line;
-                            }
-
-                            f.close();
-                            eval(content);
-                        }
-
-                        this.onFileLoaded(className, filePath);
-
-                        if (ln === 1) {
-                            return Manager.get(className);
-                        }
-
-                        continue;
-                    }
-                    //</if>
-                    this.loadScriptFile(
-                        filePath,
-                        Ext.Function.pass(this.onFactoryFileLoaded, [className, filePath, config], this),
-                        Ext.Function.pass(this.onFileLoadError, [className, filePath]),
-                        this,
-                        this.syncModeEnabled
-                    );
-                }
+            if (!this.isFileLoaded.hasOwnProperty(className)) {
+                this.isFileLoaded[className] = false;
+                this.numPendingFiles++;
             }
 		}
 	});
