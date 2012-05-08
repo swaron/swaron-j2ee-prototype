@@ -3,6 +3,9 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 		this.newInstance(config);
 		return this;
 	},
+	statics: {
+		storeId : 'lazy.DbTable'
+    },
 	newInstance: function(config){
 		var tableName = config.table;
 		var typeMapping = {
@@ -14,8 +17,12 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 			'Float' : 'float',
 			'String' : 'string'
 		}
-		var name = 'lazy.DbTable';
-		var store = Ext.StoreManager.get(name);
+		var gridXTypeMapping = {
+			'Timestamp' : 'datecolumn',
+			'Boolean' : 'checkcolumn'
+		}
+		var storeId = this.statics().storeId;
+		var store = Ext.StoreManager.get(storeName);
 		Ext.ClassManager.isCreated()
 		if (!store) {
 			Ext.Ajax.request({
@@ -25,20 +32,33 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 					var fields = [];
 					if (Ext.isArray(obj.columns)) {
 						for (var index = 0; index < obj.columns.length; index++) {
-							var config = obj.columns[index];
+							var column = obj.columns[index];
 							var field = {};
-							field.name = config.name;
-							field.mapping = config.mapping;
-							field.hide = config.hide;
-							if (typeMapping.hasOwnProperty(config.type)) {
-								field.type = typeMapping[config.type];
+							field.name = column.name;
+							field.dbName = column.mapping;
+							field.hide = column.hide;
+							if (typeMapping.hasOwnProperty(column.type)) {
+								field.type = typeMapping[column.type];
 							} else {
 								filed.type = 'auto';
 							}
 							fields.push(field);
 						}
 					}
-
+					var gridColumns = [];
+					if (Ext.isArray(obj.columns)) {
+						for (var index = 0; index < obj.columns.length; index++) {
+							var column = obj.columns[index];
+							var field = {};
+							field.text = column.mapping;
+							field.dataIndex = column.name;
+							field.sortable = true;
+							if (gridXTypeMapping.hasOwnProperty(column.type)) {
+								field.xtype = gridXTypeMapping[column.type];
+							}
+							gridColumns.push(field);
+						}
+					}
 					var modelName = 'App.lazy.model.DbTable';
 					var storeName = 'App.lazy.store.DbTable';
 					Ext.define(modelName, {
@@ -47,7 +67,7 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 						fields : fields
 					});
 					Ext.define(storeName, {
-						storeId : name,
+						storeId : storeId,
 						extend : 'Ext.data.Store',
 						remoteSort : true,
 						remoteFilter : true,
@@ -69,7 +89,9 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 						}
 					});
 					Ext.define('App.lazy.GridConfig',{
-					
+						model: modelName,
+						store: storeName,
+						gridColumns: gridColumns
 					},function(){
 						Ext.Loader.notify(['App.lazy.GridConfig'])
 					});
