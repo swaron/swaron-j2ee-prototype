@@ -93,7 +93,7 @@ Ext.define('App.lazy.GridConfigFactory',{
 						store: storeId,
 						gridColumns: gridColumns
 					},function(){
-						Ext.Loader.notify(['App.lazy.GridConfig'])
+						Ext.Loader.notify(['App.lazy.GridConfigFactory'])
 					});
 				},
 				scope : this
@@ -103,6 +103,5 @@ Ext.define('App.lazy.GridConfigFactory',{
 		}
 	}
 }, function(){
-	console.log('ClassFactory.App.lazy.GridConfig has been defined.');
+	console.log('App.lazy.GridConfigFactory has been defined.');
 });
-	console.log('execution in factory file.');
