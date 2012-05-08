@@ -6,6 +6,16 @@ cd /d %~dp0
 rem set eclipse workspace location
 set workspace=D:\tale\workspace\java\2012
 
+FOR /F "delims=" %%i IN ('dir /B /A:D-H *parent') DO set parent_project=%%i
+
+echo %parent_project% | find "parent"
+if errorlevel 0 (
+	echo "found parent project, call eclipse in parent only."
+	call :eclipse %parent_project%
+	goto :end
+) else (
+rem continue;
+)
 
 rem for every sub dir, call mvn eclipse ...
 for /f %%i in ('dir /B /A:D-H') do call :eclipse %%i
