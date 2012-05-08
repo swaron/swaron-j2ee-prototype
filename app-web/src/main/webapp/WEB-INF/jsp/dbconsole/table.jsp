@@ -4,11 +4,6 @@
 <%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <layout:basic title="" pageClass="">
-<script type="text/javascript">
-Ext.apply(App,{
-	
-});
-</script>
 <jsp:attribute name="scripts">
 <script type="text/javascript" src="${jsPath}/app/pages/dbconsole/table.js"></script>
 </jsp:attribute>
