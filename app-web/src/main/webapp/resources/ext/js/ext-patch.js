@@ -31,7 +31,26 @@
 				// </debug>
 			}
 		},
-
+		/**
+		 * wait function is used to wait an instance of class xxxFactory to be created. <br>
+		 * in the construct of xxxFactory, the xxx class need to be defined.<br>
+		 * for example: Loader.wait('App.DummyFactory',{name:'hello'},function(){App.log('after Dummy defined') }) <br>
+		 * means system should load App/DummyFactory.js, the class 'App.DummyFactory' should be defined in this js file<br>
+		 * after the js is loaded, Lorder will call Ext.create('App.DummyFactory',{name:'hello'}), <br>
+		 * and the constructor should defined class 'App.Dummy' synchronizely or asynchronizely. in both case, after the
+		 * class is defined.<br>
+		 * the constructor need to invoke Loader.notify('App.Dummy' to indicate that the class have been defined.)<br>
+		 * after the 'App.Dummy' class is defined and other required resources are defined, the Ext Ready functions will
+		 * be trigger.
+		 * 
+		 * usage:
+		 * <p>
+		 * Loader.wait('App.DummyFactory',{name:'hello'},function(){App.log('after Dummy defined') })
+		 * <p>
+		 * in App/DummyFactory.js, the constructor should invoke following codes. <br>
+		 * Ext.define('App.Dummy');
+		 * Loader.notify('App.Dummy');
+		 */
 		wait : function(expression, config, fn, scope) {
 			// <debug>
 			if ((typeof expression !== 'string' || !expression.match(/Factory$/g))) {
@@ -65,7 +84,7 @@
 	});
 
 	Class.registerPreprocessor('wait', function(cls, data, continueFn) {
-		var me = this, dependencies = [], className = Manager.getName(cls), i, j, ln, subLn, value;
+		var me = this, dependencies = [], className = Manager.getName(cls), i, j, ln, subLn, value, config;
 		var propertyName = 'wait', propertyValue;
 		if (data.hasOwnProperty(propertyName)) {
 			propertyValue = data[propertyName];
@@ -73,32 +92,24 @@
 			if (typeof propertyValue === 'string') {
 				dependencies.push(propertyValue);
 			} else if (propertyValue instanceof Array) {
-
 				for (j = 0, subLn = propertyValue.length; j < subLn; j++) {
 					value = propertyValue[j];
-
-					if (typeof value === 'string') {
-						dependencies.push(value);
-					}
-				}
-			} else if (typeof propertyValue != 'function') {
-				for (j in propertyValue) {
-					if (propertyValue.hasOwnProperty(j)) {
-						value = propertyValue[j];
-
+					if(j == 0){
 						if (typeof value === 'string') {
 							dependencies.push(value);
 						}
+					}
+					if(j == 1){
+						config = value;
 					}
 				}
 			}
 		}
 
 		if (dependencies.length === 0) {
-			// Loader.historyPush(className);
 			return;
 		}
-		Ext.Loader.wait(dependencies, function() {
+		Ext.Loader.wait(dependencies, config, function() {
 			propertyName = 'wait';
 			if (data.hasOwnProperty(propertyName)) {
 				propertyValue = data[propertyName];
@@ -107,24 +118,12 @@
 				} else if (propertyValue instanceof Array) {
 					for (j = 0, subLn = propertyValue.length; j < subLn; j++) {
 						value = propertyValue[j];
-
-						if (typeof value === 'string') {
-							data[propertyName][j] = Manager.get(value);
-						}
-					}
-				} else if (typeof propertyValue != 'function') {
-					for (var k in propertyValue) {
-						if (propertyValue.hasOwnProperty(k)) {
-							value = propertyValue[k];
-
-							if (typeof value === 'string') {
-								data[propertyName][k] = Manager.get(value);
-							}
+						if(j == 0){
+							data[propertyName] = Manager.get(value);
 						}
 					}
 				}
 			}
-
 			continueFn.call(me, cls, data);
 		});
 		return false;

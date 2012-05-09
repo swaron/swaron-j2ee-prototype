@@ -9,6 +9,7 @@ import junit.framework.Assert;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.app.web.BaseWebTest;
+import org.app.ws.rest.grid.GridConfig;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TableMetadataResourceTest extends BaseWebTest{
 
 	@Autowired
-	TableMetadataResource tableMetadataResource;
+	GridConfigResource tableMetadataResource;
 	
 	@Test
 	public void testRead() throws JsonGenerationException, JsonMappingException, IOException {

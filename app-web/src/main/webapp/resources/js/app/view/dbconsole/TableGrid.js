@@ -1,6 +1,6 @@
 Ext.define('App.view.dbconsole.TableGrid', {
 	requires : ['App.service.CodeService', 'Ext.data.Store', 'Ext.toolbar.Paging'],
-//	wait: ['App.lazy.GridConfig',{
+//	wait: ['App.lazy.GridConfigFactory',{
 //		table:'SecUser'
 //	}],
 	extend : 'Ext.grid.Panel',

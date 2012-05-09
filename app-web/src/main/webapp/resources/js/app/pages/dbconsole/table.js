@@ -1,9 +1,9 @@
 //Ext.loader.requireSingleton('App.lazy.GridConfig',{
 //	table:'SecUser'
 //});
-Ext.Loader.wait('App.lazy.GridConfigFactory',{
-	table:'SecUser'
-});
+//Ext.Loader.wait('App.lazy.GridConfigFactory',{
+//	table:'SecUser'
+//});
 
 Ext.application({
 	name : 'App',

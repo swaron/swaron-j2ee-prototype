@@ -12,6 +12,8 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.app.repo.jpa.dao.GenericDao;
+import org.app.ws.rest.grid.ColumnConfig;
+import org.app.ws.rest.grid.GridConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/rest/table_metadata", produces = { "application/json", "application/xml" })
-public class TableMetadataResource {
+@RequestMapping(value = "/rest/grid-config", produces = { "application/json", "application/xml" })
+public class GridConfigResource {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired

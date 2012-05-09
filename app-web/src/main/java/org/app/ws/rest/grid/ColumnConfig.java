@@ -1,4 +1,4 @@
-package org.app.ws.rest;
+package org.app.ws.rest.grid;
 
 public class ColumnConfig {
 	private String mapping;
