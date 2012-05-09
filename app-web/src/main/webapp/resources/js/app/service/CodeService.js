@@ -58,6 +58,7 @@ Ext.define('App.service.CodeService', {
 				App.log('unable to read from local store, try to clear local store', e);
 			}
 			if (reload) {
+				App.log('not latest version, reload codes.', e);
 				var oldAsync = Ext.Ajax.async;
 				Ext.Ajax.async = false;
 				remoteStore.load({

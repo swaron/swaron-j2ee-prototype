@@ -72,7 +72,7 @@ public class TableResource {
 
 	@RequestMapping(value = "/{tableName}/{id}", method = RequestMethod.PUT)
 	@ResponseBody
-	public PagingResult<Object> update(@PathVariable String tableName, @PathVariable String userId,
+	public PagingResult<Object> update(@PathVariable String tableName, @PathVariable String id,
 			HttpServletRequest request, @RequestBody SecUser user) throws IOException {
 		Class<?> clazz = genericDao.getPersistentClassByName(tableName);
 		if (clazz == null) {

@@ -10,9 +10,9 @@ Ext.application({
 	appFolder : App.cfg.jsPath + '/app',
 	controllers : ['dbconsole.TableController'],
 	launch : function() {
-		Ext.widget('tablegrid', {
+		var grid = Ext.widget('tablegrid', {
 			tableName:App.getParam('table'),
-			width : 700,
+			width : '100%',
 			height : 500,
 			renderTo : 'table-gird'
 		});

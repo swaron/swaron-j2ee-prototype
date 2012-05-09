@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
@@ -50,17 +53,26 @@ public class GridConfigResource {
 		Class<Object> clazz = entity.getJavaType();
 		for (Attribute<?, ?> attr : attributes) {
 			ColumnConfig columnConfig = new ColumnConfig();
-			columnConfig.setMapping(attr.getName());
+			columnConfig.setName(attr.getName());
 			columnConfig.setType(attr.getJavaType().getSimpleName());
 			if (attr.getName().equals(version.getName())) {
 				columnConfig.setHide(true);
 			}
-			columnConfig.setName(attr.getName());
+			columnConfig.setMapping(attr.getName());
 			try {
 				Field field = clazz.getDeclaredField(attr.getName());
 				if (field.isAnnotationPresent(Column.class)) {
 					String name = field.getAnnotation(Column.class).name();
-					columnConfig.setName(name);
+					columnConfig.setMapping(name);
+				}
+				if(field.isAnnotationPresent(OneToMany.class)){
+				    continue;
+				}
+				if(field.isAnnotationPresent(OneToOne.class)){
+				    continue;
+				}
+				if(field.isAnnotationPresent(ManyToOne.class)){
+				    continue;
 				}
 			} catch (NoSuchFieldException e) {
 				columnConfig.setHide(true);

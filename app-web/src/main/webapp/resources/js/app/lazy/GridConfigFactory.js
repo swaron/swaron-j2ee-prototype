@@ -42,6 +42,9 @@ Ext.define('App.lazy.GridConfigFactory',{
 							} else {
 								field.type = 'auto';
 							}
+							if(field.type == 'date'){
+								field.dateFormat = 'time'
+							}
 							fields.push(field);
 						}
 					}
@@ -50,11 +53,24 @@ Ext.define('App.lazy.GridConfigFactory',{
 						for (var index = 0; index < obj.columns.length; index++) {
 							var column = obj.columns[index];
 							var field = {};
-							field.text = column.mapping;
+							field.header = column.mapping;
 							field.dataIndex = column.name;
 							field.sortable = true;
 							if (gridXTypeMapping.hasOwnProperty(column.type)) {
 								field.xtype = gridXTypeMapping[column.type];
+							}
+							field.filter = {
+								xtype : 'textfield'
+							};
+							field.field = {
+								xtype : 'textfield'
+							}
+							if(field.xtype == 'datecolumn'){
+								field.format = 'Y-m-d',
+								field.field = {
+									xtype : 'datefield',
+									format : 'Y-m-d'
+								}
 							}
 							gridColumns.push(field);
 						}
@@ -67,7 +83,6 @@ Ext.define('App.lazy.GridConfigFactory',{
 						fields : fields
 					});
 					Ext.define(storeName, {
-						storeId : storeId,
 						extend : 'Ext.data.Store',
 						remoteSort : true,
 						remoteFilter : true,
@@ -88,11 +103,12 @@ Ext.define('App.lazy.GridConfigFactory',{
 							}
 						}
 					});
-					console.log('start to define App.lazy.GridConfig');
 					Ext.define('App.lazy.GridConfig',{
-						model: modelName,
-						store: storeId,
-						gridColumns: gridColumns
+						statics: {
+							modelName: modelName,
+							storeName: storeName,
+							gridColumns: gridColumns
+						}
 					},function(){
 						Ext.Loader.notify(['App.lazy.GridConfig'])
 					});
@@ -104,5 +120,4 @@ Ext.define('App.lazy.GridConfigFactory',{
 		}
 	}
 }, function(){
-	console.log('App.lazy.GridConfigFactory has been defined.');
 });

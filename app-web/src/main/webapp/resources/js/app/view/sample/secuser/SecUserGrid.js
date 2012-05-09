@@ -44,7 +44,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 		this.rowEditing = rowEditing;
 		this.plugins = [rowEditing, headerFilter];
 		this.columns = [{
-			text : 'Username',
+			header : 'Username',
 			width : 80,
 			sortable : true,
 			dataIndex : 'username',
@@ -56,7 +56,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 				xtype : 'textfield'
 			}
 		}, {
-			text : 'Email',
+			header : 'Email',
 			flex : 1,
 			sortable : true,
 			dataIndex : 'email',
@@ -68,7 +68,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 				xtype : 'textfield'
 			}
 		}, {
-			text : 'Login State',
+			header : 'Login State',
 			width : 100,
 			sortable : true,
 			dataIndex : 'loginState',
@@ -84,7 +84,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 				xtype : 'textfield'
 			}
 		}, {
-			text : 'Lock Time',
+			header : 'Lock Time',
 			width : 150,
 			sortable : true,
 			dataIndex : 'lockedTime',
@@ -98,7 +98,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 				xtype : 'textfield'
 			}
 		}, {
-			text : 'Last Login Date',
+			header : 'Last Login Date',
 			width : 150,
 			sortable : true,
 			dataIndex : 'lastLoginTime',
