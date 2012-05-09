@@ -40,7 +40,7 @@ Ext.define('App.lazy.GridConfigFactory',{
 							if (typeMapping.hasOwnProperty(column.type)) {
 								field.type = typeMapping[column.type];
 							} else {
-								filed.type = 'auto';
+								field.type = 'auto';
 							}
 							fields.push(field);
 						}
@@ -88,12 +88,13 @@ Ext.define('App.lazy.GridConfigFactory',{
 							}
 						}
 					});
+					console.log('start to define App.lazy.GridConfig');
 					Ext.define('App.lazy.GridConfig',{
 						model: modelName,
 						store: storeId,
 						gridColumns: gridColumns
 					},function(){
-						Ext.Loader.notify(['App.lazy.GridConfigFactory'])
+						Ext.Loader.notify(['App.lazy.GridConfig'])
 					});
 				},
 				scope : this

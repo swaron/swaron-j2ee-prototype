@@ -10,7 +10,7 @@
 			for (i = 0, ln = classNames.length; i < ln; i++) {
 				var className = classNames[i];
 				// simulate onfileload decrease pending count corresponding to the attribute in wait.
-				if (this.isFileLoaded.hasOwnProperty(className) && this.isFileLoaded[className] == false) {
+				if (this.isClassFileLoaded.hasOwnProperty(className) && this.isClassFileLoaded[className] == false) {
 					var filePath = this.classNameToFilePathMap[className] || this.getPath(className);
 					this.onFileLoaded(className, filePath);
 				}
@@ -18,6 +18,14 @@
 				// normally, we should create this class before call notify method.
 				if (!Manager.isCreated(className)) {
 					missingClasses.push(className);
+				}
+				if(className.match(/Factory$/g)){
+					Ext.Error.raise({
+						sourceClass : "ext-patch:Ext.Loader",
+						sourceMethod : "notify",
+						msg : "Invalid expression '" + name
+								+ "' specified,should notify class instead of Factory class."
+					});
 				}
 			}
 			if (missingClasses.length > 0) {
@@ -69,12 +77,12 @@
 			var createInstance = function() {
 				Ext.create(factoryClassName, config);
 				var className = factoryClassName.substr(0, factoryClassName.length - 'Factory'.length)
-				if (!this.isFileLoaded.hasOwnProperty(className)) {
-					this.isFileLoaded[className] = false;
+				if (!this.isClassFileLoaded.hasOwnProperty(className)) {
+					this.isClassFileLoaded[className] = false;
 					this.numPendingFiles++;
 				}
 				this.queue.push({
-					requires : className,
+					requires : [className],
 					callback : fn,
 					scope : scope
 				});
