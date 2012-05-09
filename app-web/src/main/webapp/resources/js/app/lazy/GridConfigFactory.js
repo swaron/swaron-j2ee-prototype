@@ -1,4 +1,5 @@
-Ext.define('ClassFactory.App.lazy.GridConfig',{
+Ext.define('App.lazy.GridConfigFactory',{
+	requires:['Ext.data.Store','Ext.data.Model'],
 	constructor : function(config){
 		this.newInstance(config);
 		return this;
@@ -22,8 +23,7 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 			'Boolean' : 'checkcolumn'
 		}
 		var storeId = this.statics().storeId;
-		var store = Ext.StoreManager.get(storeName);
-		Ext.ClassManager.isCreated()
+		var store = Ext.data.StoreManager.lookup(storeId);
 		if (!store) {
 			Ext.Ajax.request({
 				url : App.cfg.restUrl + '/rest/table_metadata/' + tableName,
@@ -90,10 +90,10 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 					});
 					Ext.define('App.lazy.GridConfig',{
 						model: modelName,
-						store: storeName,
+						store: storeId,
 						gridColumns: gridColumns
 					},function(){
-						Ext.Loader.notify(['App.lazy.GridConfig'])
+						Ext.Loader.notify(['App.lazy.GridConfigFactory'])
 					});
 				},
 				scope : this
@@ -102,4 +102,6 @@ Ext.define('ClassFactory.App.lazy.GridConfig',{
 			App.log('lazy resource already prepared.');
 		}
 	}
+}, function(){
+	console.log('App.lazy.GridConfigFactory has been defined.');
 });

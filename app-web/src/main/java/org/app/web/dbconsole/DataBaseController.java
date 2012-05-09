@@ -12,4 +12,8 @@ public class DataBaseController {
 	public String dbIndex() {
 		return "dbconsole/dbIndex";
 	}
+	@RequestMapping(value="table", method = RequestMethod.GET)
+	public String table() {
+		return "dbconsole/table";
+	}
 }
