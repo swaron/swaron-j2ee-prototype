@@ -1,5 +1,7 @@
 /**
  * bug: Ext.grid.RowEditor.loadRecord does not take account of errorSummary parameter.
+ * 
+ * resolved in 4.1.0
 */
 Ext.onReady(function(){
 	if(Ext.ClassManager.isCreated('Ext.grid.RowEditor')){
