@@ -49,6 +49,7 @@ Ext.define('App.lazy.GridConfigFactory',{
 						}
 					}
 					var gridColumns = [];
+					console.log('grid columns ' + Ext.encode(obj.columns));
 					if (Ext.isArray(obj.columns)) {
 						for (var index = 0; index < obj.columns.length; index++) {
 							var column = obj.columns[index];
@@ -59,6 +60,7 @@ Ext.define('App.lazy.GridConfigFactory',{
 							if (gridXTypeMapping.hasOwnProperty(column.type)) {
 								field.xtype = gridXTypeMapping[column.type];
 							}
+							
 							field.filter = {
 								xtype : 'textfield'
 							};
@@ -71,6 +73,12 @@ Ext.define('App.lazy.GridConfigFactory',{
 									xtype : 'datefield',
 									format : 'Y-m-d'
 								}
+							}
+							if(column.hasAlias == true){
+								console.log('alias column ' + column.mapping);
+								field.hasAlias = true;
+								field.tablename = obj.tableName;
+								field.columnName = column.mapping;
 							}
 							gridColumns.push(field);
 						}
@@ -107,7 +115,25 @@ Ext.define('App.lazy.GridConfigFactory',{
 						statics: {
 							modelName: modelName,
 							storeName: storeName,
-							gridColumns: gridColumns
+							gridColumns: gridColumns,
+							getGridColumns:function(){
+								var cols = this.gridColumns;
+								for(var i=0,ln=cols.length;i<ln;i++){
+									var col = cols[i]; 
+									if(col.hasAlias == true){
+										col.renderer = App.Code.converter(obj.tableName, col.columnName);
+										col.field = {
+											xtype : 'combobox',
+											store : App.Code.store(obj.tableName, col.columnName),
+											queryMode : 'local',
+											displayField : 'name',
+											valueField : 'code'
+										}
+									}
+								}
+								console.log("final column configs, ",cols);
+								return cols;
+							}
 						}
 					},function(){
 						Ext.Loader.notify(['App.lazy.GridConfig'])

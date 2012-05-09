@@ -11,7 +11,7 @@
 Ext.define('App.service.CodeService', {
 	alternateClassName: 'App.Code',
 	singleton:true,
-    requires: ['Ext.data.Store','App.model.DbCode','Ext.data.proxy.LocalStorage','Ext.data.proxy.Rest'],
+    requires: ['Ext.data.Store','App.model.DbCode','Ext.data.proxy.Ajax','Ext.data.proxy.LocalStorage','Ext.data.proxy.Rest','Ext.data.reader.Json','Ext.data.Request'],
 	url : App.url('/rest/codes.json'),
 	localStore : null,
 	remoteStore : null,
@@ -58,7 +58,7 @@ Ext.define('App.service.CodeService', {
 				App.log('unable to read from local store, try to clear local store', e);
 			}
 			if (reload) {
-				App.log('not latest version, reload codes.', e);
+				App.log('not latest version, reload codes. latest version: ' + App.cfg.version);
 				var oldAsync = Ext.Ajax.async;
 				Ext.Ajax.async = false;
 				remoteStore.load({

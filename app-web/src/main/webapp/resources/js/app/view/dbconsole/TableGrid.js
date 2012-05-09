@@ -31,7 +31,7 @@ Ext.define('App.view.dbconsole.TableGrid', {
 		this.plugins = [rowEditing, headerFilter];
 		
 		this.buildStore();
-		this.columns = App.lazy.GridConfig.gridColumns;
+		this.columns = App.lazy.GridConfig.getGridColumns();
 		this.callParent(arguments);
 	}
 });

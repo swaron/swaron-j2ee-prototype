@@ -81,23 +81,6 @@ public abstract class AbstractDaoSupport {
 		return entityManager.createQuery(query).getResultList();
 	}
 
-	public <T> List<T> findAllByCol(Class<T> entityClass, String fieldName, Serializable fieldValue, int startPosition,
-			int maxResult, String orderField) {
-		return findAllByCol(entityClass, fieldName, fieldValue, startPosition, maxResult, orderField, true);
-	}
-
-	public <T> List<T> findAllByCol(Class<T> entityClass, String fieldName, Serializable fieldValue, int startPosition,
-			int maxResult, String orderField, boolean ascent) {
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<T> query = builder.createQuery(entityClass);
-		Root<T> root = query.from(entityClass);
-		Order order = builder.asc(root.get(orderField));
-		if (!ascent) {
-			order = order.reverse();
-		}
-		query.select(root).where(builder.equal(root.<String> get(fieldName), fieldValue)).orderBy(order);
-		return entityManager.createQuery(query).setFirstResult(startPosition).setMaxResults(maxResult).getResultList();
-	}
 
 	public <T> T findByCol(Class<T> entityClass, String fieldName, Serializable fieldValue) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();

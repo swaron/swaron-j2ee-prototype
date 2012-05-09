@@ -28,7 +28,7 @@
 <script type="text/javascript">
 	Ext.Loader.setConfig({
 	    enabled: true,
-	    disableCaching : false
+	    disableCaching : true
 	});
 	Ext.Loader.setPath('Ext', '${extJs}/src');
 	Ext.Loader.setPath('Ext.ux', '${extJs}/ux');

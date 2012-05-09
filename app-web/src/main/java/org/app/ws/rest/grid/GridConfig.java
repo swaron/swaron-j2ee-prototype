@@ -4,6 +4,7 @@ import java.util.List;
 
 public class GridConfig {
 	String tableName;
+	String entityName;
 	String idProperty;
 	List<ColumnConfig> columns;
 
@@ -13,6 +14,14 @@ public class GridConfig {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
 
 	public String getIdProperty() {

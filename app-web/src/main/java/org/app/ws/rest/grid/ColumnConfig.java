@@ -5,6 +5,7 @@ public class ColumnConfig {
 	private boolean hide;
 	private String name;
 	private String type;
+	private boolean hasAlias;
 
 	public String getMapping() {
 		return mapping;
@@ -36,6 +37,14 @@ public class ColumnConfig {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public boolean isHasAlias() {
+		return hasAlias;
+	}
+
+	public void setHasAlias(boolean hasAlias) {
+		this.hasAlias = hasAlias;
 	}
 
 }
