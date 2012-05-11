@@ -1,10 +1,7 @@
 Ext.define('App.controller.dbconsole.TableController', {
 	extend : 'Ext.app.Controller',
-//	stores: [
-//        'DbInfo'
-//    ],
-//    models: ['DbInfo'],
-	views : ['dbconsole.TableGrid'],
+	views : ['dbconsole.AllTableView'],
+	stores:['EntityName'],
 	init : function(application) {
 		this.control({
 			'secusergrid' : {

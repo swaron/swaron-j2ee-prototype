@@ -19,7 +19,7 @@ public class DaoUtilsTest extends BaseServiceTest{
 	
 	@Test
 	public void test() {
-		genericDao.getPersistentClasses();
+		genericDao.getPersistentEntities();
 	}
 
 }

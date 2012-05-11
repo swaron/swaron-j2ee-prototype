@@ -68,7 +68,7 @@ public class GridConfigResource {
 			ColumnConfig columnConfig = new ColumnConfig();
 			columnConfig.setName(attr.getName());
 			columnConfig.setType(attr.getJavaType().getSimpleName());
-			if (attr.getName().equals(version.getName())) {
+			if (version != null && attr.getName().equals(version.getName())) {
 				columnConfig.setHide(true);
 			}
 			columnConfig.setMapping(attr.getName());

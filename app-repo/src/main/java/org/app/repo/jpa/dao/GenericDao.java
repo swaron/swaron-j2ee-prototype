@@ -10,16 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class GenericDao extends AbstractDaoSupport {
-	public void getPersistentClasses() {
+	public Set<EntityType<?>> getPersistentEntities() {
 		Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
-		for (EntityType<?> entityType : entities) {
-			String name = entityType.getName();
-			System.out.println(name);
-			Class<?> javaType = entityType.getJavaType();
-			System.out.println(javaType);
-		}
-		System.out.println(entities);
-
+		return entities;
 	}
 
 	public Class<? extends Object> getPersistentClassByName(String tableName) {

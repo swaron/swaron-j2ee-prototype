@@ -1,5 +1,6 @@
 Ext.define('App.view.dbconsole.TableGrid', {
 	requires : [
+	    'App.service.GridConfig',
 	    'App.service.CodeService',
 	    'Ext.grid.plugin.RowEditing',
 	    'Ext.ux.grid.HeaderFilters',
@@ -13,15 +14,17 @@ Ext.define('App.view.dbconsole.TableGrid', {
 	],
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.tablegrid',
+	config : {
+		gridConfig : null
+	},
 	title : 'DataSource Info Grid',
 	frame : false,
 	selModel : {
 		selType : 'rowmodel'
 	},
 	buildStore:function(){
-		var storeName = App.lazy.GridConfig.storeName;
-		var store = Ext.create(storeName);
-		this.store = store;
+		var storeName = this.getGridConfig().storeName;
+		this.store = Ext.create(storeName);
 	},
 	initComponent : function() {
 		var headerFilter = Ext.create('Ext.ux.grid.HeaderFilters');
@@ -29,9 +32,8 @@ Ext.define('App.view.dbconsole.TableGrid', {
 			errorSummary : false
 		});
 		this.plugins = [rowEditing, headerFilter];
-		
 		this.buildStore();
-		this.columns = App.lazy.GridConfig.getGridColumns();
+		this.columns = this.getGridConfig().getGridColumns();
 		this.callParent(arguments);
 	}
 });

@@ -131,7 +131,6 @@ Ext.define('App.lazy.GridConfigFactory',{
 										}
 									}
 								}
-								console.log("final column configs, ",cols);
 								return cols;
 							}
 						}
