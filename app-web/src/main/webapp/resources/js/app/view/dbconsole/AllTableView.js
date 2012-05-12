@@ -31,6 +31,7 @@ Ext.define('App.view.dbconsole.AllTableView', {
 				load : function(gConfig) {
 					var tableGrid = Ext.create('App.view.dbconsole.TableGrid', {
 						gridConfig : gConfig,
+						itemId:tableName,
 						closable : true,
 						title : tableName
 					});
@@ -50,9 +51,8 @@ Ext.define('App.view.dbconsole.AllTableView', {
 			if(tabs.items.length >= 10){
 				var firstItem = tabs.child('box');
 				tabs.remove(firstItem);
-			}else{
-				this.createChildTab(tabs,tableName);
 			}
+			this.createChildTab(tabs,tableName);
 		}
 	},
 	listeners : {

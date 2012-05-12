@@ -50,6 +50,9 @@ Ext.define('App.service.GridConfig', {
 	},
 	load : function() {
 		var tableName = this.getName();
+		this.modelName = Ext.getClassName(this)+".model."+tableName;
+		this.storeName = Ext.getClassName(this)+".store."+ tableName;
+		this.storeId = 'store-' + tableName;
 		Ext.Ajax.request({
 			url : App.cfg.restUrl + '/rest/grid-config/' + tableName + '.json',
 			success : function(response, opts) {
@@ -107,11 +110,8 @@ Ext.define('App.service.GridConfig', {
 					}
 				}
 				this.gridColumns = gridColumns;
-				var modelName = Ext.getClassName(this)+".model."+ obj.tableName;
-				var storeName = Ext.getClassName(this)+".store."+ obj.tableName;
-				this.modelName = modelName;
-				this.storeName = storeName;
-				this.storeId = 'store-' + obj.tableName;
+				var modelName = this.modelName;
+				var storeName = this.storeName;
 				if(!Ext.ClassManager.isCreated(modelName)){
 					Ext.define(modelName, {
 						extend : 'Ext.data.Model',
@@ -145,6 +145,8 @@ Ext.define('App.service.GridConfig', {
 					},function(){
 						gridConfig.fireEvent('load',gridConfig);
 					});
+				}else{
+					gridConfig.fireEvent('load', gridConfig);
 				}
 			},
 			scope : this
