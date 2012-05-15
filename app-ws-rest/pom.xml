@@ -19,8 +19,8 @@
 		<spring-version>3.1.0.RELEASE</spring-version>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://svnserver/project/code/trunk/sub-project</connection>
-		<developerConnection>scm:svn:http://svnserver/project/code/trunk/sub-project</developerConnection>
+		<connection>scm:git:https://swaron@github.com/swaron/swaron-j2ee-prototype.git</connection>
+		<developerConnection>scm:git:https://swaron@github.com/swaron/swaron-j2ee-prototype.git</developerConnection>
 		<url>http://svnserver/project/code/trunk/sub-project</url>
 	</scm>
 	<build>
@@ -103,7 +103,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.1</version>
 				<executions>
 					<execution>
 						<phase>validate</phase>
@@ -117,9 +117,9 @@
 					<revisionOnScmFailure>unavailable</revisionOnScmFailure>
 					<doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
-					<providerImplementations>
-						<svn>javasvn</svn>
-					</providerImplementations>   
+					<timestampPropertyName>appTimestamp</timestampPropertyName>
+					<useLastCommittedRevision>false</useLastCommittedRevision>
+					<shortRevisionLength>8</shortRevisionLength>
 				</configuration>
 			</plugin>
 			<plugin>
