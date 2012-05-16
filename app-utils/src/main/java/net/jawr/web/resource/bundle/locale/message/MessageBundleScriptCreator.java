@@ -24,7 +24,8 @@ import net.jawr.web.resource.bundle.factory.util.ClassLoaderResourceUtils;
 import net.jawr.web.resource.bundle.factory.util.RegexUtil;
 import net.jawr.web.resource.bundle.generator.GeneratorContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -36,7 +37,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  */
 public class MessageBundleScriptCreator {
 
-    private static final Logger LOGGER = Logger.getLogger(MessageBundleScriptCreator.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBundleScriptCreator.class.getName());
     public static final String DEFAULT_NAMESPACE = "messages";
     private static final String SCRIPT_TEMPLATE = "/net/jawr/web/resource/bundle/message/messages.js";
     protected static StringBuffer template;
@@ -85,7 +86,7 @@ public class MessageBundleScriptCreator {
             is = ClassLoaderResourceUtils.getResourceAsStream(SCRIPT_TEMPLATE,this);
             IOUtils.copy(is, sw);
         } catch (IOException e) {
-            LOGGER.fatal("a serious error occurred when initializing MessageBundleScriptCreator");
+            LOGGER.error("a serious error occurred when initializing MessageBundleScriptCreator");
             throw new BundlingProcessException("Classloading issues prevent loading the message template to be loaded. ",e);
         }finally{
             IOUtils.close(is);

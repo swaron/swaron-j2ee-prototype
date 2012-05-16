@@ -211,12 +211,7 @@
 			<artifactId>spring-security-acl</artifactId>
 			<version>${spring-version}</version>
 		</dependency>
-		<!-- Spring Aop, hibernate proxy -->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>2.2</version>
-		</dependency>
+
 		<!-- Apache common jar -->
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -270,26 +265,37 @@
 		</dependency>
 
 		<!-- basic util,helper -->
+		<!-- Spring Aop, hibernate proxy -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<!-- aspectjweaver required by spring aspectj style aop-->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.12</version>
 		</dependency>
+		<!-- freemarker is populate template library -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.15</version>
 		</dependency>
+		<!-- better date implement, not really necessary-->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>1.6.2</version>
 		</dependency>
+		<!-- popular cache framework, used by hibernate and spring cache-->
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>2.5.1</version>
 		</dependency>
+		<!-- json framework, for spring web -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -300,12 +306,12 @@
 			<artifactId>jackson-module-hibernate</artifactId>
 			<version>1.9.1</version>
 		</dependency>
+		<!-- simple xml-object serialization library  -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.4.2</version>
 		</dependency>
-
 	</dependencies>
 	<repositories>
 		<repository>

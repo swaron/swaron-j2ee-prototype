@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.junit.Assert;
+import org.apache.commons.lang.ObjectUtils;
 
 public abstract class TestUtils {
 
@@ -16,16 +16,18 @@ public abstract class TestUtils {
             Map<String, Object> dstMap = BeanUtils.describe(expected);
             Set<String> dstkeys = dstMap.keySet();
             if (srckeys.size() != dstkeys.size()) {
-                Assert.fail("actural class is not the sample class type as exptected class.");
+                throw new AssertionError("actural class is not the sample class type as exptected class.");
             }
             for (String dstkey : dstkeys) {
                 Object srcObj = srcMap.get(dstkey);
                 Object dstObj = dstMap.get(dstkey);
-                Assert.assertEquals("assert failed within " + srcObj, dstObj, srcObj);
+                if(ObjectUtils.notEqual(srcObj, dstObj)){
+                    throw new AssertionError("some property are not equal.");
+                }
             }
 
         } catch (Exception e) {
-            Assert.fail("unsupport operation.");
+            throw new AssertionError("unsupport operation.");
         }
     }
 }
