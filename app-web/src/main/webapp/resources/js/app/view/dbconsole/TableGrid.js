@@ -4,8 +4,10 @@ Ext.define('App.view.dbconsole.TableGrid', {
 	    'App.service.CodeService',
 	    'Ext.grid.plugin.RowEditing',
 	    'Ext.ux.grid.HeaderFilters',
+	    'Ext.ux.grid.feature.AutoColumnWidth',
 	    'Ext.grid.column.Date',
 	    'Ext.data.Store',
+	    'Ext.data.reader.Json',
 	    'Ext.ux.CheckColumn',
 	    'Ext.form.field.ComboBox',
 	    'Ext.form.field.Date',
@@ -27,6 +29,12 @@ Ext.define('App.view.dbconsole.TableGrid', {
 		this.store = Ext.create(storeName);
 	},
 	initComponent : function() {
+		var autoWidthFeature = Ext.create('Ext.ux.grid.feature.AutoColumnWidth',{
+			autoWidth:true,
+			maxColWidth:200,
+			minColWidth:20
+		});
+		this.features =  [autoWidthFeature];
 		var headerFilter = Ext.create('Ext.ux.grid.HeaderFilters');
 		var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 			errorSummary : false

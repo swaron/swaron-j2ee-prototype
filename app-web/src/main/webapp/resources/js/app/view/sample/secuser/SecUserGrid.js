@@ -3,6 +3,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 	    'App.service.CodeService',
 	    'Ext.grid.plugin.RowEditing',
 	    'Ext.ux.grid.HeaderFilters',
+	    'Ext.ux.grid.feature.AutoColumnWidth',
 	    'Ext.grid.column.Date',
 	    'Ext.data.Store',
 	    'App.model.SecUser',

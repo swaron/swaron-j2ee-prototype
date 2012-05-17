@@ -67,7 +67,6 @@
 		<div id="footer"></div>
 	</div>
 <jsp:invoke fragment="scripts" />
-<script type="text/javascript" src="${extJs}/fix/ext-4.0.7-fix.js?v=${appVersion}"></script>
 <script type="text/javascript">
 Ext.onReady(function(){
 	if(App.cfg.lang != 'en'){
