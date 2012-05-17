@@ -73,7 +73,7 @@ public class TableResource {
 	@RequestMapping(value = "/{tableName}/{id}", method = RequestMethod.PUT)
 	@ResponseBody
 	public PagingResult<Object> update(@PathVariable String tableName, @PathVariable String id,
-			HttpServletRequest request, @RequestBody SecUser user) throws IOException {
+			HttpServletRequest request) throws IOException {
 		Class<?> clazz = genericDao.getPersistentClassByName(tableName);
 		if (clazz == null) {
 			throw new TypeMismatchException(tableName, Entity.class);
@@ -91,12 +91,12 @@ public class TableResource {
 
 	@RequestMapping(value = "/{tableName}/{userId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public void delete(@PathVariable String tableName, @PathVariable Integer userId) {
+	public void delete(@PathVariable String tableName, @PathVariable Integer id) {
 		Class<?> clazz = genericDao.getPersistentClassByName(tableName);
 		if (clazz == null) {
 			throw new TypeMismatchException(tableName, Entity.class);
 		}
-		genericDao.remove(clazz, userId);
+		genericDao.remove(clazz, id);
 	}
 
 }

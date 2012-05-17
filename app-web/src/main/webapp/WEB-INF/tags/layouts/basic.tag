@@ -11,8 +11,12 @@
 <html>
 <head>
 <title><s:message code="${title}" text="${title}"/></title>
-
-<link rel="stylesheet" type="text/css" href="${extCss}/ext-all${debugSuffix}.css" />
+<c:if test="${debug}">
+<link rel="stylesheet" type="text/css" href="${extCss}/ext-all-debug.css" />
+</c:if>
+<c:if test="${not debug}">
+<link rel="stylesheet" type="text/css" href="${extCss}/ext-all.css" />
+</c:if>
 <link rel="stylesheet" type="text/css" href="${cssPath}/theme/${lang}/${theme}/locale.css?v=${appVersion}" />
 <jwr:style src="/bundles/css/extux.css" useRandomParam="false"/>
 <jwr:style src="/bundles/css/app.css" useRandomParam="false"/>
@@ -24,7 +28,7 @@
 
 <c:if test="${debug}">
 <!-- dynamic loading version start -->
-<script type="text/javascript" src="${extJs}/ext${debugSuffix}.js"></script>
+<script type="text/javascript" src="${extJs}/ext-dev.js"></script>
 <script type="text/javascript">
 	Ext.Loader.setConfig({
 	    enabled: true,
@@ -39,7 +43,7 @@
 </c:if>
 <c:if test="${not debug}">
 <!-- static loading version start -->
-<script type="text/javascript" src="${extJs}/ext-all${debugSuffix}.js"></script>
+<script type="text/javascript" src="${extJs}/ext-all.js"></script>
 <jwr:script src="/bundles/js/base.js" useRandomParam="false"/>
 <jwr:script src="/bundles/js/extux.js" useRandomParam="false"/>
 <jwr:script src="/bundles/js/widget.js" useRandomParam="false"/>

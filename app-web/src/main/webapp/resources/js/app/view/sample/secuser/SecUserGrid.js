@@ -23,6 +23,7 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 	selModel : {
 		selType : 'rowmodel'
 	},
+
 	listeners : {
 		selectionchange : function(selModel, selections) {
 			this.down('#delete').setDisabled(selections.length == 0);
@@ -42,6 +43,13 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 		});
 		this.headerFilter = headerFilter;
 		this.rowEditing = rowEditing;
+		
+		var autoWidthFeature = Ext.create('Ext.ux.grid.feature.AutoColumnWidth',{
+			autoWidth:true,
+			maxColWidth:200,
+			minColWidth:20
+		});
+		this.features =  [autoWidthFeature];
 		this.plugins = [rowEditing, headerFilter];
 		this.columns = [{
 			header : 'Username',

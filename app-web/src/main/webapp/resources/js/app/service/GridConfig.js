@@ -98,7 +98,8 @@ Ext.define('App.service.GridConfig', {
 							xtype : 'textfield'
 						}
 						if (field.xtype == 'datecolumn') {
-							field.format = 'Y-m-d', field.field = {
+							field.format = 'Y-m-d';
+							field.field = {
 								xtype : 'datefield',
 								format : 'Y-m-d'
 							}

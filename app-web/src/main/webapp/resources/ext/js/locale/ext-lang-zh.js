@@ -280,13 +280,12 @@ Ext.onReady(function() {
  * Ext 4.0.7 i18n bug 
  */
 Ext.onReady(function() {
-	if (Ext.ClassManager.isCreated('Ext.grid.RowEditor')) {
-		Ext.apply(Ext.grid.RowEditor.prototype, {
-			saveBtnText : '确认',
-			cancelBtnText : '取消',
-			errorsText: '错误'
-		});
-	}
+    Ext.define("Ext.locale.zh_CN.grid.RowEditor", {
+        override: "Ext.grid.RowEditor",
+		saveBtnText : '确认',
+		cancelBtnText : '取消',
+		errorsText: '错误'
+    });
 
 	// fix messageBox i18n bug
 	if (Ext.MessageBox) {
