@@ -1,3 +1,6 @@
 TableGrid.js
 TableList.js
 AllTableView.js
+DbInfoDetailForm.js
+DbInfoGrid.js
+DbInfoMaster.js

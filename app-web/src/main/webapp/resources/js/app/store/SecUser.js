@@ -1,5 +1,6 @@
 Ext.define('App.store.SecUser', {
 	extend: 'Ext.data.Store',
+	requires:['Ext.data.proxy.Rest'],
 	remoteSort : true,
 	remoteFilter : true,
 	autoLoad : true,

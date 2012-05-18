@@ -11,7 +11,8 @@
 Ext.define('App.service.CodeService', {
 	alternateClassName: 'App.Code',
 	singleton:true,
-    requires: ['Ext.data.Store','App.model.DbCode','Ext.data.proxy.Ajax','Ext.data.proxy.LocalStorage','Ext.data.proxy.Rest','Ext.data.reader.Json','Ext.data.Request','Ext.data.Batch'],
+    requires : ['Ext.data.reader.Json', 'Ext.data.Store', 'App.model.DbCode', 'Ext.data.proxy.Ajax', 'Ext.data.proxy.LocalStorage',
+			'Ext.data.proxy.Rest',  'Ext.data.Request', 'Ext.data.Batch'],
 	url : App.url('/rest/codes.json'),
 	localStore : null,
 	remoteStore : null,
@@ -35,17 +36,7 @@ Ext.define('App.service.CodeService', {
 			localStore = null;
 			App.log('failed to create localstorage, fallback to remote store.', e);
 		}
-		var remoteStore = Ext.create('Ext.data.Store', {
-			model : 'App.model.DbCode',
-			proxy : {
-				type : 'ajax',
-				url : this.url,
-				reader : {
-					type : 'json'
-				}
-			},
-			autoLoad : false
-		});
+
 		if (localStore) {
 			var reload;
 			try {
@@ -59,9 +50,20 @@ Ext.define('App.service.CodeService', {
 			}
 			if (reload) {
 				App.log('not latest version, reload codes. latest version: ' + App.cfg.version);
+				this.remoteStore = Ext.create('Ext.data.Store', {
+					model : 'App.model.DbCode',
+					proxy : {
+						type : 'ajax',
+						url : this.url,
+						reader : {
+							type : 'json'
+						}
+					},
+					autoLoad : false
+				});
 				var oldAsync = Ext.Ajax.async;
 				Ext.Ajax.async = false;
-				remoteStore.load({
+				this.remoteStore.load({
 					scope : this,
 					callback : function(records, operation, success) {
 						if(!success){
@@ -85,11 +87,21 @@ Ext.define('App.service.CodeService', {
 				Ext.Ajax.async = oldAsync;
 			}
 		} else {
-			remoteStore.load();
+			this.remoteStore = Ext.create('Ext.data.Store', {
+				model : 'App.model.DbCode',
+				proxy : {
+					type : 'ajax',
+					url : this.url,
+					reader : {
+						type : 'json'
+					}
+				},
+				autoLoad : false
+			});
+			this.remoteStore.load();
 		}
 		this.localStore = localStore;
-		this.remoteStore = remoteStore;
-		this.codeStore = localStore || remoteStore;
+		this.codeStore = localStore || this.remoteStore;
 	},
 	findName:function(table, column, code){
 		if (code == null || code == '') {

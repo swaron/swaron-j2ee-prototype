@@ -26,7 +26,7 @@ Ext.define('App.lazy.GridConfigFactory',{
 		var store = Ext.data.StoreManager.lookup(storeId);
 		if (!store) {
 			Ext.Ajax.request({
-				url : App.cfg.restUrl + '/rest/grid-config/' + tableName + '.json',
+				url : App.cfg.restUrl + '/rest/grid/config/' + tableName + '.json',
 				success : function(response, opts) {
 					var obj = Ext.decode(response.responseText);
 					var fields = [];

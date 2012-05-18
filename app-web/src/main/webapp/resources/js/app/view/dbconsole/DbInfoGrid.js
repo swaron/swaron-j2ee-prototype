@@ -2,6 +2,7 @@ Ext.define('App.view.dbconsole.DbInfoGrid', {
 	requires : [
 	    'App.service.CodeService',
 	    'Ext.data.Store',
+	    'App.store.DbInfo',
 	    'Ext.toolbar.Paging'
 	],
 
@@ -10,11 +11,18 @@ Ext.define('App.view.dbconsole.DbInfoGrid', {
 
 	store : 'DbInfo',
 	title : 'DataSource Info Grid',
+	header:false,
 	frame : false,
 	selModel : {
 		selType : 'rowmodel'
 	},
 	initComponent : function() {
+		this.store = Ext.getStore('DbInfo');
+		if(!this.store){
+			this.store = Ext.create('App.store.DbInfo',{
+				storeId : 'DbInfo'
+			});
+		}
 		this.columns = [{
 			text : 'Name',
 			width : 120,
@@ -24,7 +32,7 @@ Ext.define('App.view.dbconsole.DbInfoGrid', {
 			text : 'Url',
 			flex : 1,
 			sortable : true,
-			dataIndex : 'email'
+			dataIndex : 'url'
 		}];
 		this.dockedItems = [{
 			xtype : 'pagingtoolbar',

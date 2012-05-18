@@ -1,5 +1,6 @@
 Ext.define('App.model.DbCode', {
 	extend : 'Ext.data.Model',
+	requires:['Ext.data.reader.Json'],
 	fields : [{
 		name : 'id', // DONT TOUCH, missing id will cause it unable to be removed from localStorage
 		mapping : 'codeDictionaryId'

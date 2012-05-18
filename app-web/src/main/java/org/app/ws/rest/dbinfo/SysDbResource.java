@@ -1,4 +1,4 @@
-package org.app.ws.rest;
+package org.app.ws.rest.dbinfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/rest/dbinfo", produces = { "application/json", "application/xml" })
-public class DbInfoResource {
+@RequestMapping(value = "/rest/dbinfo/sysdb", produces = { "application/json", "application/xml" })
+public class SysDbResource {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired

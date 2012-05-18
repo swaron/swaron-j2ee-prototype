@@ -54,7 +54,7 @@ Ext.define('App.service.GridConfig', {
 		this.storeName = Ext.getClassName(this)+".store."+ tableName;
 		this.storeId = 'store-' + tableName;
 		Ext.Ajax.request({
-			url : App.cfg.restUrl + '/rest/grid-config/' + tableName + '.json',
+			url : App.cfg.restUrl + '/rest/grid/config/' + tableName + '.json',
 			success : function(response, opts) {
 				var self = this;
 				var obj = Ext.decode(response.responseText);

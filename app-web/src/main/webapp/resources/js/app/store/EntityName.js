@@ -9,7 +9,7 @@ Ext.define('App.store.EntityName', {
 	proxy:{
 		type : 'rest',
 		format : 'json',
-		url : App.cfg.restUrl + '/rest/dbinfo/table-names',
+		url : App.cfg.restUrl + '/rest/dbinfo/sysdb/table-names',
 		reader : {
 			type : 'json',
 			root : 'records'

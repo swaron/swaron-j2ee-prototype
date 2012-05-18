@@ -41,7 +41,7 @@ public class CacheController {
     @Autowired
     EhCacheCacheManager ehCacheCacheManager;
 
-    @RequestMapping("/sysInfo.do")
+    @RequestMapping("/sysinfo.do")
     public String index(Authentication authentication, Model model) {
         SessionFactory sessionFactory = entityManagerFactory.getSessionFactory();
         Statistics statistics = sessionFactory.getStatistics();
@@ -120,7 +120,7 @@ public class CacheController {
         return entry.getKey().equals("class");
     }
 
-    @RequestMapping("/cache/jpaStatistics.json")
+    @RequestMapping("/cache/jpa-statistics.json")
     public void status(Authentication authentication, Model model) {
     }
 
@@ -131,7 +131,7 @@ public class CacheController {
         map.addAttribute("stats", statistics);
     }
 
-    @RequestMapping("/cache/purgeEhcache.json")
+    @RequestMapping("/cache/purge-ehcache.json")
     public void purgeAllCache(Authentication authentication, String name,  Model model) {
         Cache cache = ehCacheCacheManager.getCache(name);
         String result = "result";

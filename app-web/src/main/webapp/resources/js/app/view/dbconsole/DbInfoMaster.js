@@ -1,9 +1,9 @@
 Ext.define('App.view.dbconsole.DbInfoMaster', {
 	extend : 'Ext.Panel',
 	alias : 'widget.dbinfomaster',
-
+	requires : ['Ext.layout.container.Border','App.view.dbconsole.DbInfoGrid','App.view.dbconsole.DbInfoDetailForm'],
 	frame : true,
-	title : 'Book List',
+	title : 'Database List',
 	width : 540,
 	height : 400,
 	layout : 'border',
@@ -11,13 +11,14 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 	// override initComponent
 	initComponent : function() {
 		this.items = [{
-			xtype : 'bookgrid',
+			xtype : 'dbinfogrid',
 			itemId : 'gridPanel',
 			region : 'north',
 			height : 210,
 			split : true
 		}, {
-			xtype : 'bookdetail',
+			xtype : 'dbinfodetailform',
+			bodyPadding : '20 10 10 10',
 			itemId : 'detailPanel',
 			region : 'center'
 		}];
@@ -25,10 +26,11 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 			text : 'Add',
 			iconCls : 'icon-add',
 			handler : function(button) {
-				var grid = button.up('secusergrid');
+				var master = button.up('dbinfomaster');
+				var grid = master.down('dbinfogrid');
 				// Create a model instance
 				grid.getStore().insert(0, {});
-				rowEditing.startEdit(grid.getStore().first(), 0);
+				grid.getSelectionModel().select(0)
 			}
 		}, {
 			itemId : 'delete',
@@ -58,12 +60,6 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 		// than a click event from the grid to provide key navigation
 		// as well as mouse navigation
 		var bookGridSm = this.getComponent('gridPanel').getSelectionModel();
-		('selectionchange', function(sm, rs) {
-			if (rs.length) {
-				var detailPanel = Ext.getCmp('detailPanel');
-				bookTpl.overwrite(detailPanel.body, rs[0].data);
-			}
-		})
 		bookGridSm.on('selectionchange', this.onRowSelect, this);
 	},
 	// add a method called onRowSelect
@@ -74,8 +70,9 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 		// are scoped locally to this instance of a component to avoid
 		// conflicts with the ComponentManager
 		if (rs.length) {
+			App.log('selected records length: ' + rs.length);
 			var detailPanel = this.getComponent('detailPanel');
-			detailPanel.updateDetail(rs[0].data);
+			detailPanel.updateDetail(rs[0]);
 		}
 
 	}

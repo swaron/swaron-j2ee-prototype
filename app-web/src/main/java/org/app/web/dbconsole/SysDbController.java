@@ -5,14 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/dbconsole")
-public class DataBaseController {
+@RequestMapping("/dbconsole/sysdb")
+public class SysDbController {
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String dbIndex() {
-		return "dbconsole/dbIndex";
-	}
-	@RequestMapping(value="table", method = RequestMethod.GET)
 	public String table() {
 		return "dbconsole/table";
 	}
