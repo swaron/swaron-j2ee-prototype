@@ -4,3 +4,4 @@ eclipse version.home
 updated in office,test auto merge.office
 added in master
 eclipse version.office
+eclipse merge
