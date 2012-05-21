@@ -48,7 +48,12 @@ Ext.define('App.view.dbconsole.DbInfoDetailForm', {
 			if (form.isValid()) {
 				App.log('summit modify/add db info.');
 				var rec = form.getRecord();
-				rec.save();
+				rec.setProxy(rec.store.getProxy());
+				rec.save({
+					callback:function(){
+						App.log('record saved.');
+					}
+				});
 			}
 		}
 	}],

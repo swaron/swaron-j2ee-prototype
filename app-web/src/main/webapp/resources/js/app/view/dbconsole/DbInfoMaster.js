@@ -17,6 +17,7 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 			height : 210,
 			split : true
 		}, {
+			disabled:true,
 			xtype : 'dbinfodetailform',
 			bodyPadding : '20 10 10 10',
 			itemId : 'detailPanel',
@@ -37,8 +38,8 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 			text : 'Delete',
 			iconCls : 'icon-delete',
 			handler : function(button) {
-				rowEditing.cancelEdit();
-				var grid = this;
+				var master = button.up('dbinfomaster');
+				var grid = master.down('dbinfogrid');
 				grid.getStore().remove(grid.getSelectionModel().getSelection());
 				if (grid.getStore().getCount() > 0) {
 					grid.getSelectionModel().select(0);
@@ -69,10 +70,15 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 		// getComponent will retrieve itemId's or id's. Note that itemId's
 		// are scoped locally to this instance of a component to avoid
 		// conflicts with the ComponentManager
+		App.log('selection change');
+		this.down('#delete').setDisabled(rs.length == 0);
+		var detailPanel = this.getComponent('detailPanel');
 		if (rs.length) {
 			App.log('selected records length: ' + rs.length);
-			var detailPanel = this.getComponent('detailPanel');
+			detailPanel.enable();
 			detailPanel.updateDetail(rs[0]);
+		}else{
+			detailPanel.disable();
 		}
 
 	}
