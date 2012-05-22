@@ -1,10 +1,10 @@
 Ext.define('App.model.DbInfo', {
 	extend : 'Ext.data.Model',
-	idProperty : 'id',
+	idProperty : 'dbInfoId',
 
 	fields : [{
-		name : 'id', // id property
-		mapping : 'id'
+		name : 'dbInfoId', // id property
+		mapping : 'dbInfoId'
 	}, {
 		name : 'name'
 	}, {
@@ -14,9 +14,11 @@ Ext.define('App.model.DbInfo', {
 	}, {
 		name : 'driverClass'
 	}, {
-		name : 'username'
+		name : 'dbUser',
+		mapping : 'dbUser'
 	}, {
-		name : 'password'
+		name : 'dbPasswd',
+		mapping : 'dbPasswd'
 	}]
 	,
 	validations : [{

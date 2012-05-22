@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/rest/users")
+@RequestMapping(value = "/rest/users", produces = { "application/json", "application/xml" })
 public class UserResource {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -28,7 +28,7 @@ public class UserResource {
     @Autowired
     PagingAssembler pagingAssembler;
 
-    @RequestMapping(method = RequestMethod.POST, produces = { "application/json", "application/xml" })
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public PagingResult<SecUser> create(@RequestBody SecUser user) {
         user.setPasswd("test");
@@ -37,15 +37,14 @@ public class UserResource {
         return PagingResult.fromSingleResult(user);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public PagingResult<SecUser> read(PagingForm form) {
         PagingParam pagingParam = pagingAssembler.toPagingParam(form);
         return userDao.findPaging(SecUser.class, pagingParam);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT, produces = { "application/json",
-            "application/xml" })
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     @ResponseBody
     public PagingResult<SecUser> update(@PathVariable String userId, @RequestBody SecUser user) {
         user.setPasswd("test");
@@ -54,8 +53,7 @@ public class UserResource {
 
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE, produces = { "application/json",
-            "application/xml" })
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     @ResponseBody
     public void delete(@PathVariable Integer userId) {
         userDao.remove(SecUser.class, userId);

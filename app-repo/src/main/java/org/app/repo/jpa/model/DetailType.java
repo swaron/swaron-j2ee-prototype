@@ -16,15 +16,16 @@ public class DetailType implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="detail_type_id")
+	@Column(name="detail_type_id", unique=true, nullable=false)
 	private Integer detailTypeId;
 
-	@Column(name="category_type_id")
+	@Column(name="category_type_id", nullable=false)
 	private Integer categoryTypeId;
 
-	@Column(name="normalized_unit")
+	@Column(name="normalized_unit", length=64)
 	private String normalizedUnit;
 
+	@Column(nullable=false, length=1024)
 	private String text;
 
 	//bi-directional many-to-one association to DetailRange

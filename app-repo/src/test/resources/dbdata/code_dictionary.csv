@@ -3,3 +3,8 @@ code_dictionary_id,table_name,column_name,code,name,sort_order,name_en,name_zh,n
 3,sec_user,login_state,111,normal,2,normal,正常,db_login_state_normal,"active,enabled,unlocked",2012-04-22T12:13:00
 4,sec_user,login_state,101,disabled,3,disabled,禁用,db_login_state_disabled,"active,disabled,unlocked",2012-04-22T12:13:00
 5,sec_user,login_state,11,locked,4,locked,锁定,db_login_state_locked,"active,enabled,locked",2012-04-22T12:13:00
+6,db_info,vendor,mysql,MySql,1,MySql,MySql,db_vender_mysql,"MySql database",2012-04-22T12:13:00
+7,db_info,vendor,h2,H2,2,H2,H2,db_vender_he,"H2 database",2012-04-22T12:13:00
+8,db_info,vendor,psql,PostgreSql,3,PostgreSql,PostgreSql,db_vender_psql,"PostgreSql database",2012-04-22T12:13:00
+9,db_info,vendor,oracle,Oracle,4,Oracle,Oracle,db_vender_oracle,"Oracle database",2012-04-22T12:13:00
+10,db_info,vendor,mssql,"Microsoft SQL Server",5,"Microsoft SQL Server","Microsoft SQL Server",db_vender_mssql,"MySql database",2012-04-22T12:13:00

@@ -33,6 +33,14 @@ Ext.define('App.view.dbconsole.DbInfoGrid', {
 			flex : 1,
 			sortable : true,
 			dataIndex : 'url'
+		}, {
+			text : 'Action',
+			width : 120,
+			sortable : false,
+	        dataIndex: 'dbInfoId',
+	        renderer: function(value) {
+	            return Ext.String.format('<a href="{0}/dbconsole/customdb/browse.do?database={1}">browse</a>', App.cfg.contextPath, value);
+	        }
 		}];
 		this.dockedItems = [{
 			xtype : 'pagingtoolbar',

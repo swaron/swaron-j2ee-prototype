@@ -16,10 +16,10 @@ public class AclClass implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="acl_class_id")
+	@Column(name="acl_class_id", unique=true, nullable=false)
 	private Integer aclClassId;
 
-	@Column(name="class")
+	@Column(name="class", nullable=false, length=100)
 	private String class_;
 
 	//bi-directional many-to-one association to AclObjectIdentity

@@ -6,9 +6,11 @@
 	<changeSet id="3" author="total" context="test">
 		<sql endDelimiter=";">
 		<![CDATA[
-			--version info for dbunit
+			--system info
 			drop table if exists db_version;
 			drop table if exists system_config;
+			
+			--general info
 			drop table if exists code_dictionary;
 			
 			--spring acl schemas
@@ -40,6 +42,7 @@
 			drop table if exists detail_type cascade;
 			drop table if exists detail_range cascade;
 			drop table if exists user_topic cascade;
+			drop table if exists db_info cascade;
 		]]>
 		</sql>
 		<createTable tableName="acl_sid">
@@ -145,9 +148,9 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="login_state" type="int" />
-<!-- 			<column name="user_detail_id" type="int">
-				<constraints nullable="false"/>
-			</column> -->
+			<column name="user_detail_id" type="int">
+				<constraints nullable="true" uniqueConstraintName="sec_user_uk_2" unique="true"/>
+			</column>
 		</createTable>
 		<createTable tableName="user_detail">
 			<column name="user_detail_id" type="int" autoIncrement="true">
@@ -169,7 +172,7 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<!-- <addForeignKeyConstraint constraintName="sec_user_fk_1" baseTableName="sec_user" baseColumnNames="user_detail_id" referencedTableName="user_detail" referencedColumnNames="user_detail_id"/> -->
+		<addForeignKeyConstraint constraintName="sec_user_fk_1" baseTableName="sec_user" baseColumnNames="user_detail_id" referencedTableName="user_detail" referencedColumnNames="user_detail_id"/>
 		<createTable tableName="unreg_user">
 			<column name="unreg_user_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
@@ -399,6 +402,27 @@
 			</column>
 			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
 				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="db_info">
+			<column name="db_info_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="vendor" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="url" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="driver_class" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+			<column name="db_user" type="varchar(256)">
+			</column>
+			<column name="db_passwd" type="varchar(256)">
 			</column>
 		</createTable>
 		<createTable tableName="db_version">

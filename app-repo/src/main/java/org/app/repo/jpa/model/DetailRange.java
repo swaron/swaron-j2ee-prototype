@@ -15,20 +15,22 @@ public class DetailRange implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="detail_range_id")
+	@Column(name="detail_range_id", unique=true, nullable=false)
 	private Integer detailRangeId;
 
 	private double max;
 
 	private double min;
 
+	@Column(nullable=false, length=1024)
 	private String text;
 
+	@Column(length=1024)
 	private String val;
 
 	//bi-directional many-to-one association to DetailType
     @ManyToOne
-	@JoinColumn(name="detail_type_id")
+	@JoinColumn(name="detail_type_id", nullable=false)
 	private DetailType detailType;
 
     public DetailRange() {

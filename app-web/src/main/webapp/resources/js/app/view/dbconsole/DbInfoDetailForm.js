@@ -25,10 +25,10 @@ Ext.define('App.view.dbconsole.DbInfoDetailForm', {
 		allowBlank : false
 	}, {
 		fieldLabel : 'username',
-		name : 'username'
+		name : 'dbUser'
 	}, {
 		fieldLabel : 'password',
-		name : 'password'
+		name : 'dbPasswd'
 	}],
 	initComponent : function() {
 		this.callParent();
@@ -47,13 +47,22 @@ Ext.define('App.view.dbconsole.DbInfoDetailForm', {
 			var form = this.up('form').getForm();
 			if (form.isValid()) {
 				App.log('summit modify/add db info.');
-				var rec = form.getRecord();
-				rec.setProxy(rec.store.getProxy());
-				rec.save({
-					callback:function(){
-						App.log('record saved.');
+				form.updateRecord();
+				var store = form.getRecord().store;
+				store.sync({
+					success:function(batch,options){
+						var current = store.currentPage;
+			            store.loadPage(current);
 					}
 				});
+//				rec.setProxy(rec.store.getProxy());
+//				rec.save({
+//					callback:function(){
+//				        var current = rec.store.currentPage;
+//			            rec.store.loadPage(current);
+//						App.log('record saved.');
+//					}
+//				});
 			}
 		}
 	}],

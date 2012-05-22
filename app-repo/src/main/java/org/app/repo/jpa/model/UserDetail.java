@@ -2,8 +2,9 @@ package org.app.repo.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -17,24 +18,28 @@ public class UserDetail implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_detail_id")
+	@Column(name="user_detail_id", unique=true, nullable=false)
 	private Integer userDetailId;
 
     @Temporal( TemporalType.DATE)
 	private Date birthday;
 
-	@Column(name="first_name")
+	@Column(name="first_name", length=64)
 	private String firstName;
 
-	@Column(name="last_name")
+	@Column(name="last_name", length=64)
 	private String lastName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", nullable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to SecUser
-    @JoinColumn(name="sec_user_id")
-    @OneToOne
+	@OneToMany(mappedBy="userDetail")
+	private List<SecUser> secUsers;
+
+	//bi-directional many-to-one association to SecUser
+    @ManyToOne
+	@JoinColumn(name="sec_user_id", nullable=false)
 	private SecUser secUser;
 
     public UserDetail() {
@@ -80,6 +85,14 @@ public class UserDetail implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public List<SecUser> getSecUsers() {
+		return this.secUsers;
+	}
+
+	public void setSecUsers(List<SecUser> secUsers) {
+		this.secUsers = secUsers;
+	}
+	
 	public SecUser getSecUser() {
 		return this.secUser;
 	}

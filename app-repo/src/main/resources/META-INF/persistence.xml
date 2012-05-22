@@ -16,6 +16,7 @@
 		<class>org.app.repo.jpa.model.CodeDictionary</class>
 		<class>org.app.repo.jpa.model.DetailRange</class>
 		<class>org.app.repo.jpa.model.DetailType</class>
+		<class>org.app.repo.jpa.model.DbInfo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.EhCacheRegionFactory"/>

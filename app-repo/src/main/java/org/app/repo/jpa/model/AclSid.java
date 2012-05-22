@@ -16,11 +16,13 @@ public class AclSid implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="acl_sid_id")
+	@Column(name="acl_sid_id", unique=true, nullable=false)
 	private Integer aclSidId;
 
+	@Column(nullable=false)
 	private Boolean principal;
 
+	@Column(nullable=false, length=100)
 	private String sid;
 
 	//bi-directional many-to-one association to AclEntry

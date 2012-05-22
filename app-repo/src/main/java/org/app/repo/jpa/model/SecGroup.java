@@ -16,10 +16,10 @@ public class SecGroup implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="sec_group_id")
+	@Column(name="sec_group_id", unique=true, nullable=false)
 	private Integer secGroupId;
 
-	@Column(name="group_name")
+	@Column(name="group_name", nullable=false, length=64)
 	private String groupName;
 
 	//bi-directional many-to-one association to SecGroupAuthority

@@ -17,11 +17,13 @@ public class SecUser implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="sec_user_id")
+	@Column(name="sec_user_id", unique=true, nullable=false)
 	private Integer secUserId;
 
+	@Column(nullable=false, length=100)
 	private String email;
 
+	@Column(nullable=false)
 	private Boolean enabled;
 
 	@Column(name="last_last_login_time")
@@ -33,18 +35,19 @@ public class SecUser implements Serializable {
 	@Column(name="locked_time")
 	private Timestamp lockedTime;
 
-	@Column(name="login_failed_count")
+	@Column(name="login_failed_count", nullable=false)
 	private Integer loginFailedCount;
 
 	@Column(name="login_state")
 	private Integer loginState;
 
+	@Column(nullable=false, length=64)
 	private String passwd;
 
-	@Version
-	@Column(name="update_time")
+	@Column(name="update_time", nullable=false)
 	private Timestamp updateTime;
 
+	@Column(nullable=false, length=64)
 	private String username;
 
 	//bi-directional many-to-one association to SecGroupMember
@@ -52,8 +55,13 @@ public class SecUser implements Serializable {
 	private List<SecGroupMember> secGroupMembers;
 
 	//bi-directional many-to-one association to UserDetail
-	@OneToOne(mappedBy = "secUser")
+    @ManyToOne
+	@JoinColumn(name="user_detail_id")
 	private UserDetail userDetail;
+
+	//bi-directional many-to-one association to UserDetail
+	@OneToMany(mappedBy="secUser")
+	private List<UserDetail> userDetails;
 
     public SecUser() {
     }
@@ -153,13 +161,21 @@ public class SecUser implements Serializable {
 	public void setSecGroupMembers(List<SecGroupMember> secGroupMembers) {
 		this.secGroupMembers = secGroupMembers;
 	}
+	
+	public UserDetail getUserDetail() {
+		return this.userDetail;
+	}
 
-    public UserDetail getUserDetail() {
-        return userDetail;
-    }
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
+	}
+	
+	public List<UserDetail> getUserDetails() {
+		return this.userDetails;
+	}
 
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
+	public void setUserDetails(List<UserDetail> userDetails) {
+		this.userDetails = userDetails;
+	}
 	
 }

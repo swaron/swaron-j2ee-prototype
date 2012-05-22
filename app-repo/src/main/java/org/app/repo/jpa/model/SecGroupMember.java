@@ -15,17 +15,17 @@ public class SecGroupMember implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="sec_group_member_id")
+	@Column(name="sec_group_member_id", unique=true, nullable=false)
 	private Integer secGroupMemberId;
 
 	//bi-directional many-to-one association to SecGroup
     @ManyToOne
-	@JoinColumn(name="sec_group_id")
+	@JoinColumn(name="sec_group_id", nullable=false)
 	private SecGroup secGroup;
 
 	//bi-directional many-to-one association to SecUser
     @ManyToOne
-	@JoinColumn(name="sec_user_id")
+	@JoinColumn(name="sec_user_id", nullable=false)
 	private SecUser secUser;
 
     public SecGroupMember() {

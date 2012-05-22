@@ -16,13 +16,13 @@ public class AclObjectIdentity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="acl_object_identity_id")
+	@Column(name="acl_object_identity_id", unique=true, nullable=false)
 	private Integer aclObjectIdentityId;
 
-	@Column(name="entries_inheriting")
+	@Column(name="entries_inheriting", nullable=false)
 	private Boolean entriesInheriting;
 
-	@Column(name="object_id_identity")
+	@Column(name="object_id_identity", nullable=false)
 	private Integer objectIdIdentity;
 
 	//bi-directional many-to-one association to AclEntry
@@ -31,7 +31,7 @@ public class AclObjectIdentity implements Serializable {
 
 	//bi-directional many-to-one association to AclClass
     @ManyToOne
-	@JoinColumn(name="object_id_class")
+	@JoinColumn(name="object_id_class", nullable=false)
 	private AclClass aclClass;
 
 	//bi-directional many-to-one association to AclObjectIdentity
@@ -45,7 +45,7 @@ public class AclObjectIdentity implements Serializable {
 
 	//bi-directional many-to-one association to AclSid
     @ManyToOne
-	@JoinColumn(name="owner_sid")
+	@JoinColumn(name="owner_sid", nullable=false)
 	private AclSid aclSid;
 
     public AclObjectIdentity() {

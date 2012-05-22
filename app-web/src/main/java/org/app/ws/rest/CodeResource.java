@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/rest/codes")
+@RequestMapping(value = "/rest/codes", produces = { "application/json", "application/xml" })
 public class CodeResource {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -21,7 +21,7 @@ public class CodeResource {
     @Autowired
     GenericDao genericDao;
 
-    @RequestMapping(method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<CodeDictionary> read() {
         List<CodeDictionary> list = genericDao.findAll(CodeDictionary.class);

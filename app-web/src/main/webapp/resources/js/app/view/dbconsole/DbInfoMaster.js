@@ -41,6 +41,7 @@ Ext.define('App.view.dbconsole.DbInfoMaster', {
 				var master = button.up('dbinfomaster');
 				var grid = master.down('dbinfogrid');
 				grid.getStore().remove(grid.getSelectionModel().getSelection());
+				grid.getStore().sync();
 				if (grid.getStore().getCount() > 0) {
 					grid.getSelectionModel().select(0);
 				}

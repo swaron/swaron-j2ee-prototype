@@ -15,30 +15,32 @@ public class AclEntry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="acl_entry_id")
+	@Column(name="acl_entry_id", unique=true, nullable=false)
 	private Integer aclEntryId;
 
-	@Column(name="ace_order")
+	@Column(name="ace_order", nullable=false)
 	private Integer aceOrder;
 
-	@Column(name="audit_failure")
+	@Column(name="audit_failure", nullable=false)
 	private Boolean auditFailure;
 
-	@Column(name="audit_success")
+	@Column(name="audit_success", nullable=false)
 	private Boolean auditSuccess;
 
+	@Column(nullable=false)
 	private Boolean granting;
 
+	@Column(nullable=false)
 	private Integer mask;
 
 	//bi-directional many-to-one association to AclObjectIdentity
     @ManyToOne
-	@JoinColumn(name="acl_object_identity")
+	@JoinColumn(name="acl_object_identity", nullable=false)
 	private AclObjectIdentity aclObjectIdentityBean;
 
 	//bi-directional many-to-one association to AclSid
     @ManyToOne
-	@JoinColumn(name="sid")
+	@JoinColumn(name="sid", nullable=false)
 	private AclSid aclSid;
 
     public AclEntry() {

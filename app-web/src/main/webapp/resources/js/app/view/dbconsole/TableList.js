@@ -15,7 +15,9 @@ Ext.define('App.view.dbconsole.TableList', {
 			dataIndex : 'tableName'
 	}],
 	initComponent : function() {
-		this.store = Ext.create('App.store.EntityName');
+		if(!this.store){
+			this.store = Ext.create('App.store.EntityName');
+		}
 		this.callParent(arguments);
 	}
 });

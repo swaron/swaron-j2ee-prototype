@@ -5,10 +5,10 @@ public class DbInfo {
 	private String vendor;
 	private String url;
 	private String driverClass;
-	private String username;
-	private String password;
+	private String dbUser;
+	private String dbPasswd;
 
-	public String getName() {
+    public String getName() {
 		return name;
 	}
 
@@ -40,20 +40,21 @@ public class DbInfo {
 		this.driverClass = driverClass;
 	}
 
-	public String getUsername() {
-		return username;
-	}
+    public String getDbUser() {
+        return dbUser;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setDbUser(String dbUser) {
+        this.dbUser = dbUser;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getDbPasswd() {
+        return dbPasswd;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setDbPasswd(String dbPasswd) {
+        this.dbPasswd = dbPasswd;
+    }
+
 
 }

@@ -5,7 +5,7 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <layout:basic title="" pageClass="">
 <jsp:attribute name="scripts">
-<script type="text/javascript" src="${jsPath}/app/pages/dbconsole/dbInfo.js"></script>
+<script type="text/javascript" src="${jsPath}/app/pages/dbconsole/browse.js"></script>
 </jsp:attribute>
 <jsp:body>
 	<br />

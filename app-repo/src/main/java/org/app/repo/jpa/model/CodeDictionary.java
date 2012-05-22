@@ -16,34 +16,37 @@ public class CodeDictionary implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="code_dictionary_id")
+	@Column(name="code_dictionary_id", unique=true, nullable=false)
 	private Integer codeDictionaryId;
 
+	@Column(nullable=false, length=256)
 	private String code;
 
-	@Column(name="column_name")
+	@Column(name="column_name", nullable=false, length=256)
 	private String columnName;
 
+	@Column(length=1024)
 	private String description;
 
+	@Column(nullable=false, length=256)
 	private String name;
 
-	@Column(name="name_en")
+	@Column(name="name_en", length=256)
 	private String nameEn;
 
-	@Column(name="name_i18n_key")
+	@Column(name="name_i18n_key", length=256)
 	private String nameI18nKey;
 
-	@Column(name="name_zh")
+	@Column(name="name_zh", length=256)
 	private String nameZh;
 
 	@Column(name="sort_order")
 	private Integer sortOrder;
 
-	@Column(name="table_name")
+	@Column(name="table_name", nullable=false, length=256)
 	private String tableName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", nullable=false)
 	private Timestamp updateTime;
 
     public CodeDictionary() {
