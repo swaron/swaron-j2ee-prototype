@@ -4,7 +4,8 @@ Ext.define('App.service.GridConfig', {
         observable: 'Ext.util.Observable'
     },
     config:{
-    	name : null
+		dbInfoId : null,
+		tableName : null
     },
 	typeMapping : {
 		'Timestamp' : 'date',
@@ -49,12 +50,17 @@ Ext.define('App.service.GridConfig', {
 		return cols;
 	},
 	load : function() {
-		var tableName = this.getName();
+		var dbInfoId = this.getDbInfoId();
+		var tableName = this.getTableName();
 		this.modelName = Ext.getClassName(this)+".model."+tableName;
 		this.storeName = Ext.getClassName(this)+".store."+ tableName;
 		this.storeId = 'store-' + tableName;
+		var url = App.cfg.restUrl + '/rest/grid/config/sys/' + tableName + '.json';
+		if(dbInfoId != null){
+			url = App.cfg.restUrl + '/rest/grid/config/' + dbInfoId + '/' + tableName + '.json';
+		}
 		Ext.Ajax.request({
-			url : App.cfg.restUrl + '/rest/grid/config/' + tableName + '.json',
+			url : url,
 			success : function(response, opts) {
 				var self = this;
 				var obj = Ext.decode(response.responseText);

@@ -18,6 +18,9 @@ import javax.persistence.metamodel.SingularAttribute;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
 import org.app.repo.jpa.dao.GenericDao;
 import org.app.repo.jpa.model.CodeDictionary;
+import org.app.repo.jpa.vo.ColumnMetaData;
+import org.app.repo.service.CustomDbManager;
+import org.app.repo.service.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -38,11 +42,44 @@ public class GridConfigResource {
 	
 	@Autowired
 	CodeDictionaryDao codeDictionaryDao;
-
-	@RequestMapping(value = "/{tableName}", method = RequestMethod.GET)
+	
+	@Autowired
+	CustomDbManager customDbManager;
+	
+	@RequestMapping(value = "/{db}/{tableName}", method = RequestMethod.GET)
 	@ResponseBody
-	public GridConfig read(@PathVariable String tableName) {
-		@SuppressWarnings("unchecked")
+	public GridConfig read(@PathVariable String db, @PathVariable String tableName) {
+	    if("sys".equals(db)){
+	        return getSysDbGridConfig(tableName);
+	    }else{
+	        return getCustomDbGridConfig(db,tableName);
+	    }
+	}
+
+    private GridConfig getCustomDbGridConfig(String db, String tableName) {
+        GridConfig gridConfig = new GridConfig();
+        gridConfig.setEntityName(tableName);        
+        gridConfig.setTableName(tableName);
+        gridConfig.setIdProperty(tableName+"_id");
+        List<ColumnMetaData> columnsResults = customDbManager.getColumnsResults(Integer.parseInt(db), tableName);
+        List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
+        for (ColumnMetaData col : columnsResults) {
+            ColumnConfig config = new ColumnConfig();
+            if("YES".equalsIgnoreCase(col.getIsAutoincrement()) ){
+                gridConfig.setIdProperty(col.getColumnName());
+            }
+            config.setHasAlias(false);
+            config.setHide(false);
+            config.setMapping(col.getColumnName());
+            config.setName(col.getColumnName());
+            config.setType(JdbcUtils.toClass(col.getDataType()).getSimpleName());
+        }
+        gridConfig.setColumns(columns);
+        return gridConfig;
+    }
+
+    private GridConfig getSysDbGridConfig(String tableName) {
+        @SuppressWarnings("unchecked")
 		EntityType<Object> entity = (EntityType<Object>) genericDao.getGridConfig("internal.table", tableName);
 		if (entity == null) {
 			return null;
@@ -95,5 +132,5 @@ public class GridConfigResource {
 			columns.add(columnConfig);
 		}
 		return gridConfig;
-	}
+    }
 }

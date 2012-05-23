@@ -23,7 +23,7 @@ public class TableMetadataResourceTest extends BaseWebTest{
 	
 	@Test
 	public void testRead() throws JsonGenerationException, JsonMappingException, IOException {
-		GridConfig gridConfig = tableMetadataResource.read("sec_user");
+		GridConfig gridConfig = tableMetadataResource.read("sys","sec_user");
 		Assert.assertFalse(gridConfig.getColumns().isEmpty());
 		logger.debug(objectMapper.writeValueAsString(gridConfig));
 	}

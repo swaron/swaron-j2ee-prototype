@@ -11,8 +11,11 @@ import org.app.framework.paging.PagingAssembler;
 import org.app.framework.paging.PagingForm;
 import org.app.framework.paging.PagingParam;
 import org.app.framework.paging.PagingResult;
+import org.app.framework.web.tree.TreeNode;
+import org.app.framework.web.tree.TreeResult;
 import org.app.repo.jpa.dao.DbInfoDao;
 import org.app.repo.jpa.model.DbInfo;
+import org.app.repo.service.CustomDbManager;
 import org.app.ws.rest.grid.GridConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +40,9 @@ public class CustomDbResource {
     
     @Autowired
     PagingAssembler pagingAssembler;
+    
+    @Autowired
+    CustomDbManager customDbManager;
 
     @RequestMapping(value="/db-infos", method = RequestMethod.POST)
     @ResponseBody
@@ -67,17 +73,22 @@ public class CustomDbResource {
     }
 
     
-    @RequestMapping(value = "/table-names", method = RequestMethod.GET)
+    @RequestMapping(value = "/table-tree", method = RequestMethod.GET)
     @ResponseBody
-    public List<GridConfig> list(@RequestParam Integer database) {
-        DbInfo dbInfo = dbInfoDao.find(DbInfo.class, database);
-//        JdbcTemplate jdbcTemplate = customDbManager.getJdbcTemplate(dbInfo);
-        List<GridConfig> tableNames = new ArrayList<GridConfig>();
-//        for (EntityType<?> entity : entities) {
-//            GridConfig gridConfig = new GridConfig();
-//            tableNames.add(gridConfig);
-//        }
-
-        return tableNames;
+    public TreeResult list(@RequestParam Integer database) {
+        TreeResult treeResult = new TreeResult();
+        List<DbInfo> findAll = dbInfoDao.findAll(DbInfo.class);
+        List<TreeNode> children = new ArrayList<TreeNode>();
+        for (DbInfo dbInfo : findAll) {
+            TreeNode node = new TreeNode();
+            node.setExpanded(false);
+            node.setLeaf(false);
+            node.setLoaded(false);
+            node.setText(dbInfo.getName());
+            node.setValue(dbInfo.getDbInfoId().toString());
+            children.add(node);
+        }
+        treeResult.setChildren(children);
+        return treeResult;
     }
 }
