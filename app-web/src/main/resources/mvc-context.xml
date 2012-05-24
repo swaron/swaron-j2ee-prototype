@@ -26,6 +26,7 @@
 	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser"/>
 	<mvc:view-controller path="/sample/crud.do" view-name="sample/secUser"/>
 	<mvc:view-controller path="/test.do" view-name="test"/>
+	<mvc:view-controller path="hna-hotel.do" view-name="hna-hotel"/>
 
 	<!-- Configures Handler Interceptors -->
 	<mvc:interceptors>
