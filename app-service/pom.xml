@@ -25,5 +25,16 @@
 	<build>
 	</build>
 	<dependencies>
+		<!-- sub modules -->
+		<dependency>
+			<groupId>org.app</groupId>
+			<artifactId>app-repo</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.app</groupId>
+			<artifactId>app-module</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -8,7 +8,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
-	<artifactId>app-domain1</artifactId>
+	<artifactId>app-domain</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Application Domain1 Module</name>
@@ -23,5 +23,22 @@
 	<build>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- sub modules -->
+		<dependency>
+			<groupId>org.app</groupId>
+			<artifactId>app-schema</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.app</groupId>
+			<artifactId>app-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

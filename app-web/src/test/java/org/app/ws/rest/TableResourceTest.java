@@ -1,7 +1,5 @@
 package org.app.ws.rest;
 
-import static org.junit.Assert.*;
-
 import org.app.framework.paging.PagingForm;
 import org.app.framework.paging.PagingResult;
 import org.app.web.BaseWebTest;
@@ -11,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TableResourceTest extends BaseWebTest{
 
 	@Autowired
-	TableResource tableResource;
+	InternalTableContentResource tableResource;
 	
 	@Test
 	public void testRead() {

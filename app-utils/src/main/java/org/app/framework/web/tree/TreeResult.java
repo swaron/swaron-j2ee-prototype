@@ -5,7 +5,6 @@ import java.util.List;
 public class TreeResult {
     private List<TreeNode> children;
     private boolean success = true;
-
     public boolean isSuccess() {
         return success;
     }

@@ -8,9 +8,8 @@ import junit.framework.Assert;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.app.domain.grid.entity.GridConfig;
 import org.app.web.BaseWebTest;
-import org.app.ws.rest.grid.GridConfig;
-import org.app.ws.rest.grid.GridConfigResource;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.junit.Test;

@@ -10,7 +10,7 @@ Ext.define('App.store.DbInfo', {
 	proxy : {
 		type : 'rest',
 		format : 'json',
-		url : App.cfg.restUrl + '/rest/dbinfo/customdb/db-infos',
+		url : App.cfg.restUrl + '/rest/db-info',
 		reader : {
 			type : 'json',
 			root : 'records'

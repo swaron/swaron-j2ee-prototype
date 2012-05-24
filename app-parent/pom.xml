@@ -13,7 +13,7 @@
 		<module>../app-schema</module>
 		<module>../app-utils</module>
 		<module>../app-repo</module>
-		<module>../app-domain1</module>
+		<module>../app-domain</module>
 		<module>../app-service</module>
 		<module>../app-web</module>
 		<module>../app-ws-rest</module>

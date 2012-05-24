@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/rest/codes", produces = { "application/json", "application/xml" })
+@RequestMapping(value = "/rest/code", produces = { "application/json", "application/xml" })
 public class CodeResource {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

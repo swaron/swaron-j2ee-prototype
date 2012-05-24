@@ -33,17 +33,17 @@ Ext.define('App.model.DbCode', {
 		mapping : 'nameI18nKey',
 		convert: function(value, record) {
 			var key = record.get('nameI18nKey');
-			var fn = App.util.findValue(window.messages,key);
-			if(fn){
-				return fn();
-			}else{
-				return value;
-			}
-//			if(App.cfg.lang == 'zh'){
-//				return record.get('name_zh');
+//			var fn = App.util.findValue(window.messages,key);
+//			if(fn){
+//				return fn();
 //			}else{
-//				return record.get('name_en');
+//				return value;
 //			}
+			if(App.cfg.lang == 'zh'){
+				return record.get('name_zh');
+			}else{
+				return record.get('name_en');
+			}
 		}
 	}],
 	

@@ -13,7 +13,7 @@ Ext.define('App.service.CodeService', {
 	singleton:true,
     requires : ['Ext.data.reader.Json', 'Ext.data.Store', 'App.model.DbCode', 'Ext.data.proxy.Ajax', 'Ext.data.proxy.LocalStorage',
 			'Ext.data.proxy.Rest',  'Ext.data.Request', 'Ext.data.Batch'],
-	url : App.url('/rest/codes.json'),
+	url : App.url('/rest/code.json'),
 	localStore : null,
 	remoteStore : null,
 	nameCache : {},
