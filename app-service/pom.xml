@@ -33,7 +33,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.app</groupId>
-			<artifactId>app-module</artifactId>
+			<artifactId>app-domain</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
