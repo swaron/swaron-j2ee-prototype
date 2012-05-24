@@ -24,99 +24,127 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExternalDbService {
-    Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger = LoggerFactory.getLogger(getClass());
 
-    private HashMap<String, DataSource> dataSources = new HashMap<String, DataSource>();
+	private HashMap<String, DataSource> dataSources = new HashMap<String, DataSource>();
 
-    public DataSource getDataSource(String key) {
-        return dataSources.get(key);
-    }
+	public DataSource getDataSource(String key) {
+		return dataSources.get(key);
+	}
 
-    public DataSource buildDataSource(String key, Properties prop) {
-        try {
-            DataSource dataSource = BasicDataSourceFactory.createDataSource(prop);
-            dataSources.put(key, dataSource);
-            return dataSource;
-        } catch (Exception e) {
-            logger.info("unable to create datasource with properties: {}", prop);
-            return null;
-        }
-    }
+	public DataSource buildDataSource(String key, Properties prop) {
+		try {
+			DataSource dataSource = BasicDataSourceFactory.createDataSource(prop);
+			dataSources.put(key, dataSource);
+			return dataSource;
+		} catch (Exception e) {
+			logger.info("unable to create datasource with properties: {}", prop);
+			return null;
+		}
+	}
 
-    public List<ColumnMetaData> getColumnsResults(Integer dbInfoId, String tableName) {
-        DataSource dataSource = this.dataSources.get(dbInfoId);
-        if (dataSource == null) {
-            return null;
-        }
-        try {
-            DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-            ResultSet columns = metaData.getColumns(null, null, tableName, "");
-            RowMapper<ColumnMetaData> rowMapper = BeanPropertyRowMapper.newInstance(ColumnMetaData.class);
-            RowMapperResultSetExtractor<ColumnMetaData> resultSetExtractor = new RowMapperResultSetExtractor<ColumnMetaData>(
-                    rowMapper);
-            List<ColumnMetaData> list = resultSetExtractor.extractData(columns);
-            columns.close();
-            return list;
-        } catch (SQLException e) {
-            logger.warn("Error while accessing table meta data results", e);
-            return null;
-        }
+	public void onDbInfoChanged(String key, Properties prop) {
+		BasicDataSource dataSource = (BasicDataSource) this.getDataSource(key);
+		if(dataSource != null){
+			 try {
+				dataSource.close();
+			} catch (SQLException e) {
+				logger.warn("unable to close datasource on db info changed.");
+			}
+		}
+		buildDataSource(key, prop);
+	}
 
-    }
+	public void onDbInfoDeleted(String key) {
+		BasicDataSource dataSource = (BasicDataSource) dataSources.remove(key);
+		if(dataSource != null){
+			try {
+				dataSource.close();
+			} catch (SQLException e) {
+				logger.warn("unable to close datasource on db info changed.");
+			}
+		}
+		dataSources.remove(key);
+	}
 
-    public List<TableMetaData> getTableResults(Integer dbInfoId) {
-        DataSource dataSource = this.dataSources.get(dbInfoId);
-        if (dataSource == null) {
-            return null;
-        }
-        try {
-            DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-            ResultSet tables = metaData.getTables(null, null, "", new String[] { "TABLE" });
-            RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
-            RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
-                    rowMapper);
-            List<TableMetaData> list = resultSetExtractor.extractData(tables);
-            tables.close();
-            return list;
-        } catch (SQLException e) {
-            logger.warn("Error while accessing table meta data results", e);
-            return null;
-        }
+	public void onDbInfoAdded(String key, Properties prop) {
+		buildDataSource(key, prop);
+	}
 
-    }
+	public List<ColumnMetaData> getColumnsResults(Integer dbInfoId, String tableName) {
+		DataSource dataSource = this.dataSources.get(dbInfoId);
+		if (dataSource == null) {
+			return null;
+		}
+		try {
+			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
+			ResultSet columns = metaData.getColumns(null, null, tableName, "");
+			RowMapper<ColumnMetaData> rowMapper = BeanPropertyRowMapper.newInstance(ColumnMetaData.class);
+			RowMapperResultSetExtractor<ColumnMetaData> resultSetExtractor = new RowMapperResultSetExtractor<ColumnMetaData>(
+					rowMapper);
+			List<ColumnMetaData> list = resultSetExtractor.extractData(columns);
+			columns.close();
+			return list;
+		} catch (SQLException e) {
+			logger.warn("Error while accessing table meta data results", e);
+			return null;
+		}
 
-    @PreDestroy
-    public void destroy() throws SQLException {
-        for (Entry<String, DataSource> e : dataSources.entrySet()) {
-            DataSource ds = e.getValue();
-            if (ds instanceof BasicDataSource) {
-                ((BasicDataSource) ds).close();
-            }
-        }
-    }
+	}
 
-    public TableMetaData getTableMetaData(int dbInfoId, String tableName) {
-        DataSource dataSource = this.dataSources.get(dbInfoId);
-        if (dataSource == null) {
-            return null;
-        }
-        try {
-            DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-            ResultSet tables = metaData.getTables(null, null, tableName, new String[] { "TABLE" });
-            RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
-            RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
-                    rowMapper);
-            List<TableMetaData> list = resultSetExtractor.extractData(tables);
-            tables.close();
-            if (list.isEmpty()) {
-                return null;
-            } else {
-                return list.get(0);
-            }
-        } catch (SQLException e) {
-            logger.warn("Error while accessing table meta data results", e);
-            return null;
-        }
-    }
+	public List<TableMetaData> getTableResults(Integer dbInfoId) {
+		DataSource dataSource = this.dataSources.get(dbInfoId);
+		if (dataSource == null) {
+			return null;
+		}
+		try {
+			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
+			ResultSet tables = metaData.getTables(null, null, "", new String[] { "TABLE" });
+			RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
+			RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
+					rowMapper);
+			List<TableMetaData> list = resultSetExtractor.extractData(tables);
+			tables.close();
+			return list;
+		} catch (SQLException e) {
+			logger.warn("Error while accessing table meta data results", e);
+			return null;
+		}
+
+	}
+
+	@PreDestroy
+	public void destroy() throws SQLException {
+		for (Entry<String, DataSource> e : dataSources.entrySet()) {
+			DataSource ds = e.getValue();
+			if (ds instanceof BasicDataSource) {
+				((BasicDataSource) ds).close();
+			}
+		}
+	}
+
+	public TableMetaData getTableMetaData(int dbInfoId, String tableName) {
+		DataSource dataSource = this.dataSources.get(dbInfoId);
+		if (dataSource == null) {
+			return null;
+		}
+		try {
+			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
+			ResultSet tables = metaData.getTables(null, null, tableName, new String[] { "TABLE" });
+			RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
+			RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
+					rowMapper);
+			List<TableMetaData> list = resultSetExtractor.extractData(tables);
+			tables.close();
+			if (list.isEmpty()) {
+				return null;
+			} else {
+				return list.get(0);
+			}
+		} catch (SQLException e) {
+			logger.warn("Error while accessing table meta data results", e);
+			return null;
+		}
+	}
 
 }

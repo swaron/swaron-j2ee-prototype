@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/rest/dbinfo/customdb", produces = { "application/json", "application/xml" })
+@RequestMapping(value = "/rest/table-tree", produces = { "application/json", "application/xml" })
 public class TableTreeResource {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -31,10 +31,10 @@ public class TableTreeResource {
     PagingAssembler pagingAssembler;
     
     @Autowired
-    ExternalDbService customDbManager;
+    ExternalDbService dbService;
 
     
-    @RequestMapping(value = "/table-tree", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public TreeResult list(@RequestParam String node) {
         TreeResult treeResult = new TreeResult();
@@ -55,7 +55,7 @@ public class TableTreeResource {
         }else{
             try {
                 Integer dbInfoId = Integer.parseInt(node);
-                List<TableMetaData> results = customDbManager.getTableResults(dbInfoId);
+                List<TableMetaData> results = dbService.getTableResults(dbInfoId);
                 if(results == null){
                     treeResult.setSuccess(false);
                 }else{

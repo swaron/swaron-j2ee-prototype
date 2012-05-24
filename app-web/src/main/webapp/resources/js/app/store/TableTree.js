@@ -7,7 +7,7 @@ Ext.define('App.store.TableTree', {
 //		extraParams:{
 //			database:''
 //		},
-		url : App.cfg.restUrl + '/rest/dbinfo/customdb/table-tree'	
+		url : App.cfg.restUrl + '/rest/table-tree'	
 	},
 	root: {
         text: 'Root',
