@@ -2,6 +2,7 @@ package org.app.repo.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -29,6 +30,10 @@ public class DbInfo implements Serializable {
 
 	@Column(nullable=false, length=256)
 	private String name;
+
+	@Version
+	@Column(name="update_time", nullable=false)
+	private Timestamp updateTime;
 
 	@Column(nullable=false, length=256)
 	private String url;
@@ -77,6 +82,14 @@ public class DbInfo implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public String getUrl() {

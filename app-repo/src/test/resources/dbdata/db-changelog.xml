@@ -424,6 +424,9 @@
 			</column>
 			<column name="db_passwd" type="varchar(256)">
 			</column>
+			<column name="update_time" type="datetime" defaultValueDate="CURRENT_TIMESTAMP">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="db_version">
 			<column name="key" type="varchar(1024)">

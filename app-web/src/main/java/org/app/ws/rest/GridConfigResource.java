@@ -16,6 +16,7 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang.StringUtils;
+import org.app.application.service.DbMetaDataService;
 import org.app.domain.grid.entity.ColumnConfig;
 import org.app.domain.grid.entity.GridConfig;
 import org.app.domain.grid.service.ExternalDbService;
@@ -48,6 +49,9 @@ public class GridConfigResource {
 	@Autowired
 	ExternalDbService customDbManager;
 	
+	@Autowired
+	DbMetaDataService metaDataService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public GridConfig read(@RequestParam String dbInfoId, @RequestParam String tableName) {
@@ -63,10 +67,12 @@ public class GridConfigResource {
         GridConfig gridConfig = new GridConfig();
         gridConfig.setEntityName(tableName);        
         gridConfig.setTableName(tableName);
-        TableMetaData metaData = customDbManager.getTableMetaData(dbInfoId, tableName);
-        gridConfig.setIdProperty(metaData.getSelfReferencingColName());
+        
+        TableMetaData tableMetaData = metaDataService.getTableMetaData(dbInfoId, tableName);
+        
+        gridConfig.setIdProperty(tableMetaData.getSelfReferencingColName());
         logger.debug("found identity column: " + gridConfig.getIdProperty());
-        List<ColumnMetaData> columnsResults = customDbManager.getColumnsResults(dbInfoId, tableName);
+        List<ColumnMetaData> columnsResults = metaDataService.getColumnMetaDatas(dbInfoId, tableName);
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
         for (ColumnMetaData col : columnsResults) {
             ColumnConfig config = new ColumnConfig();
@@ -78,6 +84,7 @@ public class GridConfigResource {
             config.setMapping(col.getColumnName());
             config.setName(col.getColumnName());
             config.setType(JdbcUtils.toClass(col.getDataType()).getSimpleName());
+            columns.add(config);
         }
         gridConfig.setColumns(columns);
         return gridConfig;

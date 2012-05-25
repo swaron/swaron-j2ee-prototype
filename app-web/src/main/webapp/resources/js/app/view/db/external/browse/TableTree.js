@@ -8,7 +8,7 @@ Ext.define('App.view.db.external.browse.TableTree', {
 	title : 'Database - Table Tree',
 	frame : false,
 	rootVisible:false,
-	singleExpand:false,
+	singleExpand:true,
 	initComponent : function() {
 		if(!this.store){
 			this.store = Ext.create('App.store.TableTree');

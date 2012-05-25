@@ -3,6 +3,10 @@ package org.app.ws.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.app.application.assemble.DbInfoAssembler;
+import org.app.application.service.DbMetaDataService;
 import org.app.domain.grid.service.ExternalDbService;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.framework.paging.PagingAssembler;
@@ -31,7 +35,13 @@ public class TableTreeResource {
     PagingAssembler pagingAssembler;
     
     @Autowired
+    DbInfoAssembler dbInfoAssembler;
+    
+    @Autowired
     ExternalDbService dbService;
+    
+    @Autowired
+    DbMetaDataService metaDataService;
 
     
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -55,7 +65,7 @@ public class TableTreeResource {
         }else{
             try {
                 Integer dbInfoId = Integer.parseInt(node);
-                List<TableMetaData> results = dbService.getTableResults(dbInfoId);
+                List<TableMetaData> results = metaDataService.getTableMetaDatas(dbInfoId);
                 if(results == null){
                     treeResult.setSuccess(false);
                 }else{

@@ -7,6 +7,7 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 	frame : true,
 	layout:'border',
 	config:{
+		maxTabs:10,
 		database: App.getParam('database')
 	},
 	initComponent : function() {
@@ -33,12 +34,12 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 		this.items = items;
 		this.callParent(arguments);
 	},
-	createChildTab:function(dbInfoId, tabs, tableName){
+	createChildTab:function(tabs, dbInfoId, tableName){
 //		var tab = centerBox.getActiveTab();
 		var name = dbInfoId + '.'+ tableName;
 		Ext.create('App.service.GridConfig', {
 			dbInfoId : dbInfoId,
-			tableName : tablename,
+			tableName : tableName,
 			listeners : {
 				load : function(gConfig) {
 					var tableGrid = Ext.create('App.view.db.TableGrid', {
@@ -56,18 +57,19 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 	onSelectTable:function(view, record, el, index){
 		var dbInfoId,tableName;
 		var tabs = this.down('#centerBox');
-		if(record.isleaf()){
+		if(record.isLeaf()){
 			var parent = record.parentNode;
-			dbInfoId = parent.get('dbInfoId'); 
-			tableName = record.get('tableName');
+			dbInfoId = parent.get('id'); 
+			tableName = record.get('text');
 		}else{
+			App.log('clicking on folder node fired a itemclick event.')
 			return ;
 		}
 		var name = dbInfoId + '.'+ tableName;
 		if(tabs.child('#' + name)){
 			tabs.setActiveTab(name);
 		}else{
-			if(tabs.items.length >= 10){
+			if(tabs.items.length >= this.getMaxTabs()){
 				var firstItem = tabs.child('box');
 				tabs.remove(firstItem);
 			}

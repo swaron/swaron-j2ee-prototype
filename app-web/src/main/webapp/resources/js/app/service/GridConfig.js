@@ -4,9 +4,10 @@ Ext.define('App.service.GridConfig', {
         observable: 'Ext.util.Observable'
     },
     config:{
-		dbInfoId : null,
+		dbInfoId : 'sys',
 		tableName : null
     },
+    url : App.cfg.restUrl + '/rest/grid-config.json',
 	typeMapping : {
 		'Timestamp' : 'date',
 		'Boolean' : 'boolean',
@@ -52,15 +53,16 @@ Ext.define('App.service.GridConfig', {
 	load : function() {
 		var dbInfoId = this.getDbInfoId();
 		var tableName = this.getTableName();
-		this.modelName = Ext.getClassName(this)+".model."+tableName;
-		this.storeName = Ext.getClassName(this)+".store."+ tableName;
+		this.modelName = Ext.getClassName(this)+".model."+dbInfoId + '-' +tableName;
+		this.storeName = Ext.getClassName(this)+".store."+dbInfoId + '-' + tableName;
 		this.storeId = 'store-' + tableName;
 		Ext.Ajax.request({
+			method : 'GET',
 			params:{
 				dbInfoId : dbInfoId,
 				tableName : tableName
 			},
-			url : App.cfg.restUrl + '/rest/grid/config.json',
+			url : this.url,
 			success : function(response, opts) {
 				var self = this;
 				var obj = Ext.decode(response.responseText);
@@ -127,10 +129,18 @@ Ext.define('App.service.GridConfig', {
 					});
 				}
 				var gridConfig = this;
+				var db = gridConfig.getDbInfoId();
+				var tableContentUrl;
+				if(db == 'sys'){
+					tableContentUrl = App.cfg.restUrl + '/rest/internal-table-content/' + obj.tableName;
+				}else{
+					tableContentUrl = App.cfg.restUrl + '/rest/external-table-content/' + db + '/' + obj.tableName;
+					
+				}
 				if(!Ext.ClassManager.isCreated(storeName)){
 					Ext.define(storeName, {
 						extend : 'Ext.data.Store',
-						storeId : 'store-' + obj.tableName,
+						storeId : 'store-' + db + '-' + obj.tableName,
 						remoteSort : true,
 						remoteFilter : true,
 						autoLoad : true,
@@ -140,7 +150,7 @@ Ext.define('App.service.GridConfig', {
 						proxy : {
 							type : 'rest',
 							format : 'json',
-							url : App.cfg.restUrl + '/rest/table/' + obj.tableName,
+							url : tableContentUrl,
 							reader : {
 								type : 'json',
 								root : 'records'

@@ -43,36 +43,7 @@ public class ExternalDbService {
 		}
 	}
 
-	public void onDbInfoChanged(String key, Properties prop) {
-		BasicDataSource dataSource = (BasicDataSource) this.getDataSource(key);
-		if(dataSource != null){
-			 try {
-				dataSource.close();
-			} catch (SQLException e) {
-				logger.warn("unable to close datasource on db info changed.");
-			}
-		}
-		buildDataSource(key, prop);
-	}
-
-	public void onDbInfoDeleted(String key) {
-		BasicDataSource dataSource = (BasicDataSource) dataSources.remove(key);
-		if(dataSource != null){
-			try {
-				dataSource.close();
-			} catch (SQLException e) {
-				logger.warn("unable to close datasource on db info changed.");
-			}
-		}
-		dataSources.remove(key);
-	}
-
-	public void onDbInfoAdded(String key, Properties prop) {
-		buildDataSource(key, prop);
-	}
-
-	public List<ColumnMetaData> getColumnsResults(Integer dbInfoId, String tableName) {
-		DataSource dataSource = this.dataSources.get(dbInfoId);
+	public List<ColumnMetaData> getColumnsResults(DataSource dataSource, String tableName) {
 		if (dataSource == null) {
 			return null;
 		}
@@ -92,8 +63,7 @@ public class ExternalDbService {
 
 	}
 
-	public List<TableMetaData> getTableResults(Integer dbInfoId) {
-		DataSource dataSource = this.dataSources.get(dbInfoId);
+	public List<TableMetaData> getTableResults(DataSource dataSource) {
 		if (dataSource == null) {
 			return null;
 		}
@@ -113,6 +83,29 @@ public class ExternalDbService {
 
 	}
 
+	public TableMetaData getTableMetaData(DataSource dataSource, String tableName) {
+	    if (dataSource == null) {
+	        return null;
+	    }
+	    try {
+	        DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
+	        ResultSet tables = metaData.getTables(null, null, tableName, new String[] { "TABLE" });
+	        RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
+	        RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
+	                rowMapper);
+	        List<TableMetaData> list = resultSetExtractor.extractData(tables);
+	        tables.close();
+	        if (list.isEmpty()) {
+	            return null;
+	        } else {
+	            return list.get(0);
+	        }
+	    } catch (SQLException e) {
+	        logger.warn("Error while accessing table meta data results", e);
+	        return null;
+	    }
+	}
+	
 	@PreDestroy
 	public void destroy() throws SQLException {
 		for (Entry<String, DataSource> e : dataSources.entrySet()) {
@@ -120,30 +113,6 @@ public class ExternalDbService {
 			if (ds instanceof BasicDataSource) {
 				((BasicDataSource) ds).close();
 			}
-		}
-	}
-
-	public TableMetaData getTableMetaData(int dbInfoId, String tableName) {
-		DataSource dataSource = this.dataSources.get(dbInfoId);
-		if (dataSource == null) {
-			return null;
-		}
-		try {
-			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-			ResultSet tables = metaData.getTables(null, null, tableName, new String[] { "TABLE" });
-			RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
-			RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
-					rowMapper);
-			List<TableMetaData> list = resultSetExtractor.extractData(tables);
-			tables.close();
-			if (list.isEmpty()) {
-				return null;
-			} else {
-				return list.get(0);
-			}
-		} catch (SQLException e) {
-			logger.warn("Error while accessing table meta data results", e);
-			return null;
 		}
 	}
 
