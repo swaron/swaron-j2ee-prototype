@@ -1,5 +1,6 @@
 package org.app.web;
 
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,6 +30,8 @@ public class WebParamInitializer{
 			appVersion = format.format(new Date());
 		}
 		servletContext.setAttribute("appVersion", appVersion);
+		
+		DriverManager.setLoginTimeout(10);
 	}
 
 }

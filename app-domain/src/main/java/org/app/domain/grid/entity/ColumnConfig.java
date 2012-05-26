@@ -1,18 +1,18 @@
 package org.app.domain.grid.entity;
 
 public class ColumnConfig {
-	private String mapping;
+	private String dbName;
 	private boolean hide;
 	private String name;
 	private String type;
 	private boolean hasAlias;
 
-	public String getMapping() {
-		return mapping;
+	public String getDbName() {
+		return dbName;
 	}
 
-	public void setMapping(String mapping) {
-		this.mapping = mapping;
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 
 	public boolean isHide() {

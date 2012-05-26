@@ -42,6 +42,12 @@ Ext.define('App.view.db.TableGrid', {
 		this.plugins = [rowEditing, headerFilter];
 		this.buildStore();
 		this.columns = this.getGridConfig().getGridColumns();
+		this.dockedItems = [{
+			xtype : 'pagingtoolbar',
+			store : this.store,
+			dock : 'bottom',
+			displayInfo : true
+		}];
 		this.callParent(arguments);
 	}
 });

@@ -1,6 +1,8 @@
 package org.app.application.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -45,12 +47,22 @@ public class DbMetaDataService {
 
     public DataSource ensureDataSource(Integer dbInfoId) {
         DbInfo dbInfo = dbInfoDao.find(DbInfo.class, dbInfoId);
-        DataSource dataSource = dbService.getDataSource(dbInfoAssembler.createKey(dbInfo));
+        String key = dbInfoAssembler.createKey(dbInfo);
+		DataSource dataSource = dbService.getDataSource(key);
         if (dataSource == null) {
-            dataSource = dbService.buildDataSource(dbInfoAssembler.createKey(dbInfo),
-                    dbInfoAssembler.createProperties(dbInfo));
+            syncDatasource();
+            dataSource = dbService.getDataSource(key);
         }
         return dataSource;
     }
+
+    private void syncDatasource() {
+		List<DbInfo> dbInfos = dbInfoDao.findAll(DbInfo.class);
+		HashMap<String, Properties> infos = new HashMap<String, Properties>();
+		for (DbInfo dbInfo : dbInfos) {
+			infos.put(dbInfoAssembler.createKey(dbInfo), dbInfoAssembler.createProperties(dbInfo));
+			dbService.syncDataSource(infos);
+		}
+	}
 
 }

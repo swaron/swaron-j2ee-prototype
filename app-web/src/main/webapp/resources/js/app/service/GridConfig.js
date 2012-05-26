@@ -72,7 +72,7 @@ Ext.define('App.service.GridConfig', {
 						var column = obj.columns[index];
 						var field = {};
 						field.name = column.name;
-						field.dbName = column.mapping;
+						field.dbName = column.dbName;
 						field.hide = column.hide;
 						if (self.typeMapping.hasOwnProperty(column.type)) {
 							field.type = self.typeMapping[column.type];
@@ -91,8 +91,8 @@ Ext.define('App.service.GridConfig', {
 						var column = obj.columns[index];
 						var field = {};
 						field.tableName = obj.tableName;
-						field.columnName = column.mapping;
-						field.header = column.mapping;
+						field.columnName = column.dbName;
+						field.header = column.dbName;
 						field.dataIndex = column.name;
 						field.sortable = true;
 						if (self.gridXTypeMapping.hasOwnProperty(column.type)) {

@@ -19,8 +19,10 @@ Ext.define('App.model.DbInfo', {
 	}, {
 		name : 'dbPasswd',
 		mapping : 'dbPasswd'
-	}]
-	,
+	}, {
+		name : 'updateTime',
+		mapping : 'updateTime'
+	}],
 	validations : [{
 		field : 'name',
 		type : 'presence'

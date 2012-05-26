@@ -3,6 +3,7 @@ package org.app.domain.grid.service;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -11,6 +12,8 @@ import java.util.Properties;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.SetUtils;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.BasicDataSourceFactory;
 import org.app.domain.grid.vo.ColumnMetaData;
@@ -20,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
+import org.springframework.jdbc.support.SQLErrorCodesFactory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +36,25 @@ public class ExternalDbService {
 		return dataSources.get(key);
 	}
 
-	public DataSource buildDataSource(String key, Properties prop) {
+	public synchronized void syncDataSource(HashMap<String, Properties> infos) {
+		Collection<String> toAdd = CollectionUtils.subtract(infos.keySet(), dataSources.keySet());
+		Collection<String> toRemove = CollectionUtils.subtract( dataSources.keySet(),infos.keySet());
+		for (String key : toRemove) {
+			DataSource dataSource = dataSources.remove(key);
+			if (dataSource instanceof BasicDataSource) {
+				try {
+					((BasicDataSource) dataSource).close();
+				} catch (SQLException e) {
+					logger.warn("unable to close datasource",e);
+				}
+			}
+		}
+		for (String key : toAdd) {
+			buildDataSource(key, infos.get(key));
+		}
+
+	}
+	public synchronized DataSource buildDataSource(String key, Properties prop) {
 		try {
 			DataSource dataSource = BasicDataSourceFactory.createDataSource(prop);
 			dataSources.put(key, dataSource);

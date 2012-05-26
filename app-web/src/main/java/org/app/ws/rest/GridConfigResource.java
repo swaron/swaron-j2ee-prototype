@@ -81,7 +81,7 @@ public class GridConfigResource {
             }
             config.setHasAlias(false);
             config.setHide(false);
-            config.setMapping(col.getColumnName());
+            config.setDbName(col.getColumnName());
             config.setName(col.getColumnName());
             config.setType(JdbcUtils.toClass(col.getDataType()).getSimpleName());
             columns.add(config);
@@ -118,13 +118,13 @@ public class GridConfigResource {
 			if (version != null && attr.getName().equals(version.getName())) {
 				columnConfig.setHide(true);
 			}
-			columnConfig.setMapping(attr.getName());
+			columnConfig.setDbName(attr.getName());
 			try {
 				Field field = clazz.getDeclaredField(attr.getName());
 				if (field.isAnnotationPresent(Column.class)) {
 					String name = field.getAnnotation(Column.class).name();
 					if(StringUtils.isNotEmpty(name)){
-					    columnConfig.setMapping(name);
+					    columnConfig.setDbName(name);
 					}
 				}
 				if(field.isAnnotationPresent(OneToMany.class)){
@@ -140,7 +140,7 @@ public class GridConfigResource {
 				columnConfig.setHide(true);
 				logger.warn("field " + attr.getName() + " of class " + clazz.getName() + " not found.");
 			}
-			if(codeDictionaryDao.findAliasCount(gridConfig.getTableName(), columnConfig.getMapping()) > 0){
+			if(codeDictionaryDao.findAliasCount(gridConfig.getTableName(), columnConfig.getDbName()) > 0){
 				columnConfig.setHasAlias(true);
 			}
 			columns.add(columnConfig);

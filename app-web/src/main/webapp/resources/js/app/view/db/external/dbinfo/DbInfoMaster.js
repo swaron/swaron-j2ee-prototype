@@ -24,6 +24,20 @@ Ext.define('App.view.db.external.dbinfo.DbInfoMaster', {
 			region : 'center'
 		}];
 		this.tbar = [{
+			text : 'Copy',
+			itemId : 'copy',
+			iconCls : 'icon-copy',
+			disabled : true,
+			handler : function(button) {
+				var master = button.up('dbinfomaster');
+				var grid = master.down('dbinfogrid');
+				var selected = grid.getSelectionModel().getLastSelected();
+				var newRec = selected.copy();
+				newRec.setId(null); // set id to null to make it as phantom
+				grid.getStore().add(newRec);
+				grid.getSelectionModel().select(newRec)
+			}
+		}, {
 			text : 'Add',
 			iconCls : 'icon-add',
 			handler : function(button) {
@@ -73,6 +87,7 @@ Ext.define('App.view.db.external.dbinfo.DbInfoMaster', {
 		// conflicts with the ComponentManager
 		App.log('selection change');
 		this.down('#delete').setDisabled(rs.length == 0);
+		this.down('#copy').setDisabled(rs.length == 0);
 		var detailPanel = this.getComponent('detailPanel');
 		if (rs.length) {
 			App.log('selected records length: ' + rs.length);
