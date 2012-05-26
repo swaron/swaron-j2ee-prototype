@@ -13,7 +13,6 @@ import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.SetUtils;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.BasicDataSourceFactory;
 import org.app.domain.grid.vo.ColumnMetaData;
@@ -23,7 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
-import org.springframework.jdbc.support.SQLErrorCodesFactory;
+import org.springframework.jdbc.support.DatabaseMetaDataCallback;
+import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.MetaDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,14 +39,14 @@ public class ExternalDbService {
 
 	public synchronized void syncDataSource(HashMap<String, Properties> infos) {
 		Collection<String> toAdd = CollectionUtils.subtract(infos.keySet(), dataSources.keySet());
-		Collection<String> toRemove = CollectionUtils.subtract( dataSources.keySet(),infos.keySet());
+		Collection<String> toRemove = CollectionUtils.subtract(dataSources.keySet(), infos.keySet());
 		for (String key : toRemove) {
 			DataSource dataSource = dataSources.remove(key);
 			if (dataSource instanceof BasicDataSource) {
 				try {
 					((BasicDataSource) dataSource).close();
 				} catch (SQLException e) {
-					logger.warn("unable to close datasource",e);
+					logger.warn("unable to close datasource", e);
 				}
 			}
 		}
@@ -54,6 +55,7 @@ public class ExternalDbService {
 		}
 
 	}
+
 	public synchronized DataSource buildDataSource(String key, Properties prop) {
 		try {
 			DataSource dataSource = BasicDataSourceFactory.createDataSource(prop);
@@ -65,69 +67,71 @@ public class ExternalDbService {
 		}
 	}
 
-	public List<ColumnMetaData> getColumnsResults(DataSource dataSource, String tableName) {
+	public List<ColumnMetaData> getColumnMetaDatas(DataSource dataSource, final String tableName) {
 		if (dataSource == null) {
 			return null;
 		}
 		try {
-			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-			ResultSet columns = metaData.getColumns(null, null, tableName, "");
-			RowMapper<ColumnMetaData> rowMapper = BeanPropertyRowMapper.newInstance(ColumnMetaData.class);
-			RowMapperResultSetExtractor<ColumnMetaData> resultSetExtractor = new RowMapperResultSetExtractor<ColumnMetaData>(
-					rowMapper);
-			List<ColumnMetaData> list = resultSetExtractor.extractData(columns);
-			columns.close();
-			return list;
-		} catch (SQLException e) {
+			DatabaseMetaDataCallback action = new DatabaseMetaDataCallback() {
+				@Override
+				public Object processMetaData(DatabaseMetaData dbmd) throws SQLException, MetaDataAccessException {
+					ResultSet tables = dbmd.getColumns(null, null, tableName, "");
+					RowMapper<ColumnMetaData> rowMapper = BeanPropertyRowMapper.newInstance(ColumnMetaData.class);
+					RowMapperResultSetExtractor<ColumnMetaData> resultSetExtractor = new RowMapperResultSetExtractor<ColumnMetaData>(
+							rowMapper);
+					List<ColumnMetaData> list = resultSetExtractor.extractData(tables);
+					tables.close();
+					return list;
+				}
+			};
+			return (List<ColumnMetaData>) JdbcUtils.extractDatabaseMetaData(dataSource, action);
+		} catch (MetaDataAccessException e) {
 			logger.warn("Error while accessing table meta data results", e);
 			return null;
 		}
 
 	}
 
-	public List<TableMetaData> getTableResults(DataSource dataSource) {
+	public List<TableMetaData> getTableMetaDatas(DataSource dataSource) {
+		return getTableMetaDatas(dataSource, "");
+	}
+
+	public List<TableMetaData> getTableMetaDatas(DataSource dataSource, final String tableName) {
 		if (dataSource == null) {
 			return null;
 		}
 		try {
-			DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-			ResultSet tables = metaData.getTables(null, null, "", new String[] { "TABLE" });
-			RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
-			RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
-					rowMapper);
-			List<TableMetaData> list = resultSetExtractor.extractData(tables);
-			tables.close();
-			return list;
-		} catch (SQLException e) {
+			DatabaseMetaDataCallback action = new DatabaseMetaDataCallback() {
+				@Override
+				public Object processMetaData(DatabaseMetaData dbmd) throws SQLException, MetaDataAccessException {
+					ResultSet tables = dbmd.getTables(null, null, tableName, new String[] { "TABLE" });
+					RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
+					RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
+							rowMapper);
+					List<TableMetaData> list = resultSetExtractor.extractData(tables);
+					tables.close();
+					return list;
+				}
+			};
+			return (List<TableMetaData>) JdbcUtils.extractDatabaseMetaData(dataSource, action);
+		} catch (MetaDataAccessException e) {
 			logger.warn("Error while accessing table meta data results", e);
 			return null;
 		}
-
 	}
 
 	public TableMetaData getTableMetaData(DataSource dataSource, String tableName) {
-	    if (dataSource == null) {
-	        return null;
-	    }
-	    try {
-	        DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-	        ResultSet tables = metaData.getTables(null, null, tableName, new String[] { "TABLE" });
-	        RowMapper<TableMetaData> rowMapper = BeanPropertyRowMapper.newInstance(TableMetaData.class);
-	        RowMapperResultSetExtractor<TableMetaData> resultSetExtractor = new RowMapperResultSetExtractor<TableMetaData>(
-	                rowMapper);
-	        List<TableMetaData> list = resultSetExtractor.extractData(tables);
-	        tables.close();
-	        if (list.isEmpty()) {
-	            return null;
-	        } else {
-	            return list.get(0);
-	        }
-	    } catch (SQLException e) {
-	        logger.warn("Error while accessing table meta data results", e);
-	        return null;
-	    }
+		if (dataSource == null) {
+			return null;
+		}
+		List<TableMetaData> list = getTableMetaDatas(dataSource, tableName);
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list.get(0);
+		}
 	}
-	
+
 	@PreDestroy
 	public void destroy() throws SQLException {
 		for (Entry<String, DataSource> e : dataSources.entrySet()) {

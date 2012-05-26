@@ -7,7 +7,7 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 	frame : true,
 	layout:'border',
 	config:{
-		maxTabs:10,
+		maxTabs:3,
 		database: App.getParam('database')
 	},
 	initComponent : function() {
@@ -37,6 +37,7 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 	createChildTab:function(tabs, dbInfoId, tableName){
 //		var tab = centerBox.getActiveTab();
 		var name = dbInfoId + '.'+ tableName;
+		var id = dbInfoId + '-'+ tableName;
 		Ext.create('App.service.GridConfig', {
 			dbInfoId : dbInfoId,
 			tableName : tableName,
@@ -44,19 +45,20 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 				load : function(gConfig) {
 					var tableGrid = Ext.create('App.view.db.TableGrid', {
 						gridConfig : gConfig,
-						itemId: name,
+						itemId: id,
 						closable : true,
 						title : name
 					});
 					tabs.add(tableGrid);
 					tabs.setActiveTab(tableGrid);
+					tableGrid.store.load();
 				}
 			}
 		});
 	},
 	onSelectTable:function(view, record, el, index){
 		var dbInfoId,tableName;
-		var tabs = this.down('#centerBox');
+		var tabs = this.child('tabpanel');
 		if(record.isLeaf()){
 			var parent = record.parentNode;
 			dbInfoId = parent.get('id'); 
@@ -65,12 +67,13 @@ Ext.define('App.view.db.external.browse.DbBrowserView', {
 			App.log('clicking on folder node fired a itemclick event.')
 			return ;
 		}
-		var name = dbInfoId + '.'+ tableName;
-		if(tabs.child('#' + name)){
-			tabs.setActiveTab(name);
+		var id = dbInfoId + '-'+ tableName;
+		if(tabs.child('#' + id)){
+			tabs.setActiveTab(id);
 		}else{
 			if(tabs.items.length >= this.getMaxTabs()){
-				var firstItem = tabs.child('box');
+				var firstItem = tabs.child('tablegrid');
+				App.log('to remove child tab');
 				tabs.remove(firstItem);
 			}
 			this.createChildTab(tabs,dbInfoId, tableName);

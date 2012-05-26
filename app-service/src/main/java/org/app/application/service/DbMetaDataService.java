@@ -32,7 +32,7 @@ public class DbMetaDataService {
 
     public List<TableMetaData> getTableMetaDatas(Integer dbInfoId) {
         DataSource dataSource = ensureDataSource(dbInfoId);
-        return dbService.getTableResults(dataSource);
+        return dbService.getTableMetaDatas(dataSource);
     }
 
     public TableMetaData getTableMetaData(Integer dbInfoId, String tableName) {
@@ -42,7 +42,7 @@ public class DbMetaDataService {
 
     public List<ColumnMetaData> getColumnMetaDatas(Integer dbInfoId, String tableName) {
         DataSource dataSource = ensureDataSource(dbInfoId);
-        return dbService.getColumnsResults(dataSource, tableName);
+        return dbService.getColumnMetaDatas(dataSource, tableName);
     }
 
     public DataSource ensureDataSource(Integer dbInfoId) {

@@ -13,7 +13,7 @@ public class DbInfoAssembler {
         properties.put("url", dbInfo.getUrl());
         properties.put("username", dbInfo.getDbUser());
         properties.put("password", dbInfo.getDbPasswd());
-        properties.put("maxWait", 10000);
+        properties.put("maxWait", "10000");
         properties.put("removeAbandoned", true);
         return properties;
     }

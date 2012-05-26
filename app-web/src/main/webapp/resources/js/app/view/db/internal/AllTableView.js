@@ -37,6 +37,7 @@ Ext.define('App.view.db.internal.AllTableView', {
 					});
 					tabs.add(tableGrid);
 					tabs.setActiveTab(tableGrid);
+					tableGrid.store.load();
 				}
 			}
 		});

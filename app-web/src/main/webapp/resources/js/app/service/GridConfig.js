@@ -143,7 +143,7 @@ Ext.define('App.service.GridConfig', {
 						storeId : 'store-' + db + '-' + obj.tableName,
 						remoteSort : true,
 						remoteFilter : true,
-						autoLoad : true,
+						autoLoad : false,
 						autoSync : true,
 						pageSize : 16,
 						model : modelName,

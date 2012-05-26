@@ -20,7 +20,7 @@ Ext.define('Ext.ux.grid.feature.AutoColumnWidth', {
 //			this.view.on('viewready', this.afterViewReady, this, {
 //				single : true
 //			});
-			this.grid.getStore().on('load',this.afterViewReady, this, {
+			this.grid.mon(this.grid.store,'load',this.afterViewReady, this, {
 				single : true
 			});
 			this.minColWidth = this.minColWidth || this.resizer.minColWidth;

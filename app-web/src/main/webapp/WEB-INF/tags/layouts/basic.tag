@@ -66,6 +66,7 @@
 		<div id="side2"></div>
 		<div id="footer"></div>
 	</div>
+<script type="text/javascript" src="${extJs}/fix/ext-4.1.0-fix.js?v=${appVersion}"></script>
 <jsp:invoke fragment="scripts" />
 <script type="text/javascript">
 Ext.onReady(function(){
