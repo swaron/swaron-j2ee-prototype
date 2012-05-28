@@ -16,10 +16,10 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang.StringUtils;
-import org.app.application.service.DbMetaDataService;
+import org.app.application.service.GridService;
 import org.app.domain.grid.entity.ColumnConfig;
 import org.app.domain.grid.entity.GridConfig;
-import org.app.domain.grid.service.ExternalDbService;
+import org.app.domain.grid.service.DbMetaDataService;
 import org.app.domain.grid.vo.ColumnMetaData;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
@@ -47,10 +47,10 @@ public class GridConfigResource {
 	CodeDictionaryDao codeDictionaryDao;
 	
 	@Autowired
-	ExternalDbService customDbManager;
+	DbMetaDataService customDbManager;
 	
 	@Autowired
-	DbMetaDataService metaDataService;
+	GridService metaDataService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
@@ -70,15 +70,14 @@ public class GridConfigResource {
         
         TableMetaData tableMetaData = metaDataService.getTableMetaData(dbInfoId, tableName);
         
-        gridConfig.setIdProperty(tableMetaData.getSelfReferencingColName());
-        logger.debug("found identity column: " + gridConfig.getIdProperty());
+        gridConfig.setIdProperty(tableMetaData.getPrimaryKeyCol());
+        if(gridConfig.getIdProperty() == null){
+            logger.warn("no identity column for table :" + tableName);
+        }
         List<ColumnMetaData> columnsResults = metaDataService.getColumnMetaDatas(dbInfoId, tableName);
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
         for (ColumnMetaData col : columnsResults) {
             ColumnConfig config = new ColumnConfig();
-            if("YES".equalsIgnoreCase(col.getIsAutoincrement()) ){
-                gridConfig.setIdProperty(col.getColumnName());
-            }
             config.setHasAlias(false);
             config.setHide(false);
             config.setDbName(col.getColumnName());

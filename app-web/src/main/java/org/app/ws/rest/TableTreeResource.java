@@ -6,8 +6,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.service.DbMetaDataService;
-import org.app.domain.grid.service.ExternalDbService;
+import org.app.application.service.GridService;
+import org.app.domain.grid.service.DbMetaDataService;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.framework.paging.PagingAssembler;
 import org.app.framework.web.tree.TreeNode;
@@ -38,10 +38,10 @@ public class TableTreeResource {
     DbInfoAssembler dbInfoAssembler;
     
     @Autowired
-    ExternalDbService dbService;
+    DbMetaDataService dbService;
     
     @Autowired
-    DbMetaDataService metaDataService;
+    GridService metaDataService;
 
     
     @RequestMapping(value = "", method = RequestMethod.GET)

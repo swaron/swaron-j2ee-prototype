@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.service.DbMetaDataService;
-import org.app.domain.grid.service.ExternalDbService;
+import org.app.application.service.GridService;
+import org.app.domain.grid.service.DbMetaDataService;
 import org.app.framework.paging.PagingAssembler;
 import org.app.framework.paging.PagingForm;
 import org.app.framework.paging.PagingParam;
@@ -49,10 +49,10 @@ public class ExternalTableContentResource {
     DbInfoAssembler dbInfoAssembler;
     
     @Autowired
-    ExternalDbService dbService;
+    DbMetaDataService dbService;
     
     @Autowired
-    DbMetaDataService metaDataService;
+    GridService metaDataService;
     
 	@RequestMapping(value = "/{dbInfoId}/{tableName}", method = RequestMethod.POST)
 	@ResponseBody

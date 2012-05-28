@@ -7,7 +7,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
-import org.app.domain.grid.service.ExternalDbService;
+import org.app.domain.grid.service.DbMetaDataService;
 import org.app.domain.grid.vo.ColumnMetaData;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.repo.jpa.dao.DbInfoDao;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DbMetaDataService {
+public class GridService {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -28,7 +28,7 @@ public class DbMetaDataService {
     DbInfoAssembler dbInfoAssembler;
 
     @Autowired
-    ExternalDbService dbService;
+    DbMetaDataService dbService;
 
     public List<TableMetaData> getTableMetaDatas(Integer dbInfoId) {
         DataSource dataSource = ensureDataSource(dbInfoId);

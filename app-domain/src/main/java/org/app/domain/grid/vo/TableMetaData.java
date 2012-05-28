@@ -8,6 +8,16 @@ public class TableMetaData {
     private String tableType;
     private String remarks;
 
+    private String primaryKeyCol;
+    
+    public String getPrimaryKeyCol() {
+        return primaryKeyCol;
+    }
+
+    public void setPrimaryKeyCol(String primaryKeyCol) {
+        this.primaryKeyCol = primaryKeyCol;
+    }
+
     public String getTableCat() {
         return tableCat;
     }

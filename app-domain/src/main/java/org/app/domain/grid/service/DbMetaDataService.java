@@ -28,7 +28,7 @@ import org.springframework.jdbc.support.MetaDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExternalDbService {
+public class DbMetaDataService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	private HashMap<String, DataSource> dataSources = new HashMap<String, DataSource>();
@@ -119,7 +119,30 @@ public class ExternalDbService {
 			return null;
 		}
 	}
+    public List<ColumnMetaData> getPrimaryKeyCols(DataSource dataSource, final String tableName) {
+        if (dataSource == null) {
+            return null;
+        }
+        try {
+            DatabaseMetaDataCallback action = new DatabaseMetaDataCallback() {
+                @Override
+                public Object processMetaData(DatabaseMetaData dbmd) throws SQLException, MetaDataAccessException {
+                    ResultSet tables = dbmd.getPrimaryKeys(null, null, tableName);
+                    RowMapper<ColumnMetaData> rowMapper = BeanPropertyRowMapper.newInstance(ColumnMetaData.class);
+                    RowMapperResultSetExtractor<ColumnMetaData> resultSetExtractor = new RowMapperResultSetExtractor<ColumnMetaData>(
+                            rowMapper);
+                    List<ColumnMetaData> list = resultSetExtractor.extractData(tables);
+                    tables.close();
+                    return list;
+                }
+            };
+            return (List<ColumnMetaData>) JdbcUtils.extractDatabaseMetaData(dataSource, action);
+        } catch (MetaDataAccessException e) {
+            logger.warn("Error while accessing primary key meta data results", e);
+            return null;
+        }
 
+    }
 	public TableMetaData getTableMetaData(DataSource dataSource, String tableName) {
 		if (dataSource == null) {
 			return null;
@@ -127,9 +150,16 @@ public class ExternalDbService {
 		List<TableMetaData> list = getTableMetaDatas(dataSource, tableName);
 		if (list.isEmpty()) {
 			return null;
-		} else {
-			return list.get(0);
 		}
+		TableMetaData tableMetaData = list.get(0);
+		List<ColumnMetaData> primaryKeyCols = getPrimaryKeyCols(dataSource, tableName);
+		if(primaryKeyCols.size() == 0){
+		    String pKey = primaryKeyCols.get(0).getColumnName();
+            tableMetaData.setPrimaryKeyCol(pKey);
+		}else{
+		    logger.warn("composite primary key are not supported, the table is: " + tableName);
+		}
+		return tableMetaData;
 	}
 
 	@PreDestroy
