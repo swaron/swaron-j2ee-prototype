@@ -36,11 +36,10 @@ public class UserDao extends AbstractJdbcSupport {
 
 	public SecUser update(SecUser user) {
 		user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-
-		jdbcTemplate
-				.update("update sec_user set email = ?, enabled =?, username = ?, login_failed_count = ? where sec_user_id = ?",
-						user.getEmail(), user.getEnabled(), user.getUsername(), user.getLoginFailedCount(),
-						user.getSecUserId());
+		String sql = "update sec_user set email = ?, enabled =?, username = ?, login_failed_count = ? where sec_user_id = ?";
+		Object[] args = new Object[] { user.getEmail(), user.getEnabled(), user.getUsername(),
+				user.getLoginFailedCount(), user.getSecUserId() };
+		jdbcTemplate.update(sql, args);
 		return user;
 	}
 
