@@ -1,16 +1,12 @@
-package org.app.repo.service;
+package org.app.domain.grid.service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.LinkedHashMap;
-import java.util.List;
 
-
-public abstract class JdbcUtils {
-	
+public class SqlTypeUtils {
     public static Class<? extends Object> toClass(int type) {
         Class<? extends Object> result = Object.class;
         switch( type ) {

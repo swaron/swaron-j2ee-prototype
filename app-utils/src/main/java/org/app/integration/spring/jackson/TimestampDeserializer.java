@@ -14,6 +14,9 @@ public class TimestampDeserializer extends StdScalarDeserializer<Timestamp> {
         super(Timestamp.class);
     }
 
+    /**
+     * fix null pointer exception when value is null.
+     */
     @Override
     public java.sql.Timestamp deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
             JsonProcessingException {

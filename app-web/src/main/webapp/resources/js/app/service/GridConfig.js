@@ -89,33 +89,36 @@ Ext.define('App.service.GridConfig', {
 				if (Ext.isArray(obj.columns)) {
 					for (var index = 0; index < obj.columns.length; index++) {
 						var column = obj.columns[index];
-						var field = {};
-						field.tableName = obj.tableName;
-						field.columnName = column.dbName;
-						field.header = column.dbName;
-						field.dataIndex = column.name;
-						field.sortable = true;
+						var col = {};
+						col.tableName = obj.tableName;
+						col.columnName = column.dbName;
+						col.header = column.dbName;
+						col.dataIndex = column.name;
+						col.sortable = true;
 						if (self.gridXTypeMapping.hasOwnProperty(column.type)) {
-							field.xtype = self.gridXTypeMapping[column.type];
+							col.xtype = self.gridXTypeMapping[column.type];
 						}
 
-						field.filter = {
+						col.filter = {
 							xtype : 'textfield'
 						};
-						field.field = {
+						col.field = {
 							xtype : 'textfield'
 						}
-						if (field.xtype == 'datecolumn') {
-							field.format = 'Y-m-d';
-							field.field = {
+						if (col.xtype == 'datecolumn') {
+							col.format = 'Y-m-d';
+							col.field = {
 								xtype : 'datefield',
 								format : 'Y-m-d'
 							}
 						}
 						if (column.hasAlias == true) {
-							field.hasAlias = true;
+							col.hasAlias = true;
 						}
-						gridColumns.push(field);
+						if(column.dbName == obj.idProperty){
+							delete col.field;
+						}
+						gridColumns.push(col);
 					}
 				}
 				this.gridColumns = gridColumns;
