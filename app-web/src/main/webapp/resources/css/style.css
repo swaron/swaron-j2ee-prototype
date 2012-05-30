@@ -14,3 +14,60 @@
 	line-height: 32px;
 }
 
+.rounded {
+    border-radius: 5px 5px 5px 5px;
+}
+.callout {
+    background: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAZAAA/+4ADkFkb2JlAGTAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgAcgAKAwERAAIRAQMRAf/EAFgAAQEBAQEAAAAAAAAAAAAAAAADAgQKAQEAAAAAAAAAAAAAAAAAAAAAEAEAAQQCAwAAAAAAAAAAAAAAAWGh0RIRUZHhExEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A93AAK6RW2ANIrbANgArpFbYA0itsA2ADoABT51t7A+dbewV4nqfEgcT1PiQXABXSK2wBpFbYBsAHQAAADoAAAB//2Q==") repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #DFDFDF;
+    clear: both;
+    margin-bottom: 18px;
+    padding: 18px;
+}
+
+
+/* Palette color codes */
+
+/* Feel free to copy&paste color codes to your application */
+
+
+
+.primary-1 { background-color: #165BB4 }
+
+.primary-2 { background-color: #285896 }
+
+.primary-3 { background-color: #0B438A }
+
+.primary-4 { background-color: #3678CD }
+
+.primary-5 { background-color: #4E86CD }
+
+
+
+.secondary-1 { background-color: #FFCB0A }
+
+.secondary-2 { background-color: #D5B02A }
+
+.secondary-3 { background-color: #C49B05 }
+
+.secondary-4 { background-color: #FFD333 }
+
+.secondary-5 { background-color: #FFDA53 }
+
+
+
+.secondary-b-1 { background-color: #FF650A }
+
+.secondary-b-2 { background-color: #D56A2A }
+
+.secondary-b-3 { background-color: #C44C05 }
+
+.secondary-b-4 { background-color: #FF7F33 }
+
+.secondary-b-5 { background-color: #FF9353 }
+
+
+
+/* end */
+
+

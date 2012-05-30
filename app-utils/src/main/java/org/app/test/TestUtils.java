@@ -21,7 +21,7 @@ public abstract class TestUtils {
             for (String dstkey : dstkeys) {
                 Object srcObj = srcMap.get(dstkey);
                 Object dstObj = dstMap.get(dstkey);
-                if(ObjectUtils.notEqual(srcObj, dstObj)){
+                if(!ObjectUtils.equals(srcObj, dstObj)){
                     throw new AssertionError("some property are not equal.");
                 }
             }
