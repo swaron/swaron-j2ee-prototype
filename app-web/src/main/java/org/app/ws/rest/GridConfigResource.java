@@ -20,11 +20,11 @@ import org.app.application.service.GridService;
 import org.app.domain.grid.entity.ColumnConfig;
 import org.app.domain.grid.entity.GridConfig;
 import org.app.domain.grid.service.DbMetaDataService;
+import org.app.domain.grid.service.SqlTypeUtils;
 import org.app.domain.grid.vo.ColumnMetaData;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
 import org.app.repo.jpa.dao.GenericDao;
-import org.app.repo.service.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +82,7 @@ public class GridConfigResource {
             config.setHide(false);
             config.setDbName(col.getColumnName());
             config.setName(col.getColumnName());
-            config.setType(JdbcUtils.toClass(col.getDataType()).getSimpleName());
+            config.setType(SqlTypeUtils.toClass(col.getDataType()).getSimpleName());
             columns.add(config);
         }
         gridConfig.setColumns(columns);

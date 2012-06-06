@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class JdbcUtils {
 	
-    public static Class<? extends Object> toClass(int type) {
+    private static Class<? extends Object> toClass(int type) {
         Class<? extends Object> result = Object.class;
         switch( type ) {
         case Types.CHAR:
