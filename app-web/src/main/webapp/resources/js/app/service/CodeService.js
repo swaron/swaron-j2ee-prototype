@@ -61,8 +61,8 @@ Ext.define('App.service.CodeService', {
 					},
 					autoLoad : false
 				});
-				var oldAsync = Ext.Ajax.async;
-				Ext.Ajax.async = false;
+//				var oldAsync = Ext.Ajax.async;
+//				Ext.Ajax.async = false;
 				this.remoteStore.load({
 					scope : this,
 					callback : function(records, operation, success) {
@@ -84,7 +84,7 @@ Ext.define('App.service.CodeService', {
 						localStore.sync();
 					}
 				});
-				Ext.Ajax.async = oldAsync;
+//				Ext.Ajax.async = oldAsync;
 			}
 		} else {
 			this.remoteStore = Ext.create('Ext.data.Store', {
@@ -174,4 +174,9 @@ Ext.define('App.service.CodeService', {
 	constructor : function() {
 		this.initStore();
 	}
+},function(){
+	var created = Ext.ClassManager.isCreated('App.service.CodeService');
+	App.log('should be created: ' + created);
 });
+var outcreated = Ext.ClassManager.isCreated('App.service.CodeService');
+console.log('out side: should be created: ' + outcreated);

@@ -1,5 +1,5 @@
 Ext.define('App.service.GridConfig', {
-	requires : ['Ext.data.Store', 'Ext.data.Model','Ext.data.reader.Json'],
+	requires : ['Ext.data.Store', 'App.service.CodeService','Ext.data.Model','Ext.data.reader.Json'],
     mixins: {
         observable: 'Ext.util.Observable'
     },

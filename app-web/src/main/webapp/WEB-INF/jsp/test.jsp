@@ -6,22 +6,22 @@
 <layout:basic title="" pageClass="">
 <jsp:attribute name="scripts">
 <script type="text/javascript">
-Ext.require('Ext.tree.Panel');
-Ext.require('App.store.TableTree');
-Ext.onReady(function(){
-	Ext.create('Ext.tree.Panel', {
-	    renderTo: Ext.getBody(),
-	    title: 'Simple Tree',
-	    width: 150,
-	    height: 150,
-	    
-	    store:Ext.create('App.store.TableTree',{
-	    	rootVisible:true,
-	    	autoLoad : true,
-	    	database : 'test'
-	    })
-	});
+Ext.require('App.view.db.internal.AllTableView');
+
+Ext.application({
+	name : 'App',
+	appFolder : App.cfg.jsPath + '/app',
+	launch : function() {
+		App.log('application launch');
+		Ext.widget('alltableview', {
+			width : '100%',
+			height : 500,
+			renderTo : Ext.getBody()
+		});
+		
+	}
 });
+
 </script>
 </jsp:attribute>
 <jsp:body>

@@ -3,7 +3,8 @@
  * 
  */
 Ext.onReady(function() {
-	Ext.override(Ext.view.AbstractView, {
+    Ext.define("Ext.bugfix.view.AbstractView", {
+        override: "Ext.view.AbstractView",
 		onRender : function() {
 			var me = this;
 			this.callOverridden();
@@ -12,5 +13,6 @@ Ext.onReady(function() {
 			}
 
 		}
-	});
+    });
+
 });
