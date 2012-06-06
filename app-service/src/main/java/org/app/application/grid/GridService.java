@@ -1,4 +1,4 @@
-package org.app.application.service;
+package org.app.application.grid;
 
 import java.util.HashMap;
 import java.util.List;

@@ -24,7 +24,7 @@ public class GenericDao extends AbstractDaoSupport {
 		}
 	}
 
-	private EntityType<?> getEntityByName(String tableName) {
+	public EntityType<?> getEntityByName(String tableName) {
 		Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 		EntityType<?> entity = null;
 		for (EntityType<?> entityType : entities) {

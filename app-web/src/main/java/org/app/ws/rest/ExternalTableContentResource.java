@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.service.GridService;
+import org.app.application.grid.GridService;
 import org.app.domain.grid.service.DbMetaDataService;
 import org.app.domain.grid.vo.ColumnMetaData;
 import org.app.domain.grid.vo.TableMetaData;
@@ -66,7 +66,6 @@ public class ExternalTableContentResource {
 	@ResponseBody
 	public PagingResult<?> read(@PathVariable Integer dbInfoId, @PathVariable String tableName, PagingForm form) {
 	    DataSource dataSource = gridService.ensureDataSource(dbInfoId);
-	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 	    PagingParam pagingParam = pagingAssembler.toPagingParam(form);
 	    return genericDao.findPaing(dataSource, tableName, pagingParam);
 	}

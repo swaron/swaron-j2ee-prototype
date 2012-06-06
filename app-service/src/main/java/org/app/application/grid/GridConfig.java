@@ -1,6 +1,7 @@
-package org.app.domain.grid.entity;
+package org.app.application.grid;
 
 import java.util.List;
+
 
 public class GridConfig {
 	String tableName;

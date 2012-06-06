@@ -71,8 +71,7 @@ Ext.define('App.service.GridConfig', {
 					for (var index = 0; index < obj.columns.length; index++) {
 						var column = obj.columns[index];
 						var field = {};
-						field.name = column.name;
-						field.dbName = column.dbName;
+						field.name = column.entityName;
 						field.hide = column.hide;
 						if (self.typeMapping.hasOwnProperty(column.type)) {
 							field.type = self.typeMapping[column.type];
@@ -91,9 +90,9 @@ Ext.define('App.service.GridConfig', {
 						var column = obj.columns[index];
 						var col = {};
 						col.tableName = obj.tableName;
-						col.columnName = column.dbName;
-						col.header = column.dbName;
-						col.dataIndex = column.name;
+						col.columnName = column.columnName;
+						col.header = column.columnName;
+						col.dataIndex = column.entityName;
 						col.sortable = true;
 						if (self.gridXTypeMapping.hasOwnProperty(column.type)) {
 							col.xtype = self.gridXTypeMapping[column.type];
@@ -115,7 +114,7 @@ Ext.define('App.service.GridConfig', {
 						if (column.hasAlias == true) {
 							col.hasAlias = true;
 						}
-						if(column.dbName == obj.idProperty){
+						if(column.columnName == obj.idProperty){
 							delete col.field;
 						}
 						gridColumns.push(col);

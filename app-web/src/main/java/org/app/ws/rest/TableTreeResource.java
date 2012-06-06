@@ -6,7 +6,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.service.GridService;
+import org.app.application.grid.GridService;
 import org.app.domain.grid.service.DbMetaDataService;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.framework.paging.PagingAssembler;

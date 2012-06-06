@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.persistence.Table;
 import javax.persistence.metamodel.EntityType;
 
-import org.app.domain.grid.entity.GridConfig;
+import org.app.application.grid.GridConfig;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
 import org.app.repo.jpa.dao.GenericDao;
 import org.slf4j.Logger;
