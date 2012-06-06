@@ -64,5 +64,4 @@ public class GridConfigResource {
 		GridConfig gridConfig = gridAssembler.createGridConfig(entity);
 		return gridConfig;
     }
-
 }

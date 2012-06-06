@@ -16,10 +16,10 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang.StringUtils;
+import org.app.domain.grid.service.SqlTypeUtils;
 import org.app.domain.grid.vo.ColumnMetaData;
 import org.app.domain.grid.vo.TableMetaData;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
-import org.app.repo.service.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +104,7 @@ public class GridAssembler {
 	        config.setHide(false);
 	        config.setColumnName(col.getColumnName());
 	        config.setEntityName(col.getColumnName());
-	        config.setType(JdbcUtils.toClass(col.getDataType()).getSimpleName());
+	        config.setType(SqlTypeUtils.toClass(col.getDataType()).getSimpleName());
 	        columns.add(config);
 	    }
 	    gridConfig.setColumns(columns);

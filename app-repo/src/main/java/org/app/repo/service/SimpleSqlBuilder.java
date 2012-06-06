@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,7 +63,7 @@ public class SimpleSqlBuilder {
 			String replacement = replacements.get(matcher.group(1));
 			if (replacement != null) {
 				// matcher.appendReplacement(buffer, replacement);
-				// see comment
+				// use this in case there are '$1' in replacement 
 				matcher.appendReplacement(buffer, "");
 				buffer.append(replacement);
 			}
@@ -73,7 +74,7 @@ public class SimpleSqlBuilder {
 
 	public String count(DataSource dataSource, String tableName, PagingParam pagingParam) {
 		sqlChecker.checkTableName(tableName);
-		return "select count(1) from " + tableName;
+		return "select count(1) from " + tableName + " " + buildFilter(pagingParam);
 	}
 
 	public String findAll(DataSource dataSource, String tableName, PagingParam pagingParam) {
@@ -87,35 +88,74 @@ public class SimpleSqlBuilder {
 			logger.info("Unsupported database type for DataSource [ {} ], availabe types are: {}", dataSource,
 					dbNameMapper.getErrorCodesMap().keySet());
 		}
-		StringBuilder buffer = new StringBuilder();
+		String template = "";
 		if (pagingParam.getStart() != null && pagingParam.getLimit() != null) {
 			if (dbName.equals("MySQL") || dbName.equals("PostgreSQL") || dbName.equals("H2")) {
-				String template = "select t.* from :table as t limit :limit offset :start";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select t.* from :table as t :where_clause :order_clause limit :limit offset :start";
 			} else if (dbName.equals("Oracle")) {
-				String template = "select t.* from (select rownum as _index, t1.* form :table as t1) t  where _index >= :start and _index < (:start + :limit)";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select t.* from (select rownum as _index, t1.* form :table as t1 :where_clause :order_clause) t  where _index >= :start and _index < (:start + :limit)";
 			} else if (dbName.equals("DB2") || dbName.equals("MS-SQL") || dbName.equals("Derby")) {
-				String template = "select t.* from (select row_number() over() as _index, t1.* form :table as t1) t  where _index >= :start and _index < (:start + :limit)";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select t.* from (select row_number() over() as _index, t1.* form :table as t1 :where_clause :order_clause) t  where _index >= :start and _index < (:start + :limit)";
 			} else if (dbName.equals("HSQL")) {
-				String template = "select limit :start :limit t.* from :table as t)";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select limit :start :limit t.* from :table as t :where_clause :order_clause)";
 			} else if (dbName.equals("Sybase")) {
-				String template = "select t.* from (select rank() as _index, t1.* form :table as t1) t  where _index >= :start and _index < (:start + :limit)";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select t.* from (select rank() as _index, t1.* form :table as t1 :where_clause :order_clause) t  where _index >= :start and _index < (:start + :limit)";
 			} else if (dbName.equals("Informix")) {
-				String template = "select skip :start first :limit t.* from :table as t";
-				buffer.append(replaceTokens(template, parameters));
+				template = "select skip :start first :limit t.* from :table as t :where_clause :order_clause";
 			}
 		} else {
-			String template = "select t.* from :table as t";
-			buffer.append(replaceTokens(template, parameters));
+			template = "select t.* from :table as t :where_clause :order_clause";
 		}
-		return buffer.toString();
+		parameters.put("order_clause", buildOrder(pagingParam));
+		parameters.put("where_clause", buildFilter(pagingParam));
+		template = replaceTokens(template, parameters);
+		return replaceTokens(template, parameters);
 	}
 
-	public UpdateStatement update(DataSource dataSource, String tableName, String pKeyCol,
+	private String buildFilter(PagingParam pagingParam) {
+	    LinkedHashMap<String, String> filters = pagingParam.getFilter();
+	    List<String> tokens = new ArrayList<String>(2);
+	    if(filters == null){
+            return "";
+        }
+	    for (Entry<String, String> sort : filters.entrySet()) {
+	        String key = sort.getKey();
+	        String value = sort.getValue();
+	        sqlChecker.checkColName(key);
+	        sqlChecker.checkColValue(value);
+	        tokens.add(key + " like '%" + value + "%'");
+	    }
+	    if(!tokens.isEmpty()){
+	        return "where " + StringUtils.join(tokens, " and ");
+	    }else{
+	        return "";
+	    }
+    }
+
+    private String buildOrder(PagingParam pagingParam) {
+        LinkedHashMap<String, String> sorts = pagingParam.getSort();
+        List<String> tokens = new ArrayList<String>(2);
+        if(sorts == null){
+            return "";
+        }
+        for (Entry<String, String> sort : sorts.entrySet()) {
+            String key = sort.getKey();
+            String value = sort.getValue();
+            sqlChecker.checkColName(key);
+            if (value.equalsIgnoreCase("asc")) {
+                tokens.add(key + " asc");
+            } else {
+                tokens.add(key + " desc");
+            }
+        }
+        if(!tokens.isEmpty()){
+            return "order by " + StringUtils.join(tokens, ',');
+        }else{
+            return "";
+        }
+    }
+
+    public UpdateStatement update(DataSource dataSource, String tableName, String pKeyCol,
 			HashMap<String, SqlParameterValue> sqlParams) {
 		StringBuffer buffer = new StringBuffer();
 		HashMap<String, String> parameters = new HashMap<String, String>();
