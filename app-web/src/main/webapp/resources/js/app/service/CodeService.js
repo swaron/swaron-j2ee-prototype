@@ -174,9 +174,4 @@ Ext.define('App.service.CodeService', {
 	constructor : function() {
 		this.initStore();
 	}
-},function(){
-	var created = Ext.ClassManager.isCreated('App.service.CodeService');
-	App.log('should be created: ' + created);
 });
-var outcreated = Ext.ClassManager.isCreated('App.service.CodeService');
-console.log('out side: should be created: ' + outcreated);
