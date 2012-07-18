@@ -10,7 +10,7 @@
 	<name>Application Parent</name>
 
 	<modules>
-		<module>../app-schema</module>
+		<module>../app-data</module>
 		<module>../app-utils</module>
 		<module>../app-repo</module>
 		<module>../app-domain</module>

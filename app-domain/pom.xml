@@ -32,7 +32,7 @@
 		<!-- sub modules -->
 		<dependency>
 			<groupId>org.app</groupId>
-			<artifactId>app-schema</artifactId>
+			<artifactId>app-data</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>

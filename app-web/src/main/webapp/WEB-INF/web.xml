@@ -51,6 +51,31 @@
 		<filter-name>ExpiresFilter</filter-name>
 		<url-pattern>/resources/*</url-pattern>
 	</filter-mapping>
+	<!-- filter used to set encoding of url in get request -->
+	<filter>
+		<filter-name>urlEncodingFilter</filter-name>
+		<filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>urlEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- spring security -->	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 	<servlet>
 		<servlet-name>page</servlet-name>

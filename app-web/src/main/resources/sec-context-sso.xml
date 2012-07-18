@@ -5,17 +5,17 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<global-method-security pre-post-annotations="enabled">
+	<global-method-security pre-post-annotations="enabled" >
 		<expression-handler ref="aclExpressionHandler" />
 	</global-method-security>
 
 	<http pattern="/resources/**" security="none" />
 	<http use-expressions="false">
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		<intercept-url pattern="/**" access="ROLE_USER" />
+		<intercept-url pattern="/user" access="ROLE_USER" />
 		<form-login />
 		<logout />
-		<remember-me key="fm" />
+		<remember-me key="app" />
 		<session-management>
 			<concurrency-control max-sessions="3" error-if-maximum-exceeded="true" />
 		</session-management>
@@ -23,15 +23,23 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="rememberMeAuthenticationProvider" />
 		<authentication-provider>
-		 	<jdbc-user-service data-source-ref="dataSource_app" />
+			<user-service>
+		      <user name="alice" password="d7e6351eaa13189a5a3641bab846c8e8c69ba39f" authorities="ROLE_USER, ROLE_ADMIN" />
+		      <user name="bob" password="4e7421b1b8765d8f9406d87e7cc6aa784c4ab97f" authorities="ROLE_USER" />
+		    </user-service>
 			<password-encoder hash="md5">
+				<salt-source user-property="username" />
+			</password-encoder>
+		</authentication-provider>
+		<authentication-provider>
+		 	<jdbc-user-service data-source-ref="dataSource_app" />
+			<password-encoder hash="sha">
 				<salt-source user-property="username" />
 			</password-encoder>
 		</authentication-provider>
 	</authentication-manager>
 
 	<beans:bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
-		<beans:property name="key" value="fm" />
+		<beans:property name="key" value="app" />
 	</beans:bean>
-	
 </beans:beans>

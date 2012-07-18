@@ -42,4 +42,5 @@
 		<property name="basenames" value="classpath:messages" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
+
 </beans>

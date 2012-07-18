@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.app.application.assemble.DbInfoAssembler;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class GridService {
@@ -30,6 +32,15 @@ public class GridService {
     @Autowired
     DbMetaDataService dbService;
 
+    @PostConstruct
+    private void init() {
+    	System.out.println("grid service init method: #######");
+    	Assert.notNull(dbService, "db Service is not injected");
+    	if(dbService != null){
+    		System.out.println("db service injected .!!!! ###################");
+    	}
+	}
+    
     public List<TableMetaData> getTableMetaDatas(Integer dbInfoId) {
         DataSource dataSource = ensureDataSource(dbInfoId);
         return dbService.getTableMetaDatas(dataSource);
