@@ -1,4 +1,4 @@
-package org.app.domain.grid.service;
+package org.app.application.grid;
 
 import java.io.IOException;
 import java.sql.DatabaseMetaData;

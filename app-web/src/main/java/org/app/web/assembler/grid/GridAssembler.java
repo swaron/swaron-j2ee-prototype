@@ -16,7 +16,7 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang.StringUtils;
-import org.app.domain.grid.service.SqlTypeUtils;
+import org.app.application.grid.SqlTypeUtils;
 import org.app.domain.vo.grid.ColumnMetaData;
 import org.app.domain.vo.grid.TableMetaData;
 import org.app.repo.jpa.dao.CodeDictionaryDao;

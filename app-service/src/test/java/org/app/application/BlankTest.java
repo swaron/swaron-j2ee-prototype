@@ -1,4 +1,4 @@
-package org.app.domain;
+package org.app.application;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.app.application.grid.DataSourceService;
+import org.app.application.grid.DatabaseMetaDataService;
 import org.app.application.grid.DbInfoAssembler;
-import org.app.domain.grid.service.DatabaseMetaDataService;
 import org.app.domain.vo.grid.ColumnMetaData;
 import org.app.domain.vo.grid.TableMetaData;
 import org.app.framework.paging.PagingAssembler;

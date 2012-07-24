@@ -1,4 +1,4 @@
-package org.app.domain.grid.service;
+package org.app.application.grid;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,7 +10,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.app.domain.BaseTest;
+import org.app.application.BaseTest;
+import org.app.application.grid.DatabaseMetaDataService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,12 +22,12 @@ import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.test.annotation.Rollback;
 
-public class CustomDbManagerTest extends BaseTest {
+public class DatabaseMetaDataServiceTest extends BaseTest {
 
     private JdbcTemplate jdbcTemplate;
     
     @Autowired
-    private DatabaseMetaDataService customDbManager;
+    private DatabaseMetaDataService metaDataService;
 
     @Autowired
     @Qualifier("dataSource_app")

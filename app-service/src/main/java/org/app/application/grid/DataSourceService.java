@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.BasicDataSourceFactory;
-import org.app.domain.grid.service.DatabaseMetaDataService;
 import org.app.repo.jpa.dao.DbInfoDao;
 import org.app.repo.jpa.po.DbInfo;
 import org.slf4j.Logger;

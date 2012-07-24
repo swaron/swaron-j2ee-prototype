@@ -1,4 +1,4 @@
-package org.app.domain;
+package org.app.application;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
