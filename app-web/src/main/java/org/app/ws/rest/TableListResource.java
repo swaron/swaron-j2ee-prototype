@@ -7,9 +7,9 @@ import java.util.Set;
 import javax.persistence.Table;
 import javax.persistence.metamodel.EntityType;
 
-import org.app.application.grid.GridConfig;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
 import org.app.repo.jpa.dao.GenericDao;
+import org.app.web.dto.grid.GridConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

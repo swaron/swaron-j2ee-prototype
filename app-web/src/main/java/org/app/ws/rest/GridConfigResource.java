@@ -3,15 +3,16 @@ package org.app.ws.rest;
 import java.util.List;
 
 import javax.persistence.metamodel.EntityType;
+import javax.sql.DataSource;
 
-import org.app.application.grid.GridAssembler;
-import org.app.application.grid.GridConfig;
-import org.app.application.grid.GridService;
-import org.app.domain.grid.service.DbMetaDataService;
-import org.app.domain.grid.vo.ColumnMetaData;
-import org.app.domain.grid.vo.TableMetaData;
+import org.app.application.grid.DataSourceService;
+import org.app.domain.grid.service.DatabaseMetaDataService;
+import org.app.domain.vo.grid.ColumnMetaData;
+import org.app.domain.vo.grid.TableMetaData;
 import org.app.repo.jpa.dao.CodeDictionaryDao;
 import org.app.repo.jpa.dao.GenericDao;
+import org.app.web.assembler.grid.GridAssembler;
+import org.app.web.dto.grid.GridConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,10 @@ public class GridConfigResource {
 	CodeDictionaryDao codeDictionaryDao;
 	
 	@Autowired
-	DbMetaDataService dbMetaDataService;
+	DatabaseMetaDataService metaDataService;
 	
 	@Autowired
-	GridService gridService;
+	DataSourceService dataSourceService;
 	
 	@Autowired
 	GridAssembler gridAssembler;
@@ -53,8 +54,9 @@ public class GridConfigResource {
 	}
 
     private GridConfig getCustomDbGridConfig(Integer dbInfoId, String tableName) {
-        TableMetaData tableMetaData = gridService.getTableMetaData(dbInfoId, tableName);
-        List<ColumnMetaData> columnMetaDatas = gridService.getColumnMetaDatas(dbInfoId, tableName);
+        DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
+        TableMetaData tableMetaData = metaDataService.getTableMetaData(dataSource, tableName);
+        List<ColumnMetaData> columnMetaDatas = metaDataService.getColumnMetaDatas(dataSource, tableName);
         return gridAssembler.createGridConfig(tableMetaData, columnMetaDatas);
     }
 

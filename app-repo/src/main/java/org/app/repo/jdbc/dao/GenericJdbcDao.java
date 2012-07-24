@@ -26,7 +26,7 @@ public class GenericJdbcDao {
 	@Autowired
 	SimpleSqlBuilder sqlBuilder;
 
-	public PagingResult<?> findPaing(DataSource dataSource, String tableName, PagingParam pagingParam) {
+	public PagingResult<Map<String, Object>> findPaing(DataSource dataSource, String tableName, PagingParam pagingParam) {
 		String countSql = sqlBuilder.count(dataSource, tableName, pagingParam);
 		String findAllSql = sqlBuilder.findAll(dataSource, tableName, pagingParam);
 

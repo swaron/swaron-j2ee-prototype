@@ -7,7 +7,7 @@ import java.util.HashMap;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
-import org.app.repo.jpa.model.DbInfo;
+import org.app.repo.jpa.po.DbInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;

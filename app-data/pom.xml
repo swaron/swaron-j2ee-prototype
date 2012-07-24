@@ -7,8 +7,7 @@
 	<name>Application Data Definition</name>
 	<version>1.0-SNAPSHOT</version>
 	<description>
-		Project basic data definition, shared by all project, contains 
-		database models, application Value Object, schema defintion object, may be web form or result
+		Project basic data definition, contains the data definition for DAO model class, service simple value objects, pojo, and web form and result class.
 		</description>
 	<build>
 		<plugins>
@@ -45,4 +44,22 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>1.1.1.Final</version>
+		</dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+        </dependency>
+        <!-- schema is part of data model, separate it into a individual jar so it can be delivered to other system -->
+		<dependency>
+			<groupId>org.app</groupId>
+			<artifactId>app-schema</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

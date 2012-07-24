@@ -3,7 +3,7 @@ package org.app.repo.jpa.dao;
 import java.util.LinkedHashMap;
 
 import org.app.framework.paging.PagingParam;
-import org.app.repo.jpa.model.CodeDictionary;
+import org.app.repo.jpa.po.CodeDictionary;
 import org.springframework.stereotype.Repository;
 
 @Repository

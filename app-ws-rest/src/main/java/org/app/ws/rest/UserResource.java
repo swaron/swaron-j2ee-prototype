@@ -5,7 +5,7 @@ import org.app.framework.paging.PagingForm;
 import org.app.framework.paging.PagingParam;
 import org.app.framework.paging.PagingResult;
 import org.app.repo.jpa.dao.UserDao;
-import org.app.repo.jpa.model.SecUser;
+import org.app.repo.jpa.po.SecUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

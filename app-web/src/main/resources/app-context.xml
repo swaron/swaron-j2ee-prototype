@@ -19,7 +19,6 @@
 	<import resource="classpath:/jpa-context.xml"/>
 	<import resource="classpath:/mvc-context.xml"/>
 	<import resource="classpath:/cache-context.xml"/>
-	<import resource="classpath:/oxm-context.xml"/>
 	<import resource="classpath:/email-context.xml"/>
 	<import resource="classpath:/acl-context.xml"/>
 	<import resource="classpath:/sec-context.xml"/>

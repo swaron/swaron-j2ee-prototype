@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.grid.GridService;
-import org.app.domain.grid.service.DbMetaDataService;
-import org.app.domain.grid.vo.TableMetaData;
+import org.app.application.grid.DataSourceService;
+import org.app.application.grid.DbInfoAssembler;
+import org.app.domain.grid.service.DatabaseMetaDataService;
+import org.app.domain.vo.grid.TableMetaData;
 import org.app.framework.paging.PagingAssembler;
 import org.app.framework.web.tree.TreeNode;
 import org.app.framework.web.tree.TreeResult;
 import org.app.repo.jpa.dao.DbInfoDao;
-import org.app.repo.jpa.model.DbInfo;
+import org.app.repo.jpa.po.DbInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class TableTreeResource {
     DbInfoAssembler dbInfoAssembler;
     
     @Autowired
-    DbMetaDataService dbService;
+    DatabaseMetaDataService metaDataService;
     
     @Autowired
-    GridService metaDataService;
+    DataSourceService dataSourceService;
 
     
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -65,7 +65,8 @@ public class TableTreeResource {
         }else{
             try {
                 Integer dbInfoId = Integer.parseInt(node);
-                List<TableMetaData> results = metaDataService.getTableMetaDatas(dbInfoId);
+                DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
+                List<TableMetaData> results = metaDataService.getTableMetaDatas(dataSource);
                 if(results == null){
                     treeResult.setSuccess(false);
                 }else{

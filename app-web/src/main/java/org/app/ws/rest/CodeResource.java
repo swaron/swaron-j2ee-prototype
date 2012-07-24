@@ -3,7 +3,7 @@ package org.app.ws.rest;
 import java.util.List;
 
 import org.app.repo.jpa.dao.GenericDao;
-import org.app.repo.jpa.model.CodeDictionary;
+import org.app.repo.jpa.po.CodeDictionary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,11 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import org.app.application.assemble.DbInfoAssembler;
-import org.app.application.grid.GridService;
-import org.app.domain.grid.service.DbMetaDataService;
-import org.app.domain.grid.vo.ColumnMetaData;
-import org.app.domain.grid.vo.TableMetaData;
+import org.app.application.grid.DataSourceService;
+import org.app.application.grid.DbInfoAssembler;
+import org.app.domain.grid.service.DatabaseMetaDataService;
+import org.app.domain.vo.grid.ColumnMetaData;
+import org.app.domain.vo.grid.TableMetaData;
 import org.app.framework.paging.PagingAssembler;
 import org.app.framework.paging.PagingForm;
 import org.app.framework.paging.PagingParam;
@@ -51,10 +51,10 @@ public class ExternalTableContentResource {
     DbInfoAssembler dbInfoAssembler;
     
     @Autowired
-    DbMetaDataService metaDataService;
+    DatabaseMetaDataService metaDataService;
     
     @Autowired
-    GridService gridService;
+    DataSourceService dataSourceService;
     
 	@RequestMapping(value = "/{dbInfoId}/{tableName}", method = RequestMethod.POST)
 	@ResponseBody
@@ -64,8 +64,8 @@ public class ExternalTableContentResource {
 
 	@RequestMapping(value = "/{dbInfoId}/{tableName}", method = RequestMethod.GET)
 	@ResponseBody
-	public PagingResult<?> read(@PathVariable Integer dbInfoId, @PathVariable String tableName, PagingForm form) {
-	    DataSource dataSource = gridService.ensureDataSource(dbInfoId);
+	public PagingResult<Map<String, Object>> read(@PathVariable Integer dbInfoId, @PathVariable String tableName, PagingForm form) {
+	    DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
 	    PagingParam pagingParam = pagingAssembler.toPagingParam(form);
 	    return genericDao.findPaing(dataSource, tableName, pagingParam);
 	}
@@ -74,7 +74,7 @@ public class ExternalTableContentResource {
 	@ResponseBody
 	public PagingResult<Map<String, Object>> update(@PathVariable Integer dbInfoId, @PathVariable String tableName,
 			@PathVariable String id, @RequestBody Map<String, Object> body) throws IOException {
-		DataSource dataSource = gridService.ensureDataSource(dbInfoId);
+		DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
 		TableMetaData tableMetaData = metaDataService.getTableMetaData(dataSource, tableName);
 		List<ColumnMetaData> columnMetaDatas = metaDataService.getColumnMetaDatas(dataSource, tableName);
 		HashMap<String, SqlParameterValue> sqlParams = metaDataService.buildSqlParameter(body, columnMetaDatas);

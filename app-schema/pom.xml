@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<name>Application Schema Definition</name>
 	<version>1.0-SNAPSHOT</version>
-	<description>Project contract definition via schema, the contracts include contracts with other system and contract between module</description>
+	<description>Project contract definition via schema, the contracts with other system. for example, the data definition for web service.</description>
 	<build>
 		<plugins>
 			<plugin>

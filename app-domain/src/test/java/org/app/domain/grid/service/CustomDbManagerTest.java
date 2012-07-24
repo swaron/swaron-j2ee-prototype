@@ -26,7 +26,7 @@ public class CustomDbManagerTest extends BaseTest {
     private JdbcTemplate jdbcTemplate;
     
     @Autowired
-    private DbMetaDataService customDbManager;
+    private DatabaseMetaDataService customDbManager;
 
     @Autowired
     @Qualifier("dataSource_app")

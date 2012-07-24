@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.app.repo.jpa.BaseRepositoryTest;
-import org.app.repo.jpa.model.SecUser;
+import org.app.repo.jpa.po.SecUser;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;

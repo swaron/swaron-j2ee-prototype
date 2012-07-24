@@ -3,6 +3,7 @@ package org.app.repo.jpa.model;
 import java.io.IOException;
 
 import org.app.integration.spring.jackson.CustomObjectMapper;
+import org.app.repo.jpa.po.SecUser;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.junit.Test;
