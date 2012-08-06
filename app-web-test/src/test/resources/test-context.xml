@@ -13,6 +13,11 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="org.app" />
+
+	<import resource="classpath:/oxm-context.xml" />
+	<import resource="classpath:/rest-context.xml" />
+	<import resource="classpath:/soap-context.xml" />
+
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreUnresolvablePlaceholders" value="true"/>
 		<property name="locations">
@@ -23,5 +28,4 @@
 	</bean>
 	<aop:config proxy-target-class="true">
 	</aop:config>
-	<import resource="classpath:/rest-context.xml" />
 </beans>

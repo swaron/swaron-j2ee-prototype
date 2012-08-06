@@ -11,10 +11,10 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class SayHello {
-
-	@PayloadRoot(localPart = "checkingRequest", namespace = "http://app.org/schemas/domain1/category1/v10")
+    
+    @PayloadRoot(localPart = "queryOrderRequest", namespace = "http://app.org/schemas/domain1/category1/v10")
 	@ResponsePayload
-	public QueryOrderResponse echo(@RequestPayload QueryOrderRequest element) {
+	public QueryOrderResponse echo(@RequestPayload QueryOrderRequest orderRequest) {
 		QueryOrderResponse response = new QueryOrderResponse();
 		Result result = new Result();
 		result.setCode(ResultCode.SUCCESS);

@@ -35,19 +35,4 @@ public class AppDomain1RestTest extends BaseTest{
     	QueryOrderResponse response = jsonTemplate.getForObject(printUrl, QueryOrderResponse.class);
     	System.out.println(ToStringBuilder.reflectionToString(response));
     }
-    public static void main(String[] args) {
-        String value = "<=123.2";
-        Pattern pattern = Pattern.compile("([<>=]+)\\s?([\\d.]+)");
-        Matcher matcher = pattern.matcher(value);
-        System.out.println(matcher.groupCount());
-//        matcher.matches();
-//        matcher.find();
-        if(matcher.groupCount() < 2){
-            System.out.println(matcher.groupCount());
-        }
-        String operator = matcher.group(1);
-        String opValue = matcher.group(2);
-        System.out.println(operator);
-        System.out.println(opValue);
-    }
 }

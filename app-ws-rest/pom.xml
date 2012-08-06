@@ -14,10 +14,6 @@
 	<name>Application Rest Web Service </name>
 	<url>http://localhost/app-ws-rest</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-version>3.1.0.RELEASE</spring-version>
-	</properties>
 	<scm>
 		<connection>scm:git:https://swaron@github.com/swaron/swaron-j2ee-prototype.git</connection>
 		<developerConnection>scm:git:https://swaron@github.com/swaron/swaron-j2ee-prototype.git</developerConnection>

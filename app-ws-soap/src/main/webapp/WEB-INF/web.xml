@@ -17,7 +17,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:/*-context.xml
-			classpath:datasource_jndi.xml
+			classpath:datasource_embed.xml
 		</param-value>
 	</context-param>
 	<listener>

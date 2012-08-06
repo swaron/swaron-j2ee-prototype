@@ -19,7 +19,6 @@
 	</description>
 
 	<properties>
-		<hibernate-version>3.6.9.Final</hibernate-version>
 		<db.name>app</db.name>
 	</properties>
 	<build>

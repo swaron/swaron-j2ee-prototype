@@ -15,8 +15,6 @@
 	<url>http://localhost/app-ws</url>
 	
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-version>3.1.0.RELEASE</spring-version>
 		<hibernate-version>3.6.9.Final</hibernate-version>
 	</properties>
 	
