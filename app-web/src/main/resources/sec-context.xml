@@ -23,7 +23,7 @@
 		</session-management>
 	</http>
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider ref="rememberMeAuthenticationProv;,lider" />
+		<authentication-provider ref="rememberMeAuthenticationProvider" />
 		<authentication-provider>
 		 	<jdbc-user-service data-source-ref="dataSource_app" />
 			<password-encoder hash="md5">

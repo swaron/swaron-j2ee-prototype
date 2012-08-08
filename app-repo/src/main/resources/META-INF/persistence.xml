@@ -4,19 +4,19 @@
 	<persistence-unit name="app-repo" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<mapping-file>META-INF/orm.xml</mapping-file>
-		<class>org.app.repo.jpa.model.AclClass</class>
-		<class>org.app.repo.jpa.model.AclEntry</class>
-		<class>org.app.repo.jpa.model.AclObjectIdentity</class>
-		<class>org.app.repo.jpa.model.AclSid</class>
-		<class>org.app.repo.jpa.model.SecGroup</class>
-		<class>org.app.repo.jpa.model.SecGroupAuthority</class>
-		<class>org.app.repo.jpa.model.SecGroupMember</class>
-		<class>org.app.repo.jpa.model.SecUser</class>
-		<class>org.app.repo.jpa.model.UserDetail</class>
-		<class>org.app.repo.jpa.model.CodeDictionary</class>
-		<class>org.app.repo.jpa.model.DetailRange</class>
-		<class>org.app.repo.jpa.model.DetailType</class>
-		<class>org.app.repo.jpa.model.DbInfo</class>
+		<class>org.app.repo.jpa.po.AclClass</class>
+		<class>org.app.repo.jpa.po.AclEntry</class>
+		<class>org.app.repo.jpa.po.AclObjectIdentity</class>
+		<class>org.app.repo.jpa.po.AclSid</class>
+		<class>org.app.repo.jpa.po.SecGroup</class>
+		<class>org.app.repo.jpa.po.SecGroupAuthority</class>
+		<class>org.app.repo.jpa.po.SecGroupMember</class>
+		<class>org.app.repo.jpa.po.SecUser</class>
+		<class>org.app.repo.jpa.po.UserDetail</class>
+		<class>org.app.repo.jpa.po.CodeDictionary</class>
+		<class>org.app.repo.jpa.po.DetailRange</class>
+		<class>org.app.repo.jpa.po.DetailType</class>
+		<class>org.app.repo.jpa.po.DbInfo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.EhCacheRegionFactory"/>

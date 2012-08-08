@@ -47,5 +47,25 @@ public class GenericJdbcDao {
 					+ "table:{}, content: {}", new Object[] { update, tableName, sqlParams });
 		}
 	}
+	public void insertRecord(DataSource dataSource, String tableName, String pKeyCol, HashMap<String, SqlParameterValue> sqlParams) {
+	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+	    UpdateStatement statement = sqlBuilder.insert(dataSource, tableName, pKeyCol, sqlParams);
+	    //TODO: return generated id value
+	    int update = jdbcTemplate.update(statement.sql, statement.args);
+	    if (update != 1) {
+	        logger.warn("update statement expect one row to be affected, but the reuslt is {}.\n"
+	                + "table:{}, content: {}", new Object[] { update, tableName, sqlParams });
+	    }
+	}
+
+    public void deleteRecord(DataSource dataSource, String tableName, String pKeyCol, Integer id) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        UpdateStatement statement = sqlBuilder.delete(dataSource, tableName, pKeyCol, id);
+        int update = jdbcTemplate.update(statement.sql, statement.args);
+        if (update != 1) {
+            logger.warn("update statement expect one row to be affected, but the reuslt is {}.\n"
+                    + "table:{}, content: {}", new Object[] { update, tableName, id });
+        }
+    }
 
 }

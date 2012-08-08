@@ -6,7 +6,7 @@
 			<access>FIELD</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<package>org.app.repo.jpa.model</package>
+	<package>org.app.repo.jpa.po</package>
 	<!--
 	<entity class="SecGroupAuthority">
 		<named-query name="groupAuthorityByGroup">

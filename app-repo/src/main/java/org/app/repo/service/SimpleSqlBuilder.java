@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,6 +182,47 @@ public class SimpleSqlBuilder {
 		Object[] args = values.toArray(new Object[values.size()]);
 		return new UpdateStatement(buffer.toString(), args);
 	}
+    
+    public UpdateStatement insert(DataSource dataSource, String tableName, String pKeyCol,
+            HashMap<String, SqlParameterValue> sqlParams) {
+        StringBuffer buffer = new StringBuffer();
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        Set<String> keySet = sqlParams.keySet();
+        List<String> keys = new ArrayList<String>();
+        List<String> holders = new ArrayList<String>();
+        List<Object> values = new ArrayList<Object>();
+        for (String key : keySet) {
+            if (key.equals(pKeyCol) ) {
+                // primary key specified,allow this
+            }
+            sqlChecker.checkColName(key);
+            keys.add(key);
+            holders.add("?");
+            values.add(sqlParams.get(key));
+        }
+        sqlChecker.checkTableName(tableName);
+        parameters.put("key_fragment", StringUtils.join(keys, ","));
+        parameters.put("val_fragment", StringUtils.join(holders, ","));
+        parameters.put("table", tableName);
+        sqlChecker.checkColName(pKeyCol);
+        String template = "insert into :table (:col_fragment) values (:val_fragment)";
+        buffer.append(replaceTokens(template, parameters));
+        Object[] args = values.toArray(new Object[values.size()]);
+        return new UpdateStatement(buffer.toString(), args);
+    }
+    
+    public UpdateStatement delete(DataSource dataSource, String tableName, String pKeyCol, Integer id) {
+        StringBuffer buffer = new StringBuffer();
+        List<Object> values = new ArrayList<Object>();
+        values.add(id);
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put("table", tableName);
+        parameters.put("pKeyCol", pKeyCol);
+        String template = "delete from :table  where :pKeyCol = ?";
+        buffer.append(replaceTokens(template, parameters));
+        Object[] args = values.toArray(new Object[values.size()]);
+        return new UpdateStatement(buffer.toString(), args);
+    }
 
 	public static class UpdateStatement {
 		public final String sql;

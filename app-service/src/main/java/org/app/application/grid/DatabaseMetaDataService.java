@@ -136,8 +136,7 @@ public class DatabaseMetaDataService {
 		return tableMetaData;
 	}
 
-	public HashMap<String, SqlParameterValue> buildSqlParameter(Map<String, Object> body,
-			List<ColumnMetaData> columnMetaDatas) {
+	public HashMap<String, SqlParameterValue> buildSqlParameter(List<ColumnMetaData> columnMetaDatas,Map<String, Object> body) {
 		HashMap<String, ColumnMetaData> colMap = new HashMap<String, ColumnMetaData>();
 		for (ColumnMetaData columnMetaData : columnMetaDatas) {
 			colMap.put(columnMetaData.getColumnName(), columnMetaData);
