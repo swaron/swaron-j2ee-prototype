@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.IdentifierGeneratorHelper;
 import org.hibernate.id.IdentityGenerator;
 import org.hibernate.id.PostInsertIdentityPersister;
@@ -69,8 +69,8 @@ public class Jdbc3IdentityGenerator extends IdentityGenerator {
 
 		@Override
 		protected PreparedStatement prepare(String insertSQL, SessionImplementor session) throws SQLException {
-			return session.getBatcher().prepareStatement( insertSQL, keyColumns );
-//			return session.getTransactionCoordinator().getJdbcCoordinator().getStatementPreparer().prepareStatement( insertSQL, keyColumns );
+//			return session.getBatcher().prepareStatement( insertSQL, keyColumns );
+			return session.getTransactionCoordinator().getJdbcCoordinator().getStatementPreparer().prepareStatement( insertSQL, keyColumns );
 		}
 
 		@Override
@@ -79,8 +79,8 @@ public class Jdbc3IdentityGenerator extends IdentityGenerator {
 			ResultSet rs = null;
 			try {
 				rs = insert.getGeneratedKeys();
-				return IdentifierGeneratorHelper.getGeneratedIdentity(rs, getPersister().getIdentifierType());
-//				return IdentifierGeneratorHelper.getGeneratedIdentity(rs, keyColumns[0], getPersister().getIdentifierType());
+//				return IdentifierGeneratorHelper.getGeneratedIdentity(rs, getPersister().getIdentifierType());
+				return IdentifierGeneratorHelper.getGeneratedIdentity(rs, keyColumns[0], getPersister().getIdentifierType());
 			} finally {
 				if (rs != null) {
 					rs.close();
