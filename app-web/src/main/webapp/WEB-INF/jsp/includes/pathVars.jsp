@@ -8,8 +8,8 @@
 <c:set var="resourcePath" value="${contextPath}/resources" scope="request" />
 <c:set var="jsPath" value="${resourcePath}/js" scope="request" />
 <c:set var="cssPath" value="${resourcePath}/css" scope="request" />
-<c:set var="extJs" value="${resourcePath}/ext/js" scope="request"/>
-<c:set var="extCss" value="${resourcePath}/ext/resources/css" scope="request"/>
+<c:set var="extJs" value="${resourcePath}/extjs" scope="request"/>
+<c:set var="extCss" value="${resourcePath}/extjs/resources/css" scope="request"/>
 
 <c:set var="locale" value="${pageContext.response.locale}" scope="request" />
 <c:set var="lang" value="${pageContext.response.locale.language}" scope="request" />

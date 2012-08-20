@@ -4,7 +4,7 @@ Ext.require([
     'Ext.grid.plugin.CellEditing',
     'Ext.grid.Panel',
     'Ext.data.Store',
-    'Ext.ux.grid.HeaderFilters',
+    'Ext.ux2.grid.HeaderFilters',
     'Ext.grid.column.Date',
     'App.model.SecUser',
     'App.service.CodeService',
@@ -81,7 +81,7 @@ Ext.onReady(function(){
     var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1
     });
-    var headerFilter = Ext.create('Ext.ux.grid.HeaderFilters');
+    var headerFilter = Ext.create('Ext.ux2.grid.HeaderFilters');
     
     var grid = Ext.create('Ext.grid.Panel', {
     	selModel: {

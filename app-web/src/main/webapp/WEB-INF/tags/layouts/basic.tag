@@ -35,8 +35,10 @@
 	    disableCaching : false
 	});
 	Ext.Loader.setPath('Ext', '${extJs}/src');
-	Ext.Loader.setPath('Ext.ux', '${extJs}/ux');
+	Ext.Loader.setPath('Ext.ux', '${extJs}/examples/ux');
 	Ext.Loader.setPath('App', '${jsPath}/app');
+	Ext.Loader.setPath('Lib', '${resourcePath}/libjs/src');
+	Ext.Loader.setPath('Ext.ux2', '${resourcePath}/extjs-ux2');
 </script>
 <jwr:script src="/bundles/js/base.js" useRandomParam="false"/>
 <!-- dynamic loading version end -->

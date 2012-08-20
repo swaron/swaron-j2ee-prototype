@@ -2,8 +2,8 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 	requires : [
 	    'App.service.CodeService',
 	    'Ext.grid.plugin.RowEditing',
-	    'Ext.ux.grid.HeaderFilters',
-	    'Ext.ux.grid.feature.AutoColumnWidth',
+	    'Ext.ux2.grid.HeaderFilters',
+	    'Ext.ux2.grid.feature.AutoColumnWidth',
 	    'Ext.grid.column.Date',
 	    'Ext.data.Store',
 	    'App.model.SecUser',
@@ -38,14 +38,14 @@ Ext.define('App.view.sample.secuser.SecUserGrid', {
 	// this.callParent(arguments);
 	// },
 	initComponent : function() {
-		var headerFilter = Ext.create('Ext.ux.grid.HeaderFilters');
+		var headerFilter = Ext.create('Ext.ux2.grid.HeaderFilters');
 		var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 			errorSummary : false
 		});
 		this.headerFilter = headerFilter;
 		this.rowEditing = rowEditing;
 		
-		var autoWidthFeature = Ext.create('Ext.ux.grid.feature.AutoColumnWidth',{
+		var autoWidthFeature = Ext.create('Ext.ux2.grid.feature.AutoColumnWidth',{
 			autoWidth:true,
 			maxColWidth:200,
 			minColWidth:20
