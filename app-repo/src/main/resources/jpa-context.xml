@@ -25,7 +25,6 @@
 	</bean>
 	
 	<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="database" value="${app.database.vendor}"></property>
 		<property name="showSql" value="false"/>
 	</bean>
 </beans>
