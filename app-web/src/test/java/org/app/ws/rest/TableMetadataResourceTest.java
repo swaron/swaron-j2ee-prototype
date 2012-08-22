@@ -1,19 +1,16 @@
 package org.app.ws.rest;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import junit.framework.Assert;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.app.web.BaseWebTest;
 import org.app.web.dto.grid.GridConfig;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class TableMetadataResourceTest extends BaseWebTest{
 

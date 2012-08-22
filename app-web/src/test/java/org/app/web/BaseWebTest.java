@@ -1,7 +1,6 @@
 package org.app.web;
 
 import org.app.test.ExposeTestContextTestExecutionListener;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,6 +12,8 @@ import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ContextConfiguration({ "classpath:/test-context.xml" })
 @TestExecutionListeners({ ExposeTestContextTestExecutionListener.class })

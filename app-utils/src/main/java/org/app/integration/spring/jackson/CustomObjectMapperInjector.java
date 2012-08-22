@@ -4,12 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class CustomObjectMapperInjector {
@@ -24,8 +25,8 @@ public class CustomObjectMapperInjector {
         if(requestMappingHandlerAdapter != null){
             List<HttpMessageConverter<?>> messageConverters = requestMappingHandlerAdapter.getMessageConverters();
             for (HttpMessageConverter<?> messageConverter : messageConverters) {
-                if (messageConverter instanceof MappingJacksonHttpMessageConverter) {
-                    MappingJacksonHttpMessageConverter m = (MappingJacksonHttpMessageConverter) messageConverter;
+                if (messageConverter instanceof MappingJackson2HttpMessageConverter) {
+                	MappingJackson2HttpMessageConverter m = (MappingJackson2HttpMessageConverter) messageConverter;
                     m.setObjectMapper(objectMapper);
                 }
             }
