@@ -62,7 +62,6 @@
 		<property name="defaultViews">
 			<list>
 				<!-- for application/json -->
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 			</list>
 		</property>
 	</bean>

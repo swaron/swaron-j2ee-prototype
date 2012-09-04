@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!--refer to for detail: http://blog.springsource.com/2009/09/28/spring-security-kerberos/ -->
+	<!-- ktpass /out http-web.keytab /mapuser http-web.springsource.com@domain 
+		/princ HTTP/web.springsource.com@domain /pass * -->
 
-	<global-method-security pre-post-annotations="enabled" >
+
+
+
+
+	<global-method-security pre-post-annotations="enabled">
 		<expression-handler ref="aclExpressionHandler" />
 	</global-method-security>
 
@@ -13,33 +21,51 @@
 	<http use-expressions="false">
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/user" access="ROLE_USER" />
+		<custom-filter ref="spnegoAuthenticationProcessingFilter"
+			position="BASIC_PROCESSING_FILTER" />
 		<form-login />
 		<logout />
 		<remember-me key="app" />
 		<session-management>
-			<concurrency-control max-sessions="3" error-if-maximum-exceeded="true" />
+			<concurrency-control max-sessions="3"
+				error-if-maximum-exceeded="true" />
 		</session-management>
 	</http>
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="rememberMeAuthenticationProvider" />
+		<authentication-provider ref="kerberosServiceAuthenticationProvider" />
 		<authentication-provider>
-			<user-service>
-		      <user name="alice" password="d7e6351eaa13189a5a3641bab846c8e8c69ba39f" authorities="ROLE_USER, ROLE_ADMIN" />
-		      <user name="bob" password="4e7421b1b8765d8f9406d87e7cc6aa784c4ab97f" authorities="ROLE_USER" />
-		    </user-service>
-			<password-encoder hash="md5">
-				<salt-source user-property="username" />
-			</password-encoder>
-		</authentication-provider>
-		<authentication-provider>
-		 	<jdbc-user-service data-source-ref="dataSource_app" />
+			<jdbc-user-service data-source-ref="dataSource_app" />
 			<password-encoder hash="sha">
 				<salt-source user-property="username" />
 			</password-encoder>
 		</authentication-provider>
 	</authentication-manager>
+	<beans:bean id="spnegoEntryPoint"
+		class="org.springframework.security.extensions.kerberos.web.SpnegoEntryPoint" />
 
-	<beans:bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+	<beans:bean id="spnegoAuthenticationProcessingFilter"
+		class="org.springframework.security.extensions.kerberos.web.SpnegoAuthenticationProcessingFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+
+	<beans:bean id="kerberosServiceAuthenticationProvider"
+		class="org.springframework.security.extensions.kerberos.KerberosServiceAuthenticationProvider">
+		<beans:property name="ticketValidator">
+			<beans:bean
+				class="org.springframework.security.extensions.kerberos.SunJaasKerberosTicketValidator">
+				<beans:property name="servicePrincipal" value="HTTP/web.springsource.com" />
+				<beans:property name="keyTabLocation" value="classpath:http-web.keytab" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="userDetailsService" ref="dummyUserDetailsService" />
+	</beans:bean>
+
+	<!-- Just returns the User authenticated by Kerberos and gives him the ROLE_USER -->
+	<beans:bean id="dummyUserDetailsService"
+		class="org.springframework.security.extensions.kerberos.sample.DummyUserDetailsService" />
+	<beans:bean id="rememberMeAuthenticationProvider"
+		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
 		<beans:property name="key" value="app" />
 	</beans:bean>
 </beans:beans>

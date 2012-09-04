@@ -12,6 +12,14 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>
@@ -35,14 +43,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.7</version>
@@ -61,6 +61,38 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+					<additionalConfig>
+						<file>
+							<name>.settings/org.eclipse.jpt.core.prefs</name>
+							<content>
+							<![CDATA[eclipse.preferences.version=1
+org.eclipse.jpt.core.platform=eclipselink2_4
+org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=false
+org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/annotations]]>
+							</content>
+						</file>
+						<file>
+							<name>.settings/org.eclipse.wst.common.project.facet.core.prefs.xml</name>
+							<content>
+							<![CDATA[<root>
+  <facet id="jpt.jpa">
+    <node name="libprov">
+      <attribute name="provider-id" value="jpa-no-op-library-provider"/>
+    </node>
+  </facet>
+</root>]]>
+							</content>
+						</file>
+					</additionalConfig>
+					<additionalProjectFacets>
+					   <jpt.jpa>2.0</jpt.jpa>
+					</additionalProjectFacets>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	<dependencies>
