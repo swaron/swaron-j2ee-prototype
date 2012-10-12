@@ -1,9 +1,9 @@
-Ext.define('Ext.ux2.datetime.DateTimeMenu', {
+Ext.define('Ext.ux.datetime.DateTimeMenu', {
 	  extend: 'Ext.menu.Menu',
 	  
 	  alias: 'widget.datetimemenu',
 	  
-	  requires: ['Ext.ux2.datetime.DateTimePicker'],
+	  requires: ['Ext.ux.datetime.DateTimePicker'],
 	  
 	  hideOnClick: true,
 	  pickerId: null,

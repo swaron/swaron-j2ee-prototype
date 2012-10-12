@@ -1,10 +1,10 @@
-﻿Ext.define('Ext.ux2.datetime.DateTimePicker', {
+﻿Ext.define('Ext.ux.datetime.DateTimePicker', {
 	extend : 'Ext.picker.Date',
 	alias : 'widget.datetimepicker',
 	timeFormat : 'H:i:s',
 	timeLabel : 'Time',
 	todayText : 'Now',
-	requires : ['Ext.ux2.datetime.TimePickerField'],
+	requires : ['Ext.ux.datetime.TimePickerField'],
 
 	initComponent : function() {
 		// keep time part for value

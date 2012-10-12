@@ -1,7 +1,7 @@
 ﻿/**
  * 时间输入框, 三个整数框分别输入时,分,秒.
  */
-Ext.define('Ext.ux2.datetime.TimePickerField', {
+Ext.define('Ext.ux.datetime.TimePickerField', {
 	extend : 'Ext.form.field.Base',
 	alias : 'widget.timepicker',
 	alternateClassName : 'Ext.form.field.TimePickerField',

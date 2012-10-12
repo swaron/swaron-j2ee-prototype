@@ -35,10 +35,9 @@
 	    disableCaching : false
 	});
 	Ext.Loader.setPath('Ext', '${extJs}/src');
-	Ext.Loader.setPath('Ext.ux', '${extJs}/examples/ux');
+	Ext.Loader.setPath('Ext.ux', '${resourcePath}/extjs-ux');
 	Ext.Loader.setPath('App', '${jsPath}/app');
 	Ext.Loader.setPath('Lib', '${resourcePath}/libjs/src');
-	Ext.Loader.setPath('Ext.ux2', '${resourcePath}/extjs-ux2');
 </script>
 <jwr:script src="/bundles/js/base.js" useRandomParam="false"/>
 <!-- dynamic loading version end -->
@@ -52,7 +51,17 @@
 <jwr:script src="/bundles/js/widget.js" useRandomParam="false"/>
 <!-- static loading version end -->
 </c:if>
-
+<script type="text/javascript">
+(function(){
+	if(App.cfg.lang != 'en'){
+		var url = Ext.util.Format.format("{0}/locale/ext-lang-{1}.js?v=${appVersion}", App.cfg.extJs, App.cfg.lang);
+		Ext.Loader.loadScript(url);
+	}
+})();
+Ext.onReady(function(){
+	Ext.getBody().unmask();
+});
+</script>
 </head>
 <body id="app">
 	<script type="text/javascript">
@@ -70,21 +79,5 @@
 		<div id="footer"></div>
 	</div>
 <jsp:invoke fragment="scripts" />
-<script type="text/javascript" src="${extJs}/fix/ext-4.1.0-fix.js?v=${appVersion}"></script>
-<script type="text/javascript">
-Ext.onReady(function(){
-	if(App.cfg.lang != 'en'){
-		var url = Ext.util.Format.format("{0}/locale/ext-lang-{1}.js?v=${appVersion}", App.cfg.extJs, App.cfg.lang);
-		Ext.Ajax.request({
-			disableCaching:false,
-		    url: url,
-		    success: function(response, opts){
-		    	eval(response.responseText);
-		    }
-		});
-	}
-	Ext.getBody().unmask();
-});
-</script>
 </body>
 </html>

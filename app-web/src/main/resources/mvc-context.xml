@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
@@ -22,11 +21,10 @@
 		directory -->
 
 	<mvc:resources mapping="/resources/**" location="/resources/" order="20" />
-	<mvc:view-controller path="/sample/mvc.do" view-name="sample/mvc"/>
-	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser"/>
-	<mvc:view-controller path="/sample/crud.do" view-name="sample/secUser"/>
-	<mvc:view-controller path="/test.do" view-name="test"/>
-	<mvc:view-controller path="hna-hotel.do" view-name="hna-hotel"/>
+	<mvc:view-controller path="/sample/mvc.do" view-name="sample/mvc" />
+	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser" />
+	<mvc:view-controller path="/sample/crud.do" view-name="sample/secUser" />
+	<mvc:view-controller path="/test.do" view-name="test" />
 
 	<!-- Configures Handler Interceptors -->
 	<mvc:interceptors>
@@ -38,30 +36,22 @@
 	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="ignoreAcceptHeader" value="false" />
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="do" value="text/html" />
-			</map>
-		</property>
-		<property name="defaultContentType" value="text/html" />
-		<property name="favorParameter" value="false" />
-		<property name="viewResolvers">
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
+		<property name="order" value="1" />
+	</bean>
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
+		<property name="definitions">
 			<list>
-				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
-				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-					<property name="prefix" value="/WEB-INF/jsp/" />
-					<property name="suffix" value=".jsp" />
-					<property name="order" value="2" />
-				</bean>
-			</list>
-		</property>
-		<property name="defaultViews">
-			<list>
-				<!-- for application/json -->
+				<value>/WEB-INF/layouts/layouts.xml</value>
+				<!-- Scan views directory for Tiles configurations -->
+				<value>/WEB-INF/views/**/views.xml</value>
 			</list>
 		</property>
 	</bean>

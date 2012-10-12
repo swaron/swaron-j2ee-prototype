@@ -18,7 +18,7 @@
 		}
 	});
 */
-Ext.define('Ext.ux2.data.LocalPagingAjaxProxy', {
+Ext.define('Ext.ux.data.LocalPagingAjaxProxy', {
     extend: 'Ext.ux.data.PagingMemoryProxy',
     mixins:{
     	ajaxProxy: 'Ext.data.proxy.Ajax'

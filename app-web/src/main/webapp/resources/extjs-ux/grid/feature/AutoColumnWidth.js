@@ -1,4 +1,4 @@
-Ext.define('Ext.ux2.grid.feature.AutoColumnWidth', {
+Ext.define('Ext.ux.grid.feature.AutoColumnWidth', {
 	extend : 'Ext.grid.feature.Feature',
 	alias : 'feature.autocolumnwidth',
 	requires : ['Ext.grid.plugin.HeaderResizer'],

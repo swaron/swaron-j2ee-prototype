@@ -76,7 +76,7 @@
  * @author Damiano Zucconi - http://www.isipc.it
  * @version 0.2.0
  */
-Ext.define('Ext.ux2.grid.plugin.HeaderFilters', {
+Ext.define('Ext.ux.grid.plugin.HeaderFilters', {
 
 	ptype : 'gridheaderfilters',
 
