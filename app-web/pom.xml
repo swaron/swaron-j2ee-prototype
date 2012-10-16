@@ -33,14 +33,12 @@
 		<finalName>${project.artifactId}</finalName> 
 		<plugins>
 			<plugin>
-		        <groupId>org.mortbay.jetty</groupId>
-		        <artifactId>jetty-maven-plugin</artifactId>
-		        <version>8.1.3.v20120416</version>
+				<!-- mvn tomcat6/7:run -->
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
 				<configuration>
-					<webApp>
-						<contextPath>/app-web</contextPath>
-						<descriptor>${basedir}/deploy/jetty-web.xml</descriptor>
-					</webApp>
+					<port>8080</port>
 				</configuration>
 			</plugin>
 			<plugin>
