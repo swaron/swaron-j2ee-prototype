@@ -44,7 +44,7 @@ public class TableTreeResource {
     DataSourceService dataSourceService;
 
     
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public TreeResult list(@RequestParam String node) {
         TreeResult treeResult = new TreeResult();

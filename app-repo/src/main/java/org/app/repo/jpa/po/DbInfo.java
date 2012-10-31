@@ -16,33 +16,30 @@ public class DbInfo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="db_info_id", unique=true, nullable=false)
+	@Column(name="db_info_id")
 	private Integer dbInfoId;
 
-	@Column(name="db_passwd", length=256)
+	@Column(name="db_passwd")
 	private String dbPasswd;
 
-	@Column(name="db_user", length=256)
+	@Column(name="db_user")
 	private String dbUser;
 
-	@Column(name="driver_class", nullable=false, length=256)
+	@Column(name="driver_class")
 	private String driverClass;
 
-	@Column(nullable=false, length=256)
 	private String name;
 
 	@Version
-	@Column(name="update_time", nullable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
-	@Column(nullable=false, length=256)
 	private String url;
 
-	@Column(nullable=false, length=256)
 	private String vendor;
 
-    public DbInfo() {
-    }
+	public DbInfo() {
+	}
 
 	public Integer getDbInfoId() {
 		return this.dbInfoId;

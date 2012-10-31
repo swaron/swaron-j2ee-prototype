@@ -42,70 +42,9 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>target/generated-sources/annotations</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-					<additionalConfig>
-						<file>
-							<name>.settings/org.eclipse.jpt.core.prefs</name>
-							<content>
-							<![CDATA[eclipse.preferences.version=1
-org.eclipse.jpt.core.platform=eclipselink2_4
-org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=false
-org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/annotations]]>
-							</content>
-						</file>
-						<file>
-							<name>.settings/org.eclipse.wst.common.project.facet.core.prefs.xml</name>
-							<content>
-							<![CDATA[<root>
-  <facet id="jpt.jpa">
-    <node name="libprov">
-      <attribute name="provider-id" value="jpa-no-op-library-provider"/>
-    </node>
-  </facet>
-</root>]]>
-							</content>
-						</file>
-					</additionalConfig>
-					<additionalProjectFacets>
-					   <jpt.jpa>2.0</jpt.jpa>
-					</additionalProjectFacets>
-                </configuration>
-            </plugin>
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>1.1.1.Final</version>
-		</dependency>
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-        </dependency>
         <!-- schema is part of data model, separate it into a individual jar so it can be delivered to other system -->
 		<dependency>
 			<groupId>org.app</groupId>

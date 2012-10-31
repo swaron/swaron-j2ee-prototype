@@ -22,7 +22,7 @@
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/user" access="ROLE_USER" />
 		<custom-filter ref="spnegoAuthenticationProcessingFilter"
-			position="BASIC_PROCESSING_FILTER" />
+			position="BASIC_AUTH_FILTER" />
 		<form-login />
 		<logout />
 		<remember-me key="app" />
@@ -46,7 +46,7 @@
 
 	<beans:bean id="spnegoAuthenticationProcessingFilter"
 		class="org.springframework.security.extensions.kerberos.web.SpnegoAuthenticationProcessingFilter">
-		<property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
 	</beans:bean>
 
 	<beans:bean id="kerberosServiceAuthenticationProvider"

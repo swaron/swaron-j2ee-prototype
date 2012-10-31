@@ -3,7 +3,6 @@ package org.app.repo.jpa.po;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -17,13 +16,11 @@ public class SecUser implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="sec_user_id", unique=true, nullable=false)
+	@Column(name="sec_user_id")
 	private Integer secUserId;
 
-	@Column(nullable=false, length=100)
 	private String email;
 
-	@Column(nullable=false)
 	private Boolean enabled;
 
 	@Column(name="last_last_login_time")
@@ -35,36 +32,25 @@ public class SecUser implements Serializable {
 	@Column(name="locked_time")
 	private Timestamp lockedTime;
 
-	@Column(name="login_failed_count", nullable=false)
+	@Column(name="login_failed_count")
 	private Integer loginFailedCount;
 
 	@Column(name="login_state")
 	private Integer loginState;
 
-	@Column(nullable=false, length=64)
 	private String passwd;
 
-	@Column(name="update_time", nullable=false)
+	@Version
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
-	@Column(nullable=false, length=64)
+	@Column(name="user_detail_id")
+	private Integer userDetailId;
+
 	private String username;
 
-	//bi-directional many-to-one association to SecGroupMember
-	@OneToMany(mappedBy="secUser")
-	private List<SecGroupMember> secGroupMembers;
-
-	//bi-directional many-to-one association to UserDetail
-    @ManyToOne
-	@JoinColumn(name="user_detail_id")
-	private UserDetail userDetail;
-
-	//bi-directional many-to-one association to UserDetail
-	@OneToMany(mappedBy="secUser")
-	private List<UserDetail> userDetails;
-
-    public SecUser() {
-    }
+	public SecUser() {
+	}
 
 	public Integer getSecUserId() {
 		return this.secUserId;
@@ -146,6 +132,14 @@ public class SecUser implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public Integer getUserDetailId() {
+		return this.userDetailId;
+	}
+
+	public void setUserDetailId(Integer userDetailId) {
+		this.userDetailId = userDetailId;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -154,28 +148,4 @@ public class SecUser implements Serializable {
 		this.username = username;
 	}
 
-	public List<SecGroupMember> getSecGroupMembers() {
-		return this.secGroupMembers;
-	}
-
-	public void setSecGroupMembers(List<SecGroupMember> secGroupMembers) {
-		this.secGroupMembers = secGroupMembers;
-	}
-	
-	public UserDetail getUserDetail() {
-		return this.userDetail;
-	}
-
-	public void setUserDetail(UserDetail userDetail) {
-		this.userDetail = userDetail;
-	}
-	
-	public List<UserDetail> getUserDetails() {
-		return this.userDetails;
-	}
-
-	public void setUserDetails(List<UserDetail> userDetails) {
-		this.userDetails = userDetails;
-	}
-	
 }

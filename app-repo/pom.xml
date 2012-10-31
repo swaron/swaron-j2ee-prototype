@@ -14,8 +14,8 @@
 	<name>Application Repository Module</name>
 	<description>
 		In addition to the three vertical layers, there is also the infrastructure. As the picture shows, it supports all of the three layers in different ways,facilitating communication between the layers. In simple terms, the infrastructure consists of everything that exists independently of our application: external libraries, database engine, application server and so on.
-		Also,we consider code and configuration files that glues the other layers to the infrastructure as part of the infrastructure layer. Looking for example at thepersistence aspect, the database schema definition, Hibernate configuration and mapping files and implementations of the repository interfaces are part of the infrastructure layer.
-		While it can be tricky to give a solid definition of what kind of code belongs to the infrastructure layer for any given situation, it should be possible tocompletely stub out the infrastructure in pure Java unit/scenario tests and still be able to use the domain layer and possibly the application layer to work out the core business problems.
+		Also,we consider code and configuration files that glues the other layers to the infrastructure as part of the infrastructure layer. Looking for example at the persistence aspect, the database schema definition, Hibernate configuration and mapping files and implementations of the repository interfaces are part of the infrastructure layer.
+		While it can be tricky to give a solid definition of what kind of code belongs to the infrastructure layer for any given situation, it should be possible to completely stub out the infrastructure in pure Java unit/scenario tests and still be able to use the domain layer and possibly the application layer to work out the core business problems.
 	</description>
 
 	<properties>
@@ -47,13 +47,64 @@
 				<version>2.0.2</version>
 				<configuration>
 					<contexts>test</contexts>
-					<changeLogFile>src/test/resources/dbdata/db-changelog.xml</changeLogFile>
+					<changeLogFile>db/db-changelog.xml</changeLogFile>
 					<driver>${jdbc.driverClassName}</driver>
 					<url>${jdbc.url}</url>
 					<username>${jdbc.username}</username>
 					<password>${jdbc.password}</password>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources/annotations</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+					<additionalConfig>
+						<file>
+							<name>.settings/org.eclipse.jpt.core.prefs</name>
+							<content>
+							<![CDATA[eclipse.preferences.version=1
+org.eclipse.jpt.core.platform=eclipselink2_4
+org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=false
+org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/annotations]]>
+							</content>
+						</file>
+						<file>
+							<name>.settings/org.eclipse.wst.common.project.facet.core.prefs.xml</name>
+							<content>
+							<![CDATA[<root>
+  <facet id="jpt.jpa">
+    <node name="libprov">
+      <attribute name="provider-id" value="jpa-no-op-library-provider"/>
+    </node>
+  </facet>
+</root>]]>
+							</content>
+						</file>
+					</additionalConfig>
+					<additionalProjectFacets>
+					   <jpt.jpa>2.0</jpt.jpa>
+					</additionalProjectFacets>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -67,7 +118,7 @@
 				<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
 				<jdbc.url>jdbc:postgresql://localhost/${db.name}</jdbc.url>
 				<jdbc.username>dev</jdbc.username>
-				<jdbc.password>dev8</jdbc.password>
+				<jdbc.password>dev</jdbc.password>
 				<db.type>psql</db.type>
 			</properties>
 		</profile>
@@ -168,6 +219,16 @@
 			<version>1.4</version>
 		</dependency>
 		<!-- orm hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>1.1.1.Final</version>
+		</dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+        </dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>

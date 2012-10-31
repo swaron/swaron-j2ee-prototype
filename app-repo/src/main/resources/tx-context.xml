@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<tx:annotation-driven transaction-manager="appTransactionManager" order="1" />
+	<tx:annotation-driven transaction-manager="appTransactionManager" order="2" />
 
 	<aop:config>
 		<aop:pointcut id="appRepositoryMethods" expression="this(org.app.repo.jpa.dao.AbstractDaoSupport)" />
