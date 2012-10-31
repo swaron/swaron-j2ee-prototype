@@ -30,7 +30,7 @@ rem actural function of mvn eclipse
 echo start mvn eclipse in %1
 cd %1
 IF EXIST "pom.xml" (
-    cmd /c mvn eclipse:eclipse -Dwtpversion=2.0 -Declipse.ajdtVersion=none -Declipse.workspace=%workspace% -DdownloadSources=true
+    cmd /c mvn install clean eclipse:eclipse -Dwtpversion=2.0 -Dmaven.test.skip=true -Declipse.workspace=%workspace% -DdownloadSources=true
 ) ELSE (
     echo "no pom.xml in %1"
 )
