@@ -1,5 +1,14 @@
-
 #wrapper {
-	width: 960px;
-	margin: auto;
+	/* width: 960px; */
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#side{
+	width: 300px;
+	float: left;
+}
+#main{
+	margin-left:300px;
+	width:auto;
 }

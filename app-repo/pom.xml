@@ -82,7 +82,7 @@
 							<name>.settings/org.eclipse.jpt.core.prefs</name>
 							<content>
 							<![CDATA[eclipse.preferences.version=1
-org.eclipse.jpt.core.platform=eclipselink2_4
+org.eclipse.jpt.core.platform=generic2_0
 org.eclipse.jpt.jpa.core.discoverAnnotatedClasses=false
 org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/annotations]]>
 							</content>

@@ -3,10 +3,10 @@
 <tiles-definitions>
     <definition extends="default" name="db/external/db-info">
         <put-attribute name="title" value="Tiles Database Info"/>
-        <put-attribute name="body" value="/WEB-INF/views/db/external/db-info.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/views/db/external/db-info.jsp"/>
     </definition>
     <definition extends="default" name="db/external/browse">
         <put-attribute name="title" value="Browse Database"/>
-        <put-attribute name="body" value="/WEB-INF/views/db/external/browse.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/views/db/external/browse.jsp"/>
     </definition>
 </tiles-definitions>
