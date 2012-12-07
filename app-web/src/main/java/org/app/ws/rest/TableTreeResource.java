@@ -52,13 +52,8 @@ public class TableTreeResource {
             List<DbInfo> results = dbInfoDao.findAll(DbInfo.class);
             List<TreeNode> children = new ArrayList<TreeNode>();
             for (DbInfo dbInfo : results) {
-                TreeNode treeNode = new TreeNode();
-                treeNode.setExpanded(false);
-                treeNode.setLeaf(false);
-                treeNode.setLoaded(false);
-                treeNode.setText(dbInfo.getName());
-                treeNode.setValue(dbInfo.getDbInfoId().toString());
-                treeNode.setId(dbInfo.getDbInfoId());
+                Integer id = dbInfo.getDbInfoId();
+                TreeNode treeNode = TreeNode.newBranch(id, id.toString(), dbInfo.getName());
                 children.add(treeNode);
             }
             treeResult.setChildren(children);
@@ -72,13 +67,7 @@ public class TableTreeResource {
                 }else{
                     List<TreeNode> children = new ArrayList<TreeNode>();
                     for (TableMetaData table : results) {
-                        TreeNode treeNode = new TreeNode();
-                        treeNode.setExpanded(false);
-                        treeNode.setLeaf(true);
-                        treeNode.setLoaded(false);
-                        treeNode.setText(table.getTableName());
-                        treeNode.setValue(table.getTableName());
-                        treeNode.setId(null);
+                        TreeNode treeNode = TreeNode.newLeaf(null, table.getTableName(), table.getTableName());
                         children.add(treeNode);
                     }
                     treeResult.setChildren(children);
