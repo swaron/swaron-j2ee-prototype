@@ -121,7 +121,7 @@
 								</goals>
 								<configuration>
 									<schemaIncludes>
-										<include>*/*.xsd</include>
+										<include>**/*.xsd</include>
 									</schemaIncludes>
 									<extension>true</extension>
 									<generateDirectory>target/generated-sources/schemas</generateDirectory>

@@ -10,7 +10,7 @@
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.EhCacheRegionFactory"/>
-			<property name="net.sf.ehcache.configurationResourceName" value="/META-INF/ehcache_repo.xml"/>
+			<property name="net.sf.ehcache.configurationResourceName" value="/META-INF/ehcache/ehcache_repo.xml"/>
 			<property name="hibernate.cache.use_second_level_cache" value="true"/>
 			<property name="hibernate.cache.use_query_cache" value="true"/>
 			<property name="hibernate.generate_statistics" value="true"/>

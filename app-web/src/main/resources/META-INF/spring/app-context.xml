@@ -15,13 +15,13 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<import resource="classpath:/tx-context.xml"/>
-	<import resource="classpath:/jpa-context.xml"/>
-	<import resource="classpath:/mvc-context.xml"/>
-	<import resource="classpath:/cache-context.xml"/>
-	<import resource="classpath:/email-context.xml"/>
-	<import resource="classpath:/acl-context.xml"/>
-	<import resource="classpath:/sec-context.xml"/>
+	<import resource="tx-context.xml"/>
+	<import resource="jpa-context.xml"/>
+	<import resource="mvc-context.xml"/>
+	<import resource="cache-context.xml"/>
+	<import resource="email-context.xml"/>
+	<import resource="acl-context.xml"/>
+	<import resource="sec-context.xml"/>
 	
 	<context:annotation-config />
 	<context:component-scan base-package="org.app" />

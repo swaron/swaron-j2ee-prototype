@@ -20,8 +20,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:/app-context.xml
-			classpath:/datasource_embed.xml
+			classpath:/META-INF/spring/app-context.xml
+			classpath:/META-INF/spring/datasource_embed.xml
 		</param-value>
 	</context-param>
 	<listener>

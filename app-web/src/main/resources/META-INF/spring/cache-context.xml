@@ -8,7 +8,7 @@
 	<cache:annotation-driven />
 
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehCacheManager" />
-	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache_app.xml"
+	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:/META-INF/ehcache/ehcache_app.xml"
 		p:shared="false" />
 
 	<!-- this is the default fallback cache,configuring from ehcache-failsafe.xml in ehcache.jar -->
