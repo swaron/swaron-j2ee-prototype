@@ -17,7 +17,11 @@
 <link rel="stylesheet" type="text/css" href="${cssPath}/theme/${lang}/${theme}/locale.css?v=${appVersion}" />
 <jwr:style src="/bundles/css/extux.css" useRandomParam="false"/>
 <jwr:style src="/bundles/css/app.css" useRandomParam="false"/>
-<tiles:insertAttribute name="styles" ignore="true"/> 
+
+<style type="text/css">
+<tiles:insertAttribute name="style" ignore="true" />
+</style>
+
 <jsp:include page="/WEB-INF/jsp/includes/appConfig.jsp" flush="false" />
 
 <jwr:script src="/bundles/js/messages.js"/>
@@ -67,9 +71,7 @@ Ext.onReady(function(){
 	<div id="wrapper" class="basic-page">
 		<tiles:insertAttribute name="header" ignore="true" />
 		<tiles:insertAttribute name="side" ignore="true" />   
-		<div id="main">
-			<tiles:insertAttribute name="body"/>
-		</div>
+		<tiles:insertAttribute name="main"/>
 		<tiles:insertAttribute name="side2" ignore="true"/>
 		<tiles:insertAttribute name="footer" ignore="true"/>
 	</div>

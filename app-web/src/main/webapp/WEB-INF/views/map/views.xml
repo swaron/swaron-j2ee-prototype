@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="db/internal/manage">
-        <put-attribute name="title" value="Internal Database" type="string"/>
-        <put-attribute name="main" value="/WEB-INF/views/db/internal/manage.jsp" type="template"/>
+    <definition extends="default" name="map/index">
+        <put-attribute name="title" value="Map Hello World"/>
+        <put-attribute name="main" value="/WEB-INF/views/map/index.jsp"/>
     </definition>
 </tiles-definitions>
