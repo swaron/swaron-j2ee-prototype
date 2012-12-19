@@ -2,6 +2,10 @@ package org.app.repo.jpa.po;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import java.sql.Timestamp;
 
 
@@ -11,6 +15,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="code_dictionary")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class CodeDictionary implements Serializable {
 	private static final long serialVersionUID = 1L;
 

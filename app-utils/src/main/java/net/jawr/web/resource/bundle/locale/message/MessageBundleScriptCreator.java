@@ -45,11 +45,12 @@ public class MessageBundleScriptCreator {
     protected String namespace;
     private String filter;
     protected Locale locale;
-    private List filterList;
+    private List<String> filterList;
     protected ServletContext servletContext;
     
     
-    public MessageBundleScriptCreator(GeneratorContext context) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public MessageBundleScriptCreator(GeneratorContext context) {
         super();
         this.servletContext = context.getServletContext();
         if(null == template)
@@ -155,7 +156,8 @@ public class MessageBundleScriptCreator {
      * Loads the message resource bundles specified and uses a BundleStringJasonifier to generate the properties. 
      * @return
      */
-    public void updateProperties(ResourceBundle bundle, Properties props){
+    @SuppressWarnings("rawtypes")
+	public void updateProperties(ResourceBundle bundle, Properties props){
         
         Enumeration keys = bundle.getKeys();
         
@@ -187,7 +189,8 @@ public class MessageBundleScriptCreator {
      * @param key
      * @return
      */
-    protected boolean matchesFilter(String key) {
+    @SuppressWarnings("rawtypes")
+	protected boolean matchesFilter(String key) {
         boolean rets = (null == filterList);
         if(!rets) {
             for(Iterator it = filterList.iterator();it.hasNext() && !rets; )

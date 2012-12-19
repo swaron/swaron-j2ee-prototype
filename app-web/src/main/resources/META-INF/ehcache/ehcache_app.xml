@@ -4,8 +4,12 @@
 	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="240"
 		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
 		memoryStoreEvictionPolicy="LRU" />
-	<cache name="sample" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
-		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+	<cache name="global.static" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+	<cache name="sample" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
 		memoryStoreEvictionPolicy="LRU">
 	</cache>
 </ehcache>

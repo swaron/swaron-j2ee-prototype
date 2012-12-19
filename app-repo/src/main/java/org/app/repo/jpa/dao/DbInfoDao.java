@@ -1,19 +1,6 @@
 package org.app.repo.jpa.dao;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.io.FileUtils;
-import org.app.repo.jpa.po.DbInfo;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.XStreamException;
 
 @Repository
 public class DbInfoDao extends AbstractDaoSupport {

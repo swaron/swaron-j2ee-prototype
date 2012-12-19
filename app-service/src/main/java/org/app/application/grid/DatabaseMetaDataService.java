@@ -34,6 +34,7 @@ public class DatabaseMetaDataService {
 	@Autowired
 	protected ObjectMapper objectMapper;
 
+	@SuppressWarnings("unchecked")
 	public List<ColumnMetaData> getColumnMetaDatas(DataSource dataSource, final String tableName) {
 		if (dataSource == null) {
 			return null;
@@ -63,6 +64,7 @@ public class DatabaseMetaDataService {
 		return getTableMetaDatas(dataSource, "");
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TableMetaData> getTableMetaDatas(DataSource dataSource, final String tableName) {
 		if (dataSource == null) {
 			return null;
@@ -87,6 +89,7 @@ public class DatabaseMetaDataService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List<ColumnMetaData> getPrimaryKeyCols(DataSource dataSource, final String tableName) {
 		if (dataSource == null) {
 			return null;

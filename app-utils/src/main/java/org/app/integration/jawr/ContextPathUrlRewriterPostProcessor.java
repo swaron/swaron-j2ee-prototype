@@ -6,7 +6,8 @@ import net.jawr.web.resource.bundle.postprocess.BundleProcessingStatus;
 import net.jawr.web.resource.bundle.postprocess.impl.CSSURLPathRewriterPostProcessor;
 
 public class ContextPathUrlRewriterPostProcessor extends CSSURLPathRewriterPostProcessor {
-    protected StringBuffer doPostProcessBundle(BundleProcessingStatus status, StringBuffer bundleData)
+    @Override
+	protected StringBuffer doPostProcessBundle(BundleProcessingStatus status, StringBuffer bundleData)
             throws IOException {
         // Retrieve the full bundle path, so we will be able to define the
         // relative path for the css images

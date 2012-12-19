@@ -52,7 +52,8 @@ public class DataSourceService {
         for (DbInfo dbInfo : dbInfos) {
             infos.put(dbInfoAssembler.createKey(dbInfo), dbInfoAssembler.createProperties(dbInfo));
         }
-        Collection<String> toRemove = CollectionUtils.subtract(dataSources.keySet(), infos.keySet());
+        @SuppressWarnings("unchecked")
+		Collection<String> toRemove = CollectionUtils.subtract(dataSources.keySet(), infos.keySet());
         for (String key : toRemove) {
             DataSource dataSource = dataSources.remove(key);
             if (dataSource instanceof BasicDataSource) {
@@ -62,30 +63,6 @@ public class DataSourceService {
                     logger.warn("unable to close datasource", e);
                 }
             }
-        }
-    }
-
-    private void syncDatasource() {
-        List<DbInfo> dbInfos = dbInfoDao.findAll(DbInfo.class);
-        HashMap<String, DbInfo> infos = new HashMap<String, DbInfo>();
-        for (DbInfo dbInfo : dbInfos) {
-            infos.put(dbInfoAssembler.createKey(dbInfo), dbInfo);
-        }
-        Collection<String> toAdd = CollectionUtils.subtract(infos.keySet(), dataSources.keySet());
-        Collection<String> toRemove = CollectionUtils.subtract(dataSources.keySet(), infos.keySet());
-        for (String key : toRemove) {
-            DataSource dataSource = dataSources.remove(key);
-            if (dataSource instanceof BasicDataSource) {
-                try {
-                    ((BasicDataSource) dataSource).close();
-                } catch (SQLException e) {
-                    logger.warn("unable to close datasource", e);
-                }
-            }
-        }
-        for (String key : toAdd) {
-            DataSource dataSource = createDataSource(key, infos.get(key));
-            dataSources.put(key, dataSource);
         }
     }
 

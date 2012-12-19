@@ -94,7 +94,8 @@ public class CacheController {
         model.addAttribute("query", map);
     }
 
-    public Map<String, Object> describe(Object object) {
+    @SuppressWarnings("unchecked")
+	public Map<String, Object> describe(Object object) {
         Map<String, Object> map1 = new HashMap<String, Object>();
         try {
             map1 = BeanUtils.describe(object);

@@ -13,7 +13,7 @@ Ext.define('App.service.CodeService', {
 	singleton:true,
     requires : ['Ext.data.reader.Json', 'Ext.data.Store', 'App.model.DbCode', 'Ext.data.proxy.Ajax', 'Ext.data.proxy.LocalStorage',
 			'Ext.data.proxy.Rest',  'Ext.data.Request', 'Ext.data.Batch'],
-	url : App.url('/rest/code.json'),
+	url : App.url('/rest/code/enum.json'),
 	localStore : null,
 	remoteStore : null,
 	nameCache : {},
@@ -28,7 +28,7 @@ Ext.define('App.service.CodeService', {
 				autoLoad : false,
 				proxy : {
 					type : 'localstorage',
-					id : 'app-code'
+					id : 'app-ecode'
 				}
 			});
 			//proxy will be instantiated in constructor of Ext.data.AbstractStore, will test the availability of localstorage.

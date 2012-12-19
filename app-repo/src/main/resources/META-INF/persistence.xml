@@ -7,6 +7,7 @@
 		<class>org.app.repo.jpa.po.CodeDictionary</class>
 		<class>org.app.repo.jpa.po.DbInfo</class>
 		<class>org.app.repo.jpa.po.SecUser</class>
+		<class>org.app.repo.jpa.po.SystemConfig</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.EhCacheRegionFactory"/>

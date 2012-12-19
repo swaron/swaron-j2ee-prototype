@@ -1,9 +1,9 @@
 package org.app.repo.jdbc.dao;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameterValue;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -47,14 +48,28 @@ public class GenericJdbcDao {
 					+ "table:{}, content: {}", new Object[] { update, tableName, sqlParams });
 		}
 	}
-	public void insertRecord(DataSource dataSource, String tableName, String pKeyCol, HashMap<String, SqlParameterValue> sqlParams) {
-	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-	    UpdateStatement statement = sqlBuilder.insert(dataSource, tableName, pKeyCol, sqlParams);
-	    //TODO: return generated id value
-	    int update = jdbcTemplate.update(statement.sql, statement.args);
-	    if (update != 1) {
-	        logger.warn("update statement expect one row to be affected, but the reuslt is {}.\n"
-	                + "table:{}, content: {}", new Object[] { update, tableName, sqlParams });
+	public Object insertRecord(DataSource dataSource, String tableName, String pKeyCol, HashMap<String, SqlParameterValue> sqlParams) {
+		if(sqlParams == null){
+			return null;
+		}
+	    HashMap<String, Object> args = new HashMap<String, Object>();
+	    for (Entry<String, SqlParameterValue> entry : sqlParams.entrySet()) {
+			args.put(entry.getKey(), entry.getValue().getValue());
+		}
+	    
+	    SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(dataSource);
+	    jdbcInsert.withTableName(tableName).usingGeneratedKeyColumns(pKeyCol);
+	    if(sqlParams!= null && sqlParams.containsKey(pKeyCol)){
+	    	//primary key specified.
+	    	int rows = jdbcInsert.execute(args);
+	    	if(rows == 1){
+	    		return sqlParams.get(pKeyCol).getValue();
+	    	}else{
+	    		return null;
+	    	}
+	    }else{
+	    	Number key = jdbcInsert.executeAndReturnKey(args);
+	    	return key;
 	    }
 	}
 

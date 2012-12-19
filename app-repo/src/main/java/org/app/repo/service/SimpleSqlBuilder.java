@@ -160,23 +160,23 @@ public class SimpleSqlBuilder {
 		StringBuffer buffer = new StringBuffer();
 		HashMap<String, String> parameters = new HashMap<String, String>();
 		Set<String> keySet = sqlParams.keySet();
-		List<String> keys = new ArrayList<String>();
+		List<String> cols = new ArrayList<String>();
 		List<Object> values = new ArrayList<Object>();
-		for (String key : keySet) {
+		for (String col : keySet) {
 			// skip primary key, we will use primary key in where clause
-			if (key.equals(pKeyCol)) {
+			if (col.equals(pKeyCol)) {
 				continue;
 			}
-			sqlChecker.checkColName(key);
-			keys.add(key + " = ?");
-			values.add(sqlParams.get(key));
+			sqlChecker.checkColName(col);
+			cols.add(col + " = ?");
+			values.add(sqlParams.get(col));
 		}
 		sqlChecker.checkTableName(tableName);
-		parameters.put("col_fragment", StringUtils.join(keys, ","));
 		parameters.put("table", tableName);
+		parameters.put("col_fragment", StringUtils.join(cols, ","));
 		sqlChecker.checkColName(pKeyCol);
-		parameters.put("pKeyCol", pKeyCol);
-		String template = "update :table set :col_fragment where :pKeyCol = ?";
+		parameters.put("where_fragment", pKeyCol + " = ?");
+		String template = "update :table set :col_fragment where :where_fragment";
 		values.add(sqlParams.get(pKeyCol));
 		buffer.append(replaceTokens(template, parameters));
 		Object[] args = values.toArray(new Object[values.size()]);
@@ -191,17 +191,17 @@ public class SimpleSqlBuilder {
         List<String> keys = new ArrayList<String>();
         List<String> holders = new ArrayList<String>();
         List<Object> values = new ArrayList<Object>();
-        for (String key : keySet) {
-            if (key.equals(pKeyCol) ) {
+        for (String col : keySet) {
+            if (col.equals(pKeyCol) ) {
                 // primary key specified,allow this
             }
-            sqlChecker.checkColName(key);
-            keys.add(key);
+            sqlChecker.checkColName(col);
+            keys.add(col);
             holders.add("?");
-            values.add(sqlParams.get(key));
+            values.add(sqlParams.get(col));
         }
         sqlChecker.checkTableName(tableName);
-        parameters.put("key_fragment", StringUtils.join(keys, ","));
+        parameters.put("col_fragment", StringUtils.join(keys, ","));
         parameters.put("val_fragment", StringUtils.join(holders, ","));
         parameters.put("table", tableName);
         sqlChecker.checkColName(pKeyCol);

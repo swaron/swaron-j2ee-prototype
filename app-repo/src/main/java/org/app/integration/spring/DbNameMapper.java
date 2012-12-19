@@ -28,10 +28,12 @@ public class DbNameMapper {
 		return instance;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Map<String, SQLErrorCodes> getErrorCodesMap() {
 		return UnmodifiableMap.decorate(errorCodesMap);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public DbNameMapper() {
 		SQLErrorCodesFactory instance = SQLErrorCodesFactory.getInstance();
 		try {

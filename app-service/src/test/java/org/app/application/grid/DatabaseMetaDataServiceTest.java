@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.app.application.BaseTest;
-import org.app.application.grid.DatabaseMetaDataService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,9 +24,6 @@ import org.springframework.test.annotation.Rollback;
 public class DatabaseMetaDataServiceTest extends BaseTest {
 
     private JdbcTemplate jdbcTemplate;
-    
-    @Autowired
-    private DatabaseMetaDataService metaDataService;
 
     @Autowired
     @Qualifier("dataSource_app")
@@ -39,7 +35,6 @@ public class DatabaseMetaDataServiceTest extends BaseTest {
     @Rollback(false)
     public void dbInfo() throws Exception {
         Connection connection = jdbcTemplate.getDataSource().getConnection();
-        String catalog = connection.getCatalog();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet catalogs = metaData.getCatalogs();
         RowMapper<String> rowMapper = new SingleColumnRowMapper<String>(String.class);
