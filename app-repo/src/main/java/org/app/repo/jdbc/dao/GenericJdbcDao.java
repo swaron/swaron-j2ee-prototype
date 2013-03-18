@@ -34,8 +34,8 @@ public class GenericJdbcDao {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		RowMapper<Map<String, Object>> rowMapper = new ColumnMapRowMapper();
 		List<Map<String, Object>> resultList = jdbcTemplate.query(findAllSql, rowMapper);
-		long total = jdbcTemplate.queryForLong(countSql);
-		PagingResult<Map<String, Object>> result = new PagingResult<Map<String, Object>>(resultList, (int) total);
+		int total = jdbcTemplate.queryForInt(countSql);
+		PagingResult<Map<String, Object>> result = new PagingResult<Map<String, Object>>(resultList,  total);
 		return result;
 	}
 

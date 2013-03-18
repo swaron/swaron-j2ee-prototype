@@ -37,6 +37,7 @@ Ext.define('App.service.TypeCodeService', {
 						var result = Ext.decode(response.responseText);
 						if(Ext.isObject(result)){
 							storage.setItem('app-tcode-'+'_value', Ext.JSON.encode(result))
+							storage.setItem('app-tcode-_store_version',App.cfg.version);
 						}else{
 							App.log('result from type code service is not an object.');
 						}
@@ -64,7 +65,6 @@ Ext.define('App.service.TypeCodeService', {
 			    }
 			});
 		}
-		this.localStore = localStore;
 		this.codeStore = localStore || this.remoteStore;
 	},
 	loadLocalImage:function(){
@@ -143,8 +143,6 @@ Ext.define('App.service.TypeCodeService', {
 			App.log(msg);
 		}
 	},
-	
-	//TODO:
 	
 	store : function(type_table, id_column,name_column) {
 		var columnStore = Ext.create('Ext.data.Store', {

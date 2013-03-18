@@ -8,6 +8,14 @@
 		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
 		memoryStoreEvictionPolicy="LRU">
 	</cache>
+	<cache name="global.short" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="150" timeToLiveSeconds="300"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="300"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+	<cache name="global.long" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
 	<cache name="sample" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
 		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
 		memoryStoreEvictionPolicy="LRU">
