@@ -9,7 +9,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
 	<artifactId>app-web-test</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Application Web Integration Test</name>
 	<url>http://localhost/app-web</url>
@@ -148,7 +147,7 @@
 		<dependency>
 			<groupId>org.app</groupId>
 			<artifactId>app-data</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${module.version}</version>
 		</dependency>
 	</dependencies>
 </project>

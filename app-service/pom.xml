@@ -9,7 +9,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
 	<artifactId>app-service</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Application Lightweight Service Layer</name>
 	<description>
@@ -29,7 +28,7 @@
 		<dependency>
 			<groupId>org.app</groupId>
 			<artifactId>app-repo</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${module.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -2,48 +2,16 @@
 <html>
 <head>
 <title>Extjs Build</title>
+    <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
 <script type="text/javascript" src="extjs/ext-dev.js"></script>
+<script type="text/javascript" src="extjs-build.js"></script>
 <script type="text/javascript">
 	Ext.Loader.setConfig({
 		enabled : true,
 		disableCaching : false
 	});
 	Ext.Loader.setPath('Ext', 'extjs/src');
-	Ext.Loader.setPath('Ext.ux', 'extjs/examples/ux');
-	Ext.Loader.setPath('Ext.ux2', 'extjs-ux2');
-	Ext.Loader.setPath('App', 'js/app');
-	Ext.Loader.setPath('Lib', 'extjs/libjs/src');
 </script>
-<script type="text/javascript">
-	var App_Config = {
-		restUrl:'/app-web',
-
-		defaultLang: 'en',
-		contextPath: '/app-web',
-		jsPath: 'js',
-		cssPath: 'css',
-		extJs: 'extjs'
-	};
-</script>
-<script type="text/javascript" src="js/app/base/app.js"></script>
-<script type="text/javascript" src="js/app/pages/db/internal/manage.js"></script>
-<script type="text/javascript" src="js/app/pages/db/external/browse.js"></script>
-<script type="text/javascript" src="js/app/pages/db/external/db-info.js"></script>
-
 </head>
-<body id="app">
-	<script type="text/javascript">
-		Ext.getBody().mask("Loading Page ...");
-	</script>
-	<div id="wrapper" class="basic-page ${pageClass}">
-		<div id="header"></div>
-		<div id="side"></div>
-		<div id="main">
-			<div id="body">
-			</div>
-		</div>
-		<div id="side2"></div>
-		<div id="footer"></div>
-	</div>
-</body>
+<body></body>
 </html>

@@ -3,12 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
 	<artifactId>app-data</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>Application Data Definition</name>
-	<version>1.0-SNAPSHOT</version>
 	<description>
 		Project basic data definition, contains the data definition for DAO model class, service simple value objects, pojo, and web form and result class.
-		</description>
+	</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<module.version>1.0.0</module.version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -49,7 +53,7 @@
 		<dependency>
 			<groupId>org.app</groupId>
 			<artifactId>app-schema</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${module.version}</version>
 		</dependency>
 	</dependencies>
 </project>

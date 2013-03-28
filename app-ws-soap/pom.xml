@@ -9,7 +9,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
 	<artifactId>app-ws-soap</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Application Soap Web Service</name>
 	<url>http://localhost/app-ws</url>
@@ -101,7 +100,7 @@
 		<dependency>
 			<groupId>org.app</groupId>
 			<artifactId>app-repo</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${module.version}</version>
 		</dependency>
 	</dependencies>
 </project>

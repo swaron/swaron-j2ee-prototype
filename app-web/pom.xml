@@ -9,7 +9,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.app</groupId>
 	<artifactId>app-web</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Application Web Layer</name>
 	<description>
@@ -109,7 +108,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
-				<version>1.1</version>
+				<version>1.2</version>
 				<executions>
 					<execution>
 						<phase>validate</phase>
@@ -261,12 +260,36 @@
 		<dependency>
 			<groupId>org.app</groupId>
 			<artifactId>app-service</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${module.version}</version>
+		</dependency>
+		<!-- for WAFFLE Kerberos  authenticaiton windows  -->
+		<dependency>
+			<groupId>com.sun.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>3.5.0</version>
+			<scope>system</scope>
+			<systemPath>/lib/jna-3.5.0.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>org.app</groupId>
-			<artifactId>app-repo</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>com.sun.jna</groupId>
+			<artifactId>platform</artifactId>
+			<version>3.5.0</version>
+			<scope>system</scope>
+			<systemPath>/lib/platform-3.5.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>waffle</groupId>
+			<artifactId>waffle-jna</artifactId>
+			<version>1.5</version>
+			<scope>system</scope>
+			<systemPath>/lib/waffle-jna.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>waffle</groupId>
+			<artifactId>waffle-spring-security3</artifactId>
+			<version>1.5</version>
+			<scope>system</scope>
+			<systemPath>/lib/waffle-spring-security3.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
