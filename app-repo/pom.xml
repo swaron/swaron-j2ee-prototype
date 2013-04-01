@@ -23,30 +23,12 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<configuration>
-							<target>
-								<delete file="${basedir}/src/test/resources/jdbc.properties" />
-								<copy file="${basedir}/src/test/resources/jdbc-${db.type}.properties" tofile="${basedir}/src/test/resources/jdbc.properties" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>2.0.2</version>
 				<configuration>
-					<contexts>test</contexts>
-					<changeLogFile>db/db-changelog.xml</changeLogFile>
+					<contexts>dev</contexts>
+					<changeLogFile>META-INF/db/db-changelog.xml</changeLogFile>
 					<driver>${jdbc.driverClassName}</driver>
 					<url>${jdbc.url}</url>
 					<username>${jdbc.username}</username>
@@ -184,7 +166,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>2.0.2</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- database -->
 		<dependency>

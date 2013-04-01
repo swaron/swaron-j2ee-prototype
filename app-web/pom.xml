@@ -29,7 +29,7 @@
 		<url>http://svnserver/project/code/trunk/sub-project</url>
 	</scm>
 	<build>
-		<finalName>${project.artifactId}</finalName> 
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<!-- mvn tomcat6/7:run -->
@@ -140,26 +140,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<configuration>
-							<target>
-								<copy todir="${basedir}/src" overwrite="true" preservelastmodified="true" verbose="true">
-									<fileset dir="${basedir}/src" includes="**/*.env_${env}"/>
-									<mapper type="glob"  from="*.env_${env}" to="*"></mapper>
-								</copy>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
@@ -221,11 +201,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-    	<dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-jsp</artifactId>
-            <version>2.2.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 		<!-- JSR 303 with Hibernate Validator -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -262,34 +242,20 @@
 			<artifactId>app-service</artifactId>
 			<version>${module.version}</version>
 		</dependency>
-		<!-- for WAFFLE Kerberos  authenticaiton windows  -->
+		<!-- for WAFFLE Kerberos authenticaiton windows -->
 		<dependency>
-			<groupId>com.sun.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>3.5.0</version>
-			<scope>system</scope>
-			<systemPath>/lib/jna-3.5.0.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jna</groupId>
-			<artifactId>platform</artifactId>
-			<version>3.5.0</version>
-			<scope>system</scope>
-			<systemPath>/lib/platform-3.5.0.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>waffle</groupId>
-			<artifactId>waffle-jna</artifactId>
-			<version>1.5</version>
-			<scope>system</scope>
-			<systemPath>/lib/waffle-jna.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>waffle</groupId>
+			<groupId>com.github.dblock.waffle</groupId>
 			<artifactId>waffle-spring-security3</artifactId>
 			<version>1.5</version>
-			<scope>system</scope>
-			<systemPath>/lib/waffle-spring-security3.jar</systemPath>
 		</dependency>
+		<!-- <dependency> <groupId>com.sun.jna</groupId> <artifactId>jna</artifactId> 
+			<version>3.5.0</version> <scope>system</scope> <systemPath>/lib/jna-3.5.0.jar</systemPath> 
+			</dependency> <dependency> <groupId>com.sun.jna</groupId> <artifactId>platform</artifactId> 
+			<version>3.5.0</version> <scope>system</scope> <systemPath>/lib/platform-3.5.0.jar</systemPath> 
+			</dependency> <dependency> <groupId>waffle</groupId> <artifactId>waffle-jna</artifactId> 
+			<version>1.5</version> <scope>system</scope> <systemPath>/lib/waffle-jna.jar</systemPath> 
+			</dependency> <dependency> <groupId>waffle</groupId> <artifactId>waffle-spring-security3</artifactId> 
+			<version>1.5</version> <scope>system</scope> <systemPath>/lib/waffle-spring-security3.jar</systemPath> 
+			</dependency> -->
 	</dependencies>
 </project>

@@ -3,9 +3,9 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<spring:url var="banner" value="/resources/css/image/banner-graphic.png" />
-	<spring:url var="home" value="/" />
-	<spring:message code="button_home" var="home_label" htmlEscape="false" />
-	<a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}"> <img src="${banner}" />
-	</a>
+	<spring:url var="banner"  value="/resources/css/image/banner-graphic.png" />
+	<spring:message code="button_home" var="home_label" htmlEscape="true" />
+	
+	<a href="${contextPath}/" name="${home_label}" title="${home_label}"> <img src="${banner}" /></a>
+	
 </div>

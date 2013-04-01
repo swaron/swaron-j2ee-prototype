@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request" />
 <c:set var="resourcePath" value="${contextPath}/resources" scope="request" />
@@ -21,5 +22,6 @@
 
 <c:if test="${cookie.debug.value == 'true' or param['_debug'] == 'true'}">
 <c:set var="debug" value="true" scope="request"/>
-<c:set var="debugSuffix" value="-dev" scope="request" />
 </c:if>
+
+<s:eval expression="@appProps['app.env']" var="app_env"/>

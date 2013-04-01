@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
-">
-	<changeSet id="3" author="total" context="test">
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="130401001" author="total" context="dev">
 		<createTable tableName="acl_sid">
 			<column name="acl_sid_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
@@ -397,7 +400,7 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<loadData tableName="code_dictionary" encoding="UTF-8" file="db/code_dictionary.csv"></loadData>
+		<loadData tableName="code_dictionary" encoding="UTF-8" file="META-INF/db/code_dictionary.csv"></loadData>
 		<modifySql dbms="h2">
 			<replace replace="inet" with="varchar(16)" />
 		</modifySql>

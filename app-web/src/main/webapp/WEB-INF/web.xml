@@ -21,8 +21,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:/META-INF/spring/app-context.xml
-			classpath:/META-INF/spring/datasource_embed.xml
 		</param-value>
+	</context-param>
+	<context-param>
+	     <param-name>spring.profiles.default</param-name>
+	     <param-value>prod</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

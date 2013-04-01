@@ -15,6 +15,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+	<import resource="datasource.xml"/>
 	<import resource="tx-context.xml"/>
 	<import resource="jpa-context.xml"/>
 	<import resource="mvc-context.xml"/>
