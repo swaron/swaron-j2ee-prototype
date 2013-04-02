@@ -22,7 +22,7 @@
 	<div id="main" class="container">
 		<h2 class="text-center">User Information</h2>
 
-		<table border="1" class="table table-striped .table-bordered">
+		<table border="1" class="table table-striped table-bordered">
 			<tr>
 				<th>Tag</th>
 				<th>Value</th>
@@ -31,7 +31,7 @@
 				<td>&lt;sec:authentication property='name' /&gt;</td>
 				<td><sec:authentication property="name" /></td>
 			</tr>
-
+				<sec:authorize ifAllGranted="ROLE_USER">
 				<tr>
 					<td>&lt;sec:authentication property='principal.username' /&gt;</td>
 					<td><sec:authentication property="principal.username" /></td>
@@ -44,7 +44,7 @@
 					<td>&lt;sec:authentication property='principal.accountNonLocked' /&gt;</td>
 					<td><sec:authentication property="principal.accountNonLocked" /></td>
 				</tr>
-
+				</sec:authorize>
 		</table>
 
 		<div class="round-box">
