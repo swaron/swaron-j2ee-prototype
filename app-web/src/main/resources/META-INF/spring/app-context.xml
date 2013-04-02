@@ -22,7 +22,7 @@
 	<import resource="cache-context.xml"/>
 	<import resource="email-context.xml"/>
 	<import resource="acl-context.xml"/>
-	<import resource="sec-context.xml"/>
+	<import resource="sec-context-kerberos.xml"/>
 	
 	<context:annotation-config />
 	<context:component-scan base-package="org.app" />
