@@ -45,7 +45,7 @@
 	<beans:bean id="kerberosServiceAuthenticationProvider" class="org.springframework.security.extensions.kerberos.KerberosServiceAuthenticationProvider">
 		<beans:property name="ticketValidator">
 			<beans:bean class="org.springframework.security.extensions.kerberos.SunJaasKerberosTicketValidator">
-				<beans:property name="servicePrincipal" value="HTTP/flightnet.hnair.com@HNANET" />
+				<beans:property name="servicePrincipal" value="HTTP/flightnet.hnair.com@aaron.local" />
 				<beans:property name="keyTabLocation" value="classpath:flightnet.keytab" />
 			</beans:bean>
 		</beans:property>
