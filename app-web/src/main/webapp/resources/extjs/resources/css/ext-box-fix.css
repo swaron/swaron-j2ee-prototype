@@ -1,0 +1,25 @@
+.x-border-box,.x-border-box * {
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-ms-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+
+.x-panel,.x-panel * {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.x-border-box .x-form-text {
+	color: black;
+	padding: 2px 6px 1px 6px;
+	background: white repeat-x 0 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: silver #d9d9d9 #d9d9d9;
+	height: 24px;
+	line-height: 18px;
+	margin-bottom: 0px;
+}
