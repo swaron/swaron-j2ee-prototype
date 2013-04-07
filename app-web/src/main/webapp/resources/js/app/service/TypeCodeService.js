@@ -15,15 +15,16 @@ Ext.define('App.service.TypeCodeService', {
 			'Ext.data.proxy.Rest',  'Ext.data.Request', 'Ext.data.Batch'],
 	url : App.url('/rest/code/type.json'),
 	storeId : 'app-tcode',
-	//localimage will be lazy filled from local storage when local storage are available.
+	//local image will be lazy filled from local storage when local storage are available.
 	localImage : null,
-	//remote iamge will be filled when local storage not available.
+	//remote image will be filled when local storage not available.
 	remoteImage : null,
 	nameCache : {},
 	mixins : {
 		observable : 'Ext.util.Observable'
 	},
 	initStore : function() {
+		var service = this;
 		var localStorageExist = 'localStorage' in window && window['localStorage'] !== null;
 		if(localStorageExist){
 			var storage = window.localStorage;
@@ -38,6 +39,7 @@ Ext.define('App.service.TypeCodeService', {
 						if(Ext.isObject(result)){
 							storage.setItem('app-tcode-'+'_value', Ext.JSON.encode(result))
 							storage.setItem('app-tcode-_store_version',App.cfg.version);
+							service.localImage = result;
 						}else{
 							App.log('result from type code service is not an object.');
 						}
@@ -49,7 +51,6 @@ Ext.define('App.service.TypeCodeService', {
 			}
 		}else{
 			App.log('localstorage not exist, fallback to remote store.', e);
-			var service = this;
 			Ext.Ajax.request({
 				url:this.url,
 				success: function(response){
@@ -65,29 +66,29 @@ Ext.define('App.service.TypeCodeService', {
 			    }
 			});
 		}
-		this.codeStore = localStore || this.remoteStore;
 	},
 	loadLocalImage:function(){
 		var localStorageExist = 'localStorage' in window && window['localStorage'] !== null;
 		if(localStorageExist){
 			var storage = window.localStorage;
 			var result = storage.getItem('app-tcode-'+'_value');
-			this.localImage = Ext.JSON.decode(result);
-			return this.localImage;
+			return Ext.JSON.decode(result);
 		}else{
 			//local storage not exist
 			return null;
 		}
 	},
+	getLocalImage:function(){
+		if(this.localImage == null){
+			this.localImage = this.loadLocalImage();
+		}
+		return this.localImage;
+	},
 	getNameInternal:function(type_table, id_column,name_column, id){
 		if (id == null || id == '') {
 			return '';
 		}
-		var image = this.remoteImage || this.localImage;
-		if(image == null){
-			this.loadLocalImage();
-			image = this.localImage;
-		}
+		var image = this.getLocalImage() || this.remoteImage;
 		if(image == null){
 			return '';
 		}

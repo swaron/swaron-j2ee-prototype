@@ -23,6 +23,7 @@
 			classpath:/META-INF/spring/app-context.xml
 		</param-value>
 	</context-param>
+	<!-- override in tomcat context.xml <Environment name="spring.profiles.active" value="dev"  type="java.lang.String" /> -->
 	<context-param>
 	     <param-name>spring.profiles.default</param-name>
 	     <param-value>prod</param-value>

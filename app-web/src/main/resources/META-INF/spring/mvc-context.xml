@@ -23,7 +23,6 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" order="20" />
 	<mvc:view-controller path="/sample/mvc.do" view-name="sample/mvc" />
 	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser" />
-	<mvc:view-controller path="/sample/crud.do" view-name="sample/secUser" />
 	<mvc:view-controller path="/test.do" view-name="test" />
 	<mvc:view-controller path="/user/info.do" view-name="user/info" />
 	<mvc:view-controller path="/login/login.do" view-name="login/login" />
@@ -40,13 +39,13 @@
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
-		<property name="order" value="1" />
+		<property name="order" value="2" />
 	</bean>
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
-		<property name="order" value="2" />
+		<property name="order" value="1" />
 	</bean>
 	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
 		<property name="definitions">

@@ -26,7 +26,7 @@ Ext.define('App.view.db.external.dbinfo.DbInfoMaster', {
 		this.tbar = [{
 			text : 'Copy',
 			itemId : 'copy',
-			iconCls : 'icon-copy',
+			iconCls : 'icon-tags',
 			disabled : true,
 			handler : function(button) {
 				var master = button.up('dbinfomaster');
@@ -39,7 +39,7 @@ Ext.define('App.view.db.external.dbinfo.DbInfoMaster', {
 			}
 		}, {
 			text : 'Add',
-			iconCls : 'icon-add',
+			iconCls : 'icon-plus-sign',
 			handler : function(button) {
 				var master = button.up('dbinfomaster');
 				var grid = master.down('dbinfogrid');
@@ -50,7 +50,7 @@ Ext.define('App.view.db.external.dbinfo.DbInfoMaster', {
 		}, {
 			itemId : 'delete',
 			text : 'Delete',
-			iconCls : 'icon-delete',
+			iconCls : 'icon-remove-sign',
 			handler : function(button) {
 				var master = button.up('dbinfomaster');
 				var grid = master.down('dbinfogrid');

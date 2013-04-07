@@ -100,7 +100,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 				<jdbc.url>jdbc:postgresql://localhost/${db.name}</jdbc.url>
 				<jdbc.username>dev</jdbc.username>
 				<jdbc.password>dev</jdbc.password>
-				<db.type>psql</db.type>
 			</properties>
 		</profile>
 		<profile>
@@ -115,7 +114,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 				<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>
 				<jdbc.url>jdbc:h2:~/h2/${db.name}</jdbc.url>
 				<jdbc.username>sa</jdbc.username>
-				<db.type>h2</db.type>
 			</properties>
 		</profile>
 		<profile>
@@ -128,7 +126,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 				<jdbc.url>jdbc:mysql://localhost/${db.name}</jdbc.url>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
-				<db.type>mysql</db.type>
 			</properties>
 		</profile>
 		<profile>
@@ -144,7 +141,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 				<jdbc.url>jdbc:oracle:thin:@//localhost:1521/ORCL</jdbc.url>
 				<jdbc.username>system</jdbc.username>
 				<jdbc.password>system</jdbc.password>
-				<db.type>oracle</db.type>
 			</properties>
 		</profile>
 		<profile>
@@ -157,7 +153,6 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 				<jdbc.url>jdbc:jtds:sqlserver://localhost:1433/${db.name};domain=X;userNTLMv2=true</jdbc.url>
 				<jdbc.username>wuser</jdbc.username>
 				<jdbc.password>wuser</jdbc.password>
-				<db.type>mssql</db.type>
 			</properties>
 		</profile>
 	</profiles>

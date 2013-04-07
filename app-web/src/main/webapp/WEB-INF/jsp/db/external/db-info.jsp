@@ -1,15 +1,28 @@
-<%@page language="java" pageEncoding="utf-8" contentType="text/html;charset=utf-8"%>
+<!doctype html>
+<%@page trimDirectiveWhitespaces="true" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="u" uri="http://app.org/tags/utils"%>
-<%@taglib prefix="layout" tagdir="/WEB-INF/tags/layouts"%>
-<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<layout:basic title="" pageClass="">
-<jsp:attribute name="scripts">
-<script type="text/javascript" src="${jsPath}/app/pages/db/external/db-info.js"></script>
-</jsp:attribute>
-<jsp:body>
-	<br />
-	<div id="table-gird">
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<jsp:include page="/WEB-INF/jsp/includes/pathVars.jsp" flush="false" />
+<html>
+<head>
+<title><s:message code="${page.title.test}" /></title>
+<jsp:include page="/WEB-INF/jsp/includes/css-all.jsp" />
+</head>
+<body id="app" class="test-page">
+	<jsp:include page="/WEB-INF/jsp/includes/fragment/header.jspx" />
+	<jsp:include page="/WEB-INF/jsp/includes/fragment/side.jspx" />
+	<div id="main" class="container">
+		<div id="table-gird">
 	</div>
-</jsp:body>
-</layout:basic>
+	</div>
+	<jsp:include page="/WEB-INF/jsp/includes/fragment/footer.jspx" />
+	<jsp:include page="/WEB-INF/jsp/includes/js-all.jsp" />
+	<script type="text/javascript" src="${jsPath}/app/pages/db/external/db-info.js"></script>
+	<script type="text/javascript">
+		Ext.getBody().mask("Loading Page ...");
+		Ext.onReady(function() {
+			Ext.getBody().unmask();
+		});
+	</script>
+</body>
+</html>

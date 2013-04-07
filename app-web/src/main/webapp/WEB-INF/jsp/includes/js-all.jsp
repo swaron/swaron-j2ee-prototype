@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/jsp/includes/appConfig.jsp" flush="false" />
 <jwr:script src="/bundles/js/messages.js"/>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 
 
 <c:if test="${debug}">

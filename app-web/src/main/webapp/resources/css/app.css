@@ -15,6 +15,16 @@
 	zoom: 1;
 }
 
+.fill-fixed-up{
+	height: 40px;
+}
+
+@media (max-width: 979px){
+	.fill-fixed-up {
+		height: 0px;
+		line-height: 0px;
+	}
+}
 
 .footer {
 	padding: 30px 0;
