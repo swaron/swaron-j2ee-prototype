@@ -12,10 +12,10 @@
 <head>
 <title><s:message code="${title}" text="${title}"/></title>
 <c:if test="${debug}">
-<link rel="stylesheet" type="text/css" href="${extCss}/ext-all-custom-debug.css" />
+<link rel="stylesheet" type="text/css" href="${extCss}/ext-all-neptune.css" />
 </c:if>
 <c:if test="${not debug}">
-<link rel="stylesheet" type="text/css" href="${extCss}/ext-all-custom.css" />
+<link rel="stylesheet" type="text/css" href="${extCss}/ext-all-neptune.css" />
 </c:if>
 <link rel="stylesheet" type="text/css" href="${cssPath}/theme/${lang}/${theme}/locale.css?v=${appVersion}" />
 <jwr:style src="/bundles/css/extux.css" useRandomParam="false"/>

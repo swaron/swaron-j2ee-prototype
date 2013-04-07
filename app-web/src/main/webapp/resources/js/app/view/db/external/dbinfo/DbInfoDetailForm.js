@@ -2,13 +2,16 @@ Ext.define('App.view.db.external.dbinfo.DbInfoDetailForm', {
 	extend : 'Ext.form.Panel',
 	alias : 'widget.dbinfodetailform',
 	trackResetOnLoad:true,
-	layout: 'anchor',
+	layout: 'form',
     defaults: {
         anchor: '100%'
     },
 	defaultType: 'textfield',
 	items : [{
 		fieldLabel : 'Name',
+		afterLabelTextTpl: '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>',
+		tooltip: 'Enter your first name',
+        allowBlank: false,
 		name : 'name',
 		allowBlank : false
 	}, {

@@ -30,7 +30,8 @@
 <c:if test="${not debug}">
 <!-- static loading version start, use cdn -->
 <!-- <script type="text/javascript" src="${extJs}/ext-all.js"></script> -->
-<script type="text/javascript" src="http://cdn.sencha.io/ext-4.1.1-gpl/ext-all.js"></script>
+<script src="${contextPath}/resources/extjs/ext-all.js"></script>
+<script src="${contextPath}/resources/extjs/ext-theme-neptune.js"></script>
 <jwr:script src="/bundles/js/base.js" useRandomParam="false"/>
 <jwr:script src="/bundles/js/extux.js" useRandomParam="false"/>
 <jwr:script src="/bundles/js/widget.js" useRandomParam="false"/>
@@ -46,4 +47,8 @@
 		Ext.Loader.loadScript(url);
 	}
 })();
+Ext.onReady(function(){
+	//Ext change box mode to border, which affect other frameworks. refer to Ext.isBorderBox for detail
+	//Ext.fly(Ext.getBody().dom.parentNode).removeCls('x-border-box');
+});
 </script>
