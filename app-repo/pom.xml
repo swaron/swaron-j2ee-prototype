@@ -193,6 +193,12 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- 1.6 fix memory leak on reloadbug bug   -->
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.6</version>
+		</dependency>
 		<!-- orm hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

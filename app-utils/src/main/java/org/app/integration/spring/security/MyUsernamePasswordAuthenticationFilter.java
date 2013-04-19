@@ -10,13 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
-import org.springframework.stereotype.Service;
 
-@Service
 public class MyUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
-    @Autowired
+    @Autowired(required=false)
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         super.setAuthenticationManager(authenticationManager);
     }
