@@ -1,115 +1,146 @@
+/**
+ * Auto adjust table column width with the content in table,
+ * 1. forceFit==true:  the width of columns is flex, will force fit into grid and auto resize with grid, 
+ * 2. forceFit==false: the width of columns is static, will NOT resize with grid. total column width is equal or larger then grid size. 
+ * depends on extjs 4.2
+ */
 Ext.define('Ext.ux.grid.feature.AutoColumnWidth', {
 	extend : 'Ext.grid.feature.Feature',
 	alias : 'feature.autocolumnwidth',
 	requires : ['Ext.grid.plugin.HeaderResizer'],
 	eventPrefix : 'autowidth',
+	ftype: 'autocolumnwidth',
 	config:{
-		autoWidth : false,
 		maxColWidth : null,
 		minColWidth : null
 	},
+	
 	init : function() {
 		this.grid;
 		this.view;
-		this.headerCt = this.view.headerCt;
+		this.headerCt = this.view.getHeaderCt();
 		this.resizer = this.headerCt.resizer;
 		if (this.resizer) {
-			this.headerCt.on('afterrender', this.afterHeaderRender, this, {
-				single : true
-			});
-//			this.view.on('viewready', this.afterViewReady, this, {
-//				single : true
-//			});
-			this.grid.mon(this.grid.store,'load',this.afterViewReady, this, {
-				single : true
-			});
 			this.minColWidth = this.minColWidth || this.resizer.minColWidth;
 			this.maxColWidth = this.maxColWidth || this.resizer.maxColWidth;
 		}else{
 			this.minColWidth = this.minColWidth || Ext.grid.plugin.HeaderResizer.prototype.minColWidth;
 			this.maxColWidth = this.maxColWidth || Ext.grid.plugin.HeaderResizer.prototype.maxColWidth;
 		}
+		this.view.on('viewready', this.afterViewReady, this, {
+			single : false
+		});
+		this.grid.mon(this.grid.store,'load',this.afterViewReady, this, {
+			single : false
+		});
 	},
 	afterViewReady : function() {
-		if(!this.autoWidth || this.forceFit){
-			//ajust column width only when auto width is true. and force fit is false.
+		if(!this.grid.store || this.grid.store.getCount() == 0){
+			//store is not ready, return.
 			return;
 		}
 		var headerCt = this.headerCt;
 		var cols = headerCt.getVisibleGridColumns();
-		this.updateWidthPorperties(cols);
-		this.layoutWithNewWidth(cols);
+		this.adjustColumnWidth(cols);
 	},
-	afterHeaderRender : function(headerCt) {
-		var me = this, headerCt = me.headerCt, el = headerCt.el;
-		// we only listen to dblclick since mousemove is handled by HeaderResizer
-		headerCt.mon(el, 'dblclick', me.onHeaderCtDblClick, me);
-	},
-	layoutWithNewWidth:function(cols){
-        Ext.suspendLayouts();
+	adjustColumnWidth:function(cols){
+		//for performance reason, calculate all column's width, and update all at the same time. 
+		var viewEl = this.view.el;
+		var totalColWidth = 0;
+		var lockWidth = 0;
 		for(var i=0,ln = cols.length;i<ln;i++){
 			var col = cols[i];
-			if (col.flex) {
-	        	delete col.flex;
-	        }
-	        col.setWidth(col.newWidth);
+			if(col.locked || col.isCheckerHd){
+				//don't change
+				col.newWidth = col.width;
+				lockWidth += col.newWidth;
+			}else{
+				var maxWidth = this.view.getMaxContentWidth(col);
+				col.newWidth = Ext.Number.constrain(maxWidth, this.minColWidth, this.maxColWidth);
+				totalColWidth += col.newWidth;
+			}
 		}
-		var viewEl = this.view.el;
-		var table = viewEl.down('.' + Ext.baseCSSPrefix + 'grid-table-resizer');
-		table.setWidth(this.headerCt.getFullWidth());
+		
+		
+        Ext.suspendLayouts();
+        
+        if(this.grid.forceFit){
+        	//use flex for relative layout
+    		for(var i=0,ln = cols.length;i<ln;i++){
+    			var col = cols[i];
+    			if(col.locked || col.isCheckerHd){
+					//don't change widht
+				}else{
+	    			if (col.width) {
+	    	        	delete col.width;
+	    	        }
+	    			col.flex = col.newWidth;
+				}
+    		}
+        }else{
+        	//user absolute pixel layout
+        	var containerWidth = this.view.getWidth();
+			if(totalColWidth < (containerWidth-lockWidth) && totalColWidth > 0 ){
+				var extend = (containerWidth-lockWidth)/totalColWidth;
+				for(var i=0,ln = cols.length;i<ln;i++){
+					var col = cols[i];
+					if(col.locked || col.isCheckerHd){
+					//don't change width
+					}else{
+						//expend width to container
+						col.newWidth = col.newWidth * extend;
+					}
+				}
+			}
+			
+        	for(var i=0,ln = cols.length;i<ln;i++){
+        		var col = cols[i];
+        		if (col.flex) {
+        			delete col.flex;
+        		}
+        		col.setWidth(col.newWidth);
+        	}
+        }
+		//leave last column as flex when force fit is not specified.
+//		if(i > 0 && !this.forceFit){
+//			cols[i-1].flex = 1;
+//		}
+		
+//		var viewEl = this.view.el;
+//		var table = viewEl.down('.' + Ext.baseCSSPrefix + 'grid-table');
+		
+		this.view.setWidth(this.headerCt.getFullWidth());
         Ext.resumeLayouts(true);
 	},
 	updateWidthPorperties:function(cols){
 		var viewEl = this.view.el;
-		var table = viewEl.down('.' + Ext.baseCSSPrefix + 'grid-table-resizer');
+		var totalColWidth = 0;
 		for(var i=0,ln = cols.length;i<ln;i++){
 			var col = cols[i];
-			var firstTh = viewEl.down('.' + Ext.baseCSSPrefix + 'grid-col-resizer-' + col.id);
-			var maxHeaderWidth = this.getComputedHeaderWidth(col);
-			var maxTdWidth = this.getComputedTdWidth(col);
-			col.origWidth = col.getWidth();
-			var maxWidth = Math.max(maxHeaderWidth, maxTdWidth);
+			var maxWidth = this.view.getMaxContentWidth(col);
 			col.newWidth = maxWidth = Ext.Number.constrain(maxWidth, this.minColWidth, this.maxColWidth);
+			totalColWidth += maxWidth;
 		}
-	},
-	getComputedTdWidth:function(col){
-		var viewEl = this.view.el;
-		var tds = Ext.select('.' + Ext.baseCSSPrefix + 'grid-cell-' + col.id,false, viewEl.dom);
 		
-		var maxWidth = 0;
-		tds.each(function(el){
-			maxWidth = Math.max(maxWidth,el.getFrameWidth('lr') + el.getTextWidth());
-		});
-		return maxWidth;
-	},
-	getComputedHeaderWidth:function(col){
-		var colHeader = col.getEl();
-		var headerInner = colHeader.down('.' + Ext.baseCSSPrefix + 'column-header-inner');
-		var headerText = colHeader.down('.' + Ext.baseCSSPrefix + 'column-header-text');
-		var headerTrigger = colHeader.down('.' + Ext.baseCSSPrefix + 'column-header-trigger');
-		var hiddenWidth = headerTrigger.getStyle('width');
-		var triggerWidth = 14;
-		var match = /&(\d)+px$/g.exec(hiddenWidth);
-		if(match){
-			triggerWidth = match[1];
-		}
-		return headerInner.getBorderWidth('lr')+headerInner.getFrameWidth('lr')+headerText.getWidth()+triggerWidth;
-	},
-	onHeaderCtDblClick : function() {
-		// HeaderResizer has to be enabled to use the auto resizing functionality
-		if (this.resizer && !this.resizer.disabled && !!this.resizer.activeHd) {
-			// activeHd is the target column
-			var col = this.resizer.activeHd, viewEl = this.view.el;
-			var maxHeaderWidth = this.getComputedHeaderWidth(col);
-			var maxTdWidth = this.getComputedTdWidth(col);
-			col.origWidth = col.getWidth();
-			var maxWidth = Math.max(maxHeaderWidth, maxTdWidth);
-			col.newWidth = maxWidth = Ext.Number.constrain(maxWidth, this.minColWidth, this.maxColWidth);
-			Ext.suspendLayouts();
-			col.setWidth(col.newWidth);
-			var table = viewEl.down('.' + Ext.baseCSSPrefix + 'grid-table-resizer');
-			table.setWidth(this.headerCt.getFullWidth());
-			Ext.resumeLayouts(true);
+		
+		var containerWidth = this.view.getWidth();
+		if(this.grid.forceFit){
+			//use flex for relative layout
+			if(totalColWidth < containerWidth && totalColWidth > 0 ){
+				var extend = containerWidth/totalColWidth;
+				for(var i=0,ln = cols.length;i<ln;i++){
+					var col = cols[i];
+					//expend width to container
+					col.newWidth = col.newWidth * extend;
+				}
+			}
+		}else{
+			//user absolute pixel layout
+			if(cols.length > 0){
+				var col = cols[cols.length -1];
+				 col.newWidth = containerWidth-totalColWidth+col.newWidth;
+			}
 		}
 	}
+	
 });

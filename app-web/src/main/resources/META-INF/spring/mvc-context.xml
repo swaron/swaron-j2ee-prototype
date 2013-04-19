@@ -21,11 +21,6 @@
 		directory -->
 
 	<mvc:resources mapping="/resources/**" location="/resources/" order="20" />
-	<mvc:view-controller path="/sample/mvc.do" view-name="sample/mvc" />
-	<mvc:view-controller path="/sample/secUser.do" view-name="sample/secUser" />
-	<mvc:view-controller path="/test.do" view-name="test" />
-	<mvc:view-controller path="/user/info.do" view-name="user/info" />
-	<mvc:view-controller path="/login/login.do" view-name="login/login" />
 
 	<!-- Configures Handler Interceptors -->
 	<mvc:interceptors>

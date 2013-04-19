@@ -1,11 +1,11 @@
 package org.app.framework.paging;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,14 @@ public class PagingAssembler {
         PagingParam param = new PagingParam();
         param.setStart(form.getStart());
         param.setLimit(form.getLimit());
-        LinkedHashMap<String, String> sortParams = readConfigListFromJson(form.getSort(), "property", "direction");
-        param.setSort(sortParams);
-        LinkedHashMap<String, String> filterParams = readConfigListFromJson(form.getFilter(), "property", "value");
-        param.setFilter(filterParams);
+        readConfigListFromJson(param.getSort(),form.getSort(), "property", "direction");
+        readConfigListFromJson(param.getFilter(), form.getFilter(), "property", "value");
+        
         return param;
     }
 
-    private LinkedHashMap<String, String> readConfigListFromJson(String json, String keyProp, String valueProp) {
-        return readConfigListFromJson(json, keyProp, valueProp, true);
+    private List<SimpleEntry<String, String>> readConfigListFromJson(List<SimpleEntry<String,String>> list, String json, String keyProp, String valueProp) {
+        return readConfigListFromJson(list,json, keyProp, valueProp, true);
     }
 
     /**
@@ -43,22 +42,23 @@ public class PagingAssembler {
      * @param valueProp
      * @return
      */
-    private LinkedHashMap<String, String> readConfigListFromJson(String json, String keyProp, String valueProp, boolean trimValue) {
+    private List<SimpleEntry<String, String>> readConfigListFromJson(List<SimpleEntry<String,String>> params,String json, String keyProp, String valueProp, boolean trimValue) {
         if(json == null){
             return null;
-        }
+        }//[{"property":"name","direction":"ASC"}]
         try {
             TypeReference<List<Map<String, String>>> ref = new TypeReference<List<Map<String, String>>>() {
             };
-            List<Map<String, String>> list = objectMapper.readValue(json, ref);
-            LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
+            
+           List<Map<String, String>> list = objectMapper.readValue(json, ref);
+           
             for (Map<String, String> map : list) {
                 String prop =  map.get(keyProp);
                 String value =  map.get(valueProp);
                 if(trimValue){
                     value = StringUtils.trim(value);
                 }
-                params.put(prop, value);
+                params.add(new SimpleEntry<String, String>(prop, value));
             }
             return params;
         } catch (IOException e) {

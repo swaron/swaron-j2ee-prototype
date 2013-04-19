@@ -1,0 +1,19 @@
+.fill-fixed-up{
+	height: 40px;
+}
+
+@media (max-width: 979px){
+	.fill-fixed-up {
+		height: 0px;
+		line-height: 0px;
+	}
+	.navbar-fixed-top {
+		margin-bottom: 0px;
+	}
+}
+.container{
+	min-width: 500px;
+}
+#main.container{
+	padding-top: 5px;
+}

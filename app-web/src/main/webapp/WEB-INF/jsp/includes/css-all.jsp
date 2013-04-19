@@ -3,7 +3,7 @@
 <%@taglib prefix="jwr" uri="http://jawr.net/tags-el" %>
 
 
-<link rel="stylesheet" type="text/css" href="${extCss}/ext-box-fix.css" />
+<link rel="stylesheet" type="text/css" href="${extCss}/ext-bootstrap-fix.css" />
 <link rel="stylesheet" type="text/css" href="${extCss}/ext-all-neptune.css" />
 <link rel="stylesheet" type="text/css" href="${cssPath}/theme/${lang}/${theme}/locale.css?v=${appVersion}" />
 <jwr:style src="/bundles/css/extux.css" useRandomParam="false"/>

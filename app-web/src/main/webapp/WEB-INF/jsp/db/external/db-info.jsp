@@ -16,7 +16,7 @@
 	</div>
 	</div>
 	<jsp:include page="/WEB-INF/jsp/includes/fragment/footer.jspx" />
-	<jsp:include page="/WEB-INF/jsp/includes/js-all.jsp" />
+	<jsp:include page="/WEB-INF/jsp/includes/js-ext.jsp" />
 	<script type="text/javascript" src="${jsPath}/app/pages/db/external/db-info.js"></script>
 	<script type="text/javascript">
 		Ext.getBody().mask("Loading Page ...");

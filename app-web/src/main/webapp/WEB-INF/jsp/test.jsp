@@ -16,7 +16,7 @@
 		<div id="side2"></div>
 	</div>
 	<jsp:include page="/WEB-INF/jsp/includes/fragment/footer.jspx" />
-	<jsp:include page="/WEB-INF/jsp/includes/js-all.jsp" />
+	<jsp:include page="/WEB-INF/jsp/includes/js-ext.jsp" />
 	<script type="text/javascript">
 		Ext.getBody().mask("Loading Page ...");
 		Ext.onReady(function() {

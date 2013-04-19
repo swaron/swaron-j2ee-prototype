@@ -45,10 +45,8 @@ public class CodeDictionaryDao extends AbstractDaoSupport {
 
 	public long findAliasCount(String table, String column) {
 		PagingParam pagingParam = new PagingParam();
-		LinkedHashMap<String, String> filters = new LinkedHashMap<String, String>();
-		filters.put("tableName", table);
-		filters.put("columnName", column);
-		pagingParam.setFilter(filters);
+		pagingParam.addFilter("tableName", table);
+		pagingParam.addFilter("columnName", column);
 		return countAll(CodeDictionary.class, pagingParam);
 	}
 

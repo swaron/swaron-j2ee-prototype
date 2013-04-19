@@ -12,6 +12,7 @@
 <body id="app" class="test-page">
 	<jsp:include page="/WEB-INF/jsp/includes/fragment/header.jspx" />
 	<jsp:include page="/WEB-INF/jsp/includes/fragment/side.jspx" />
+	
 	<div id="main" class="container">
 		<h2 class="text-center">Login Page</h2>
 		<form class="form-horizontal">
@@ -36,6 +37,7 @@
 			</div>
 		</form>
 	</div>
+	
 	<jsp:include page="/WEB-INF/jsp/includes/fragment/footer.jspx" />
 	<jsp:include page="/WEB-INF/jsp/includes/js-basic.jsp" />
 </body>

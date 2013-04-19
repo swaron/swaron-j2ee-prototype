@@ -1,5 +1,6 @@
 package org.app.repo.service;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -113,12 +114,12 @@ public class SimpleSqlBuilder {
 	}
 
 	private String buildFilter(PagingParam pagingParam) {
-	    LinkedHashMap<String, String> filters = pagingParam.getFilter();
+	    List<SimpleEntry<String, String>> filters = pagingParam.getFilter();
 	    List<String> tokens = new ArrayList<String>(2);
 	    if(filters == null){
             return "";
         }
-	    for (Entry<String, String> sort : filters.entrySet()) {
+	    for (Entry<String, String> sort : filters) {
 	        String key = sort.getKey();
 	        String value = sort.getValue();
 	        sqlChecker.checkColName(key);
@@ -133,12 +134,12 @@ public class SimpleSqlBuilder {
     }
 
     private String buildOrder(PagingParam pagingParam) {
-        LinkedHashMap<String, String> sorts = pagingParam.getSort();
+        List<SimpleEntry<String,String>> sorts = pagingParam.getSort();
         List<String> tokens = new ArrayList<String>(2);
         if(sorts == null){
             return "";
         }
-        for (Entry<String, String> sort : sorts.entrySet()) {
+        for (Entry<String, String> sort : sorts) {
             String key = sort.getKey();
             String value = sort.getValue();
             sqlChecker.checkColName(key);

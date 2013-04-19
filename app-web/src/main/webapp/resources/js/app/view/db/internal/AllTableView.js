@@ -8,16 +8,17 @@ Ext.define('App.view.db.internal.AllTableView', {
 	layout:'border',
 	items : [{
 		region : 'west',
+		border:false,
 		xtype : 'tablelist',
 		itemId : 'tableList',
 		name : 'tableList',
-		title : 'Table List',
 		collapsible: true,
 		margins : '0 5 5 5',
 		width : 200 
 	}, {
 		xtype : 'tabpanel',
 		itemId : 'centerBox',
+		border:false,
 		name : 'centerBox',
 		region : 'center',
 		height : 500,
