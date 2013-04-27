@@ -5,7 +5,7 @@ import java.io.IOException;
 import junit.framework.Assert;
 
 import org.app.web.BaseWebTest;
-import org.app.web.dto.grid.GridConfig;
+import org.app.web.dto.db.GridConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

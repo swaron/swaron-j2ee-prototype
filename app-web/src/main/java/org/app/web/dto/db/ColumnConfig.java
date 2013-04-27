@@ -1,4 +1,4 @@
-package org.app.web.dto.grid;
+package org.app.web.dto.db;
 
 public class ColumnConfig {
 	private String columnName;
