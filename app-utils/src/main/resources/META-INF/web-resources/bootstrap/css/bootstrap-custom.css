@@ -1,0 +1,297 @@
+/* Bootstrap v3 Customization for Application
+ */
+
+
+/**
+ 修改bootstrap里面从顶部滑到中间的提示框的方式，修改了持续时间和位置
+ **/
+.alert-popup {
+	position: fixed;
+	top: 10%;
+	left: 50%;
+	z-index: 190000;
+	min-width: 400px;
+	margin-left: -200px;
+}
+
+.alert-popup.fade {
+	top: -25%;
+	-webkit-transition: opacity 0.3s linear, top 0.3s ease-out;
+	-moz-transition: opacity 0.3s linear, top 0.3s ease-out;
+	-o-transition: opacity 0.3s linear, top 0.3s ease-out;
+	transition: opacity 0.3s linear, top 0.3s ease-out;
+}
+
+.alert-popup.fade.in {
+	top: 10%;
+}
+.btn{
+	padding:4px 12px;
+}
+.btn-large {
+	padding: 14px 16px;
+}
+.btn-app:hover, .btn-app:focus, .btn-app:active, .btn-app.active {
+	color:#428bca;
+}
+/* 乘务特定的按钮颜色*/
+.btn-app {
+	color:#428bca;
+	background-color: #F2F2F2;
+	background-image: -moz-linear-gradient(top,hsl(0, 100%, 100%),hsl(0, 0%, 90%));
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(hsl(0, 100%, 100%)),to(hsl(0, 0%, 90%)));
+	background-image: -webkit-linear-gradient(top,hsl(0, 100%, 100%),hsl(0, 0%, 90%));
+	background-image: -o-linear-gradient(top,hsl(0, 100%, 100%),hsl(0, 0%, 90%));
+	background-image: linear-gradient(to bottom,hsl(0, 100%, 100%),hsl(0, 0%, 90%));
+	background-repeat: repeat-x;
+	border: 1px solid #CCCCCC;
+	border-color: #E6E6E6 #E6E6E6 #BFBFBF;
+	border-color: rgba(0,0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color:  #B3B3B3;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.btn-dark {
+	background-color: #40474B;
+	*background-color: #40474B;
+	background-image: -moz-linear-gradient(top, #9AA8AE, #40474B);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#9AA8AE), to(#40474B));
+	background-image: -webkit-linear-gradient(top, #9AA8AE, #40474B);
+	background-image: -o-linear-gradient(top, #9AA8AE, #40474B);
+	background-image: linear-gradient(to bottom, #9AA8AE, #40474B);
+	border-color: #40474B #40474B #251500;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9AA8AE', endColorstr='#ff252F33', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-dark:hover,.btn-dark:focus,.btn-dark:active,.btn-dark.active,.btn-dark.disabled,.btn-dark[disabled]
+	{
+	background-color: #40474B;
+	*background-color: #40474B;
+}
+
+.btn-dark:active,.btn-dark.active {
+	background-color: #003399 \9;
+}
+
+/* 乘务特定的导航样式, 背景色 淡灰蓝*/
+.main-navbar {
+	padding-top: 5px;
+	background-color: #d6dde0;
+	background-image: -moz-linear-gradient(top, #f7f7f7, #d6dde0);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f7f7f7), to(#d6dde0));
+	background-image: -webkit-linear-gradient(top, #f7f7f7, #d6dde0);
+	background-image: -o-linear-gradient(top, #f7f7f7, #d6dde0);
+	background-image: linear-gradient(to bottom, #f7f7f7, #d6dde0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff7f7f7", endColorstr="#ffd6dde0", GradientType=0);
+}
+
+
+/*主导航选中之后的背景色和次级导航的背景色一致，上圆角，字体偏白色*/
+.main-navbar.navbar .nav>.active>a:hover,.main-navbar.navbar .nav>.active>a:focus,.main-navbar.navbar .nav>.active>a {
+	color: #D8D8D8;
+	border-radius: 10px 10px 0 0;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-image: linear-gradient(to bottom, #7E7E7E, #474747);
+	background-color: #474747;
+}
+/*子导航太高了*/
+.navbar-nav>li>a{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.navbar{
+	padding-left:0px;
+	padding-right:0px;
+	min-height: 40px;
+}
+/*主导航 高度对齐，图标用的是26px，所以把文字line-height改成26，便于文字和图标对齐， padding从15改为10，减少一点空间占用*/
+.main-navbar.navbar .nav-tabs>li>a {
+	font-size:20px;
+	padding: 10px;
+}
+/* nav-tabs 默认有个偏白色的边框， 这边是 偏黑色， 覆盖掉*/
+.main-navbar .nav-tabs>.active>a,.main-navbar .nav-tabs>.active>a:hover,.main-navbar .nav-tabs>.active>a:focus {
+	border-color: #474747;
+}
+
+
+/*添加一个 1024以上的，大屏幕才会显示的选项， 这是因为 主导航上的元素太多，放不下了。*/
+.visible-lg {
+	display: none !important;
+}
+/*定义大屏幕的规则为1200px*/
+@media ( min-width : 1200px) {
+	.visible-lg {
+		display: inherit !important;
+	}
+}
+/*主体默认在桌面上占用所有宽度*/
+.container {
+	padding-left:15px;
+	padding-right:15px;
+	max-width: none !important;
+}
+/*让鼠标移到subnav的菜单上时自动显示下拉菜单*/
+.sub-navbar ul.nav li.dropdown:hover>ul.dropdown-menu {
+	display: block;
+}
+
+/*移除2px的空隙，稍微没那么好看，不过可以避免鼠标移掉2px之间时hover出来的菜单消失的问题。*/
+/* .sub-navbar ul.nav>li.dropdown ul.dropdown-menu {
+	margin-top: 0px;
+}
+ */
+/* overflow:auto 会导致下拉菜单不能出来*/
+.tab-content {
+	overflow: visible;
+}
+
+/* 导航 .navbar .nav 的margin影响了.nav-list的对齐。 */
+.navbar .nav-list {
+	margin-left: 0;
+	list-style: none;
+}
+/* 导航 .navbar .nav 的float影响了.nav-list li的显示 。 */
+.navbar .nav-list>li {
+	float: none;
+}
+
+/* 还原 .nav-list的设置，这些值被.navbar 影响*/
+.nav-list li>a {
+	padding: 3px 15px;
+	display: block;
+	color: #555;
+}
+
+.nav-list>li>a:hover,.nav-list>li>a:focus {
+	text-decoration: none;
+	background-color: #eeeeee;
+}
+
+/*调整2级导航的背景色，变得稍微灰一点，没那么黑*/
+.navbar-inverse {
+	background-color: #1b1b1b;
+	background-image: -moz-linear-gradient(top, #474747, #141414);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#474747), to(#141414));
+	background-image: -webkit-linear-gradient(top, #474747, #141414);
+	background-image: -o-linear-gradient(top, #474747, #141414);
+	background-image: linear-gradient(to bottom, #474747, #141414);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff474747", endColorstr="#ff141414", GradientType=0);
+}
+
+/* nav bar 里面搜索图标的对齐，默认会导致高度增加 */
+.navbar-form {
+	margin-top:0px;
+	margin-bottom: 0px;
+}
+
+label{
+	font-weight: normal;
+}
+.dropdown-menu  .dropdown-nestmenu  li {
+	list-style: none;
+}
+
+.dropdown-menu  .dropdown-nestmenu  li>a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 20px;
+	color: #333333;
+	white-space: nowrap;
+}
+
+.dropdown-menu .dropdown-nestmenu  li>a:hover,.dropdown-menu .dropdown-nestmenu  li>a:focus {
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #0081c2;
+	background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+	background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+	background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
+.dropdown-menu .dropdown-nestmenu  .active>a,.dropdown-menu .dropdown-nestmenu  .active>a:hover,.dropdown-menu .dropdown-nestmenu  .active>a:focus
+	{
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #0081c2;
+	background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+	background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+	background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+	background-repeat: repeat-x;
+	outline: 0;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
+.dropdown-menu .dropdown-nestmenu  .disabled>a,.dropdown-menu .dropdown-nestmenu  .disabled>a:hover,.dropdown-menu .dropdown-nestmenu  .disabled>a:focus
+	{
+	color: #999999;
+}
+
+.dropdown-menu .dropdown-nestmenu  .disabled>a:hover,.dropdown-menu .dropdown-nestmenu  .disabled>a:focus {
+	text-decoration: none;
+	cursor: default;
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+/* 我们的breadcrumb没有导航功能，取消链接的效果*/
+.breadcrumb>li>a {
+	color: #555;
+	cursor: default;
+}
+
+.breadcrumb>li>.divider {
+	color: gray;
+}
+
+.breadcrumb>.active {
+	color: #555;
+}
+
+.breadcrumb>li>a:HOVER,.breadcrumb>li>a:FOCUS {
+	text-decoration: none;
+}
+
+ul.dropdown-menu>li>a {
+	
+}
+
+ul.dropdown-menu>li>ul {
+	list-style: none;
+}
+
+ul.dropdown-menu>li>ul>li>a {
+	
+}
+
+ul.dropdown-menu>li>ul>li>ul {
+	list-style: none;
+}
+
+ul.dropdown-menu>li>ul>li>ul>li>a {
+	
+}
+
+
+ul.nav-list li.leaf a {
+	color: #08c;
+}
+
+.nav-list>.active>a,.nav-list>.active>a:hover,.nav-list>.active>a:focus {
+	color: #FFF;
+}
+
+.table-borderless tbody>tr>th, .table-borderless tbody>tr>td { 
+     border-top: none; 
+ }
+
