@@ -1,15 +1,14 @@
 package org.app.framework.paging;
 
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,45 +24,54 @@ public class PagingAssembler {
         PagingParam param = new PagingParam();
         param.setStart(form.getStart());
         param.setLimit(form.getLimit());
-        readConfigListFromJson(param.getSort(),form.getSort(), "property", "direction");
-        readConfigListFromJson(param.getFilter(), form.getFilter(), "property", "value");
-        
+        param.getSort().addAll(parseSorters(form.getSort()));
+        param.getFilter().addAll(parseFilters(form.getFilter()));
+
         return param;
     }
 
-    private List<SimpleEntry<String, String>> readConfigListFromJson(List<SimpleEntry<String,String>> list, String json, String keyProp, String valueProp) {
-        return readConfigListFromJson(list,json, keyProp, valueProp, true);
-    }
-
     /**
-     * turn filter parameters or sort parameters into a map 
+     * turn filter parameters or sort parameters into a map
+     * 
      * @param json
      * @param keyProp
      * @param valueProp
      * @return
      */
-    private List<SimpleEntry<String, String>> readConfigListFromJson(List<SimpleEntry<String,String>> params,String json, String keyProp, String valueProp, boolean trimValue) {
-        if(json == null){
-            return null;
-        }//[{"property":"name","direction":"ASC"}]
+    private List<Filter> parseFilters(String json) {
+        if (json == null) {
+            return Collections.EMPTY_LIST;
+        }
         try {
-            TypeReference<List<Map<String, String>>> ref = new TypeReference<List<Map<String, String>>>() {
+            TypeReference<List<Filter>> ref = new TypeReference<List<Filter>>() {
             };
-            
-           List<Map<String, String>> list = objectMapper.readValue(json, ref);
-           
-            for (Map<String, String> map : list) {
-                String prop =  map.get(keyProp);
-                String value =  map.get(valueProp);
-                if(trimValue){
-                    value = StringUtils.trim(value);
-                }
-                params.add(new SimpleEntry<String, String>(prop, value));
-            }
-            return params;
+
+            return objectMapper.<List<Filter>> readValue(json, ref);
         } catch (IOException e) {
-            logger.info("failed to deserialize paging config of string " + json, e);
-            return null;
+            logger.info("failed to deserialize filter string " + json, e);
+            return Collections.EMPTY_LIST;
+        }
+    }
+
+    /**
+     * turn filter parameters or sort parameters into a map
+     * 
+     * @param json
+     * @param keyProp
+     * @param valueProp
+     * @return
+     */
+    private List<Sorter> parseSorters(String json) {
+        if (!StringUtils.hasLength(json)) {
+            return Collections.EMPTY_LIST;
+        }// [{"property":"name","direction":"ASC"}]
+        try {
+            TypeReference<List<Sorter>> ref = new TypeReference<List<Sorter>>() {
+            };
+            return objectMapper.<List<Sorter>> readValue(json, ref);
+        } catch (IOException e) {
+            logger.info("failed to deserialize sorter string " + json, e);
+            return Collections.EMPTY_LIST;
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.app.repo.service;
 
-import org.app.test.ExposeTestContextTestExecutionListener;
+import org.app.integration.junit4.ExposeTestContextTestExecutionListener;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;

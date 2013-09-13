@@ -26,56 +26,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/rest/table-tree", produces = { "application/json", "application/xml" })
 public class TableTreeResource {
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    DbInfoDao dbInfoDao;
-    
-    @Autowired
-    PagingAssembler pagingAssembler;
-    
-    @Autowired
-    DbInfoAssembler dbInfoAssembler;
-    
-    @Autowired
-    DatabaseMetaDataService metaDataService;
-    
-    @Autowired
-    DataSourceService dataSourceService;
+	@Autowired
+	DbInfoDao dbInfoDao;
 
-    
-    @RequestMapping(value="/*", method = RequestMethod.GET)
-    @ResponseBody
-    public TreeResult list(@RequestParam String node) {
-        TreeResult treeResult = new TreeResult();
-        if("root".equals(node)){
-            List<DbInfo> results = dbInfoDao.findAll(DbInfo.class);
-            List<TreeNode> children = new ArrayList<TreeNode>();
-            for (DbInfo dbInfo : results) {
-                Integer id = dbInfo.getDbInfoId();
-                TreeNode treeNode = TreeNode.newBranch(id, id.toString(), dbInfo.getName());
-                children.add(treeNode);
-            }
-            treeResult.setChildren(children);
-        }else{
-            try {
-                Integer dbInfoId = Integer.parseInt(node);
-                DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
-                List<TableMetaData> results = metaDataService.getTableMetaDatas(dataSource);
-                if(results == null){
-                    treeResult.setSuccess(false);
-                }else{
-                    List<TreeNode> children = new ArrayList<TreeNode>();
-                    for (TableMetaData table : results) {
-                        TreeNode treeNode = TreeNode.newLeaf(null, table.getTableName(), table.getTableName());
-                        children.add(treeNode);
-                    }
-                    treeResult.setChildren(children);
-                }
-            } catch (NumberFormatException e) {
-                treeResult.setSuccess(false);
-            }
-        }
-        return treeResult;
-    }
+	@Autowired
+	PagingAssembler pagingAssembler;
+
+	@Autowired
+	DbInfoAssembler dbInfoAssembler;
+
+	@Autowired
+	DatabaseMetaDataService metaDataService;
+
+	@Autowired
+	DataSourceService dataSourceService;
+
+	@RequestMapping(value = "/*", method = RequestMethod.GET)
+	@ResponseBody
+	public TreeResult list(@RequestParam String node) {
+		TreeResult treeResult = new TreeResult();
+		if ("root".equals(node)) {
+			List<DbInfo> results = dbInfoDao.findAll(DbInfo.class);
+			List<TreeNode> children = new ArrayList<TreeNode>();
+			for (DbInfo dbInfo : results) {
+				Integer id = dbInfo.getDbInfoId();
+				TreeNode treeNode = TreeNode.newBranch(id, dbInfo.getName(), null, dbInfo.getName());
+				children.add(treeNode);
+			}
+			treeResult.setChildren(children);
+		} else {
+			try {
+				Integer dbInfoId = Integer.parseInt(node);
+				DataSource dataSource = dataSourceService.getDataSource(dbInfoId);
+				List<TableMetaData> results = metaDataService.getTableMetaDatas(dataSource);
+				if (results == null) {
+					treeResult.setSuccess(false);
+				} else {
+					List<TreeNode> children = new ArrayList<TreeNode>();
+					for (TableMetaData table : results) {
+						TreeNode treeNode = TreeNode
+								.newLeaf(null, table.getTableName(), dbInfoId, table.getTableName());
+						children.add(treeNode);
+					}
+					treeResult.setChildren(children);
+				}
+			} catch (NumberFormatException e) {
+				treeResult.setSuccess(false);
+			}
+		}
+		return treeResult;
+	}
 }

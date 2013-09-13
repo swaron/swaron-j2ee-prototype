@@ -1,6 +1,6 @@
 package org.app.web;
 
-import org.app.test.ExposeTestContextTestExecutionListener;
+import org.app.integration.junit4.ExposeTestContextTestExecutionListener;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;

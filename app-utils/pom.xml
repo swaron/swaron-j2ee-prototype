@@ -36,6 +36,11 @@
 			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0.1</version>
+		</dependency>
 		<!-- Jawr JavaScript/CSS Minification + Bundles -->
 		<dependency>
 			<groupId>net.jawr</groupId>
@@ -43,5 +48,11 @@
 			<version>3.3.3</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- jpa -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+        </dependency>
 	</dependencies>
 </project>

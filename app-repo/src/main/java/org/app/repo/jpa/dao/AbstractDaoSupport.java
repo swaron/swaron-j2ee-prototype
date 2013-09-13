@@ -15,7 +15,7 @@ import javax.persistence.criteria.Root;
 
 import org.app.framework.paging.PagingParam;
 import org.app.framework.paging.PagingResult;
-import org.app.repo.service.DaoUtils;
+import org.app.framework.repo.service.DaoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

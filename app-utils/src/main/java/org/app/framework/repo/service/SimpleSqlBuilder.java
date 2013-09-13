@@ -1,36 +1,30 @@
-package org.app.repo.service;
+package org.app.framework.repo.service;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.reflect.FieldUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.app.framework.paging.Filter;
 import org.app.framework.paging.PagingParam;
-import org.app.integration.spring.DbNameMapper;
+import org.app.framework.paging.Sorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlParameterValue;
-import org.springframework.stereotype.Service;
 
-@Service
 public class SimpleSqlBuilder {
 	protected static Logger logger = LoggerFactory.getLogger(SimpleSqlBuilder.class);
 
-	DbNameMapper dbNameMapper = DbNameMapper.getInstance();
+	DbTypeResolver dbNameMapper = DbTypeResolver.getInstance();
 
-	@Autowired
-	SqlChecker sqlChecker;
+	SqlChecker sqlChecker = new SqlChecker();
 
 	protected static String replaceTokens(String text, Object bean) {
 		Pattern pattern = Pattern.compile(":(\\S+)");
@@ -114,17 +108,23 @@ public class SimpleSqlBuilder {
 	}
 
 	private String buildFilter(PagingParam pagingParam) {
-	    List<SimpleEntry<String, String>> filters = pagingParam.getFilter();
+	    List<Filter> filters = pagingParam.getFilter();
 	    List<String> tokens = new ArrayList<String>(2);
 	    if(filters == null){
             return "";
         }
-	    for (Entry<String, String> sort : filters) {
-	        String key = sort.getKey();
-	        String value = sort.getValue();
+	    for (Filter filter : filters) {
+	        String key = filter.getProperty();
+	        String value = String.valueOf(filter.getValue());
+	        if("any".equals(filter.getMatchStyle())){
+	        	value = "%" + value + "%";
+	        }else if("exact".equals(filter.getMatchStyle())){
+	        }else{
+	        	value = value + "%";
+	        }
 	        sqlChecker.checkColName(key);
 	        sqlChecker.checkColValue(value);
-	        tokens.add(key + " like '%" + value + "%'");
+	        tokens.add(key + " " + value );
 	    }
 	    if(!tokens.isEmpty()){
 	        return "where " + StringUtils.join(tokens, " and ");
@@ -134,19 +134,19 @@ public class SimpleSqlBuilder {
     }
 
     private String buildOrder(PagingParam pagingParam) {
-        List<SimpleEntry<String,String>> sorts = pagingParam.getSort();
+        List<Sorter> sorts = pagingParam.getSort();
         List<String> tokens = new ArrayList<String>(2);
         if(sorts == null){
             return "";
         }
-        for (Entry<String, String> sort : sorts) {
-            String key = sort.getKey();
-            String value = sort.getValue();
-            sqlChecker.checkColName(key);
-            if (value.equalsIgnoreCase("asc")) {
-                tokens.add(key + " asc");
+        for (Sorter sort : sorts) {
+            String prop = sort.getProperty();
+            String dir = sort.getDirection();
+            sqlChecker.checkColName(prop);
+            if (dir.equalsIgnoreCase("ASC")) {
+                tokens.add(prop + " ASC");
             } else {
-                tokens.add(key + " desc");
+                tokens.add(prop + " DESC");
             }
         }
         if(!tokens.isEmpty()){

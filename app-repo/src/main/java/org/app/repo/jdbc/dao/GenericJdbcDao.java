@@ -9,8 +9,8 @@ import javax.sql.DataSource;
 
 import org.app.framework.paging.PagingParam;
 import org.app.framework.paging.PagingResult;
-import org.app.repo.service.SimpleSqlBuilder;
-import org.app.repo.service.SimpleSqlBuilder.UpdateStatement;
+import org.app.framework.repo.service.SimpleSqlBuilder;
+import org.app.framework.repo.service.SimpleSqlBuilder.UpdateStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

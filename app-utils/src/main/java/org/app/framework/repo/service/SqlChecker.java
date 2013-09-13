@@ -1,15 +1,14 @@
-package org.app.repo.service;
+package org.app.framework.repo.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
-@Service
 public class SqlChecker {
 	Pattern tablePattern = Pattern.compile("\\w+");
 	Pattern columnPattern = Pattern.compile("\\w+");
-	Pattern valuePattern = Pattern.compile("\\w+");
+	Pattern valuePattern = Pattern.compile("[\\w <>=']+");
 
 	public void checkTableName(String tableName) {
 		Matcher matcher = tablePattern.matcher(tableName);

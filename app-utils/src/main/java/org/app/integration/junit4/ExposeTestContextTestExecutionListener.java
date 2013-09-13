@@ -1,4 +1,4 @@
-package org.app.test;
+package org.app.integration.junit4;
 
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.test.context.TestContext;

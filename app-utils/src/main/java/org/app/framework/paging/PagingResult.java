@@ -3,18 +3,24 @@ package org.app.framework.paging;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.app.framework.web.result.ActionResult;
 
-public class PagingResult<T> {
-    List<T> records;
-    int total;
 
+
+public class PagingResult<T> extends ActionResult{
+    protected List<T> records;
+    protected int total;
+
+    public PagingResult() {
+	}
+    
     public PagingResult(List<T> records, int total) {
         super();
         this.records = records;
         this.total = total;
     }
 
-    public List<T> getRecords() {
+	public List<T> getRecords() {
         return records;
     }
 
@@ -35,6 +41,11 @@ public class PagingResult<T> {
         records.add(element);
         PagingResult<T> result = new PagingResult<T>(records, 1);
         return result;
+    }
+
+    public static <T> PagingResult<T> fromList(List<T> records) {
+    	PagingResult<T> result = new PagingResult<T>(records, records.size());
+    	return result;
     }
 
 }

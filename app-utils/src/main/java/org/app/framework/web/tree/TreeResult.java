@@ -2,23 +2,39 @@ package org.app.framework.web.tree;
 
 import java.util.List;
 
-public class TreeResult {
-    private List<TreeNode> children;
-    private boolean success = true;
-    public boolean isSuccess() {
-        return success;
-    }
+import org.app.framework.web.result.ActionResult;
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 
-    public List<TreeNode> getChildren() {
-        return children;
-    }
+public class TreeResult<T> extends ActionResult{
+	private List<TreeNode<T>> children;
 
-    public void setChildren(List<TreeNode> children) {
-        this.children = children;
-    }
+	public TreeResult() {
+	}
+	
+	public TreeResult(List<TreeNode<T>> children) {
+		super();
+		this.children = children;
+	}
+
+	public List<TreeNode<T>> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<TreeNode<T>> children) {
+		this.children = children;
+	}
+	
+	public static <T extends ActionResult> T errorResult(Class<T> clazz, String message) {
+		try {
+			T result = clazz.newInstance();
+			result.setSuccess(false);
+			result.setMessage(message);
+			return result;
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+	}
 
 }
