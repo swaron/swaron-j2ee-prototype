@@ -1,19 +1,19 @@
 /**
  * ## Example Code
  * 
- * App.Code.getName('table','column', '1'); //return table->column->name <br>
- * App.Code.getCode('table','column', 'name'); // return table->column->code <br>
- * App.Code.converter('table','column'); //return a function which will convert code to name <br>
- * App.Code.store('table','column'); // return a store which contains all data of table.column
+ * App.DictCode.getName('table','column', '1'); //return table->column->name <br>
+ * App.DictCode.getCode('table','column', 'name'); // return table->column->code <br>
+ * App.DictCode.converter('table','column'); //return a function which will convert code to name <br>
+ * App.DictCode.store('table','column'); // return a store which contains all data of table.column
 */
 
 
-Ext.define('App.service.CodeService', {
-	alternateClassName: 'App.Code',
+Ext.define('App.service.DictCodeService', {
+	alternateClassName: 'App.DictCode',
 	singleton:true,
     requires : ['Ext.data.reader.Json', 'Ext.data.Store', 'App.model.DbCode', 'Ext.data.proxy.Ajax', 'Ext.data.proxy.LocalStorage',
 			'Ext.data.proxy.Rest',  'Ext.data.Request', 'Ext.data.Batch'],
-	url : App.url('/rest/code/enum.json'),
+	url : App.url('/rest/code/dict.json'),
 	localStore : null,
 	remoteStore : null,
 	nameCache : {},
@@ -103,9 +103,9 @@ Ext.define('App.service.CodeService', {
 		this.localStore = localStore;
 		this.codeStore = localStore || this.remoteStore;
 	},
-	findName:function(table, column, code){
+	findName:function(table, column, code, defaultValue){
 		if (code == null || code == '') {
-			return '';
+			return defaultValue === undefined ? '': defaultValue;
 		}
 		var store = this.codeStore;
 		var index = store.findBy(function(model) {
@@ -119,10 +119,10 @@ Ext.define('App.service.CodeService', {
 			return store.getAt(index).get('name');
 		}
 	},
-	getName : function(table, column, code) {
+	getName : function(table, column, code, defaultValue) {
 		var key = table + '.' + column + '.' + code;
 		if (this.nameCache[key] === undefined) {
-			var name = this.findName(table, column, code);
+			var name = this.findName(table, column, code, defaultValue);
             this.nameCache[key] = name;
         }
         return this.nameCache[key];
@@ -158,10 +158,10 @@ Ext.define('App.service.CodeService', {
 		columnStore.sort();
 		return columnStore;
 	},
-	converter : function(table, column) {
+	converter : function(table, column, defaultValue) {
 		var service = this;
 		var fn = function(code) {
-			return service.getName(table, column, code);
+			return service.getName(table, column, code, defaultValue);
 		}
 		return fn;
 	},

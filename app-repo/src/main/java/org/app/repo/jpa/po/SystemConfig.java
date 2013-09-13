@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="system_config")
+@Cacheable
 public class SystemConfig implements Serializable {
 	private static final long serialVersionUID = 1L;
 

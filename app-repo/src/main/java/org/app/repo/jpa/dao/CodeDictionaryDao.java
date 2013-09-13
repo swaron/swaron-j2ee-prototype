@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.app.framework.paging.PagingParam;
 import org.app.framework.paging.PagingResult;
 import org.app.repo.jdbc.dao.GenericJdbcDao;
@@ -50,6 +52,24 @@ public class CodeDictionaryDao extends AbstractDaoSupport {
 		return countAll(CodeDictionary.class, pagingParam);
 	}
 
+	public boolean isTypeTable(String table) {
+		List<SystemConfig> list = findAllByCol(SystemConfig.class, SystemConfig_.paramKey.getName(), TYPECODE_SYSTEM_CONFIG_KEY);
+//		List<String> tables = new ArrayList<String>();
+		for (SystemConfig systemConfig : list) {
+			String paramValue = systemConfig.getParamValue();
+			String[] split = StringUtils.split(paramValue, ", ");
+			if(split == null){
+				continue;
+			}
+			for (String tableToken : split) {
+				if(StringUtils.isNotBlank(tableToken) && tableToken.equals(table)){
+					return true;
+//					tables.add(tableToken);
+				}
+			}
+		}
+		return false;
+	}
 	public HashMap<String, PagingResult<Map<String, Object>>> dumpTypeCodes() {
 		List<SystemConfig> list = findAllByCol(SystemConfig.class, SystemConfig_.paramKey.getName(), TYPECODE_SYSTEM_CONFIG_KEY);
 		List<String> tables = new ArrayList<String>();

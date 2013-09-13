@@ -38,10 +38,10 @@ Ext.define('App.service.GridConfig', {
 		for (var i = 0, ln = cols.length; i < ln; i++) {
 			var col = cols[i];
 			if (col.hasAlias == true) {
-				col.renderer = App.Code.converter(col.tableName, col.columnName);
+				col.renderer = App.DictCode.converter(col.tableName, col.columnName);
 				col.field = {
 					xtype : 'combobox',
-					store : App.Code.store(col.tableName, col.columnName),
+					store : App.DictCode.store(col.tableName, col.columnName),
 					queryMode : 'local',
 					displayField : 'name',
 					valueField : 'code'

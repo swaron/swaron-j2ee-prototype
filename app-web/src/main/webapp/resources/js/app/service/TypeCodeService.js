@@ -4,7 +4,7 @@
  * App.TypeCode.getName('type_table','type_id_column','type_name_column', '1'); //return table->column->name <br>
  * App.TypeCode.getCode('type_table','type_id_column','type_name_column', 'name'); // return table->column->code <br>
  * App.TypeCode.converter('type_table','type_id_column','type_name_column'); //return a function which will convert code to name <br>
- * App.TypeCode.store('table','type_id_column','type_name_column'); // return a store which contains all data of table.column
+ * App.TypeCode.store('type_table','type_id_column','type_name_column'); // return a store which contains all data of table.column
 */
 
 

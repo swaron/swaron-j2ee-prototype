@@ -123,10 +123,10 @@ Ext.onReady(function(){
         	width: 100,
         	sortable: true,
         	dataIndex: 'loginState',
-        	renderer: App.Code.converter('sec_user','login_state'),
+        	renderer: App.DictCode.converter('sec_user','login_state'),
         	field: {
 				xtype : 'combobox',
-				store : App.Code.store('sec_user','login_state'),
+				store : App.DictCode.store('sec_user','login_state'),
 				queryMode : 'local',
 				displayField : 'name',
 				valueField : 'code'

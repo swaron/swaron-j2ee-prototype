@@ -40,9 +40,9 @@ public class CodeResource {
 	 * 
 	 * @return CodeDictionary list in database
 	 */
-	@RequestMapping(value = "/enum", method = RequestMethod.GET)
+	@RequestMapping(value = "/dict", method = RequestMethod.GET)
 	@ResponseBody
-	@Cacheable(value="global.static",key="'CodeResource.enumCode'")
+	@Cacheable(value="global.static",key="'CodeResource.dictCode'")
 	public List<CodeDictionary> listEnumCode() {
 		List<CodeDictionary> list = codeDictionaryDao.findAll(CodeDictionary.class);
 		return list;
