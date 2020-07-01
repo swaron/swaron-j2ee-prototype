@@ -171,7 +171,7 @@ org.eclipse.jpt.jpa.core.metamodelSourceFolderName=target/generated-sources/anno
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.16</version>
+			<version>8.0.16</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
